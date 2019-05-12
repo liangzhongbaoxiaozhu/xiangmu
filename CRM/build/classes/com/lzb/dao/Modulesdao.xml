@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lzb.dao.Modulesdao">
+<!-- 根据用户id查角色 -->
+<select id="SelectRoles" parameterType="int" resultType="roles"> 
+select * from Roles where Rid in(select RoleId from UserRoles where UserId=#{id})
+</select>
+
+<!-- 根据角色查模块id -->
+<select id="SelectModules" parameterType="int" resultType="modules">
+select * from Modules where Mid in(select ModuleId from RoleModules where RoleId=#{id})
+</select>
+
+<!-- 根据父模块id查子模块id -->
+<select id="SelectZiModules" parameterType="int" resultType="modules">
+select * from Modules where ParentId=#{id}
+</select>
+</mapper>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lzb.dao.Rolesdao">
+
+
+<select id="SelectRoles" resultType="roles"  parameterType="fenYe">
+select * from roles
+
+limit #{page},#{pageSize}
+</select>
+<select id="SelectCount" resultType="int"  parameterType="fenYe">
+select count(Rid) from roles
+</select>
+
+<insert id="InsertRoles" parameterType="roles">
+insert into roles (Rname)values(#{Rname})
+</insert>
+
+<update id="UpdateRoles" parameterType="roles">
+update roles set Rname=#{Rname} where Rid=#{Rid}
+</update>
+
+</mapper>
