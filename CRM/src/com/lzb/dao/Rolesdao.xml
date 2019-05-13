@@ -21,4 +21,7 @@ insert into roles (Rname)values(#{Rname})
 update roles set Rname=#{Rname} where Rid=#{Rid}
 </update>
 
+<delete id="deleteRoles" parameterType="int">
+delete from roles where Rid=#{id}
+</delete>
 </mapper>

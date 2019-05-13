@@ -27,5 +27,15 @@ public class RolesServiceImpl implements RolesService{
 		// TODO Auto-generated method stub
 		return rolesdao.InsertRoles(roles);
 	}
+	@Override
+	public Integer UpdateRoles(Roles roles) {
+		// TODO Auto-generated method stub
+		return rolesdao.UpdateRoles(roles);
+	}
+	@Override
+	public Integer deleteRoles(Integer id) {
+		// TODO Auto-generated method stub
+		return rolesdao.deleteRoles(id);
+	}
 
 }

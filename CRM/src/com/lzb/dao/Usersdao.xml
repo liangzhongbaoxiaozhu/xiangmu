@@ -8,4 +8,44 @@
    select * from users where LoginName=#{LoginName} and PassWord=#{PassWord}
    </select>
 
+
+<select id="SelectUsers" resultType="users"  parameterType="fenYe">
+select * from users
+
+limit #{page},#{pageSize}
+</select>
+<select id="SelectCount" resultType="int"  parameterType="fenYe">
+select count(Uid) from users
+</select>
+
+<insert id="InsertUsers" parameterType="users">
+insert into users (LoginName,PassWord,CreateData,Email,Mtel)
+values(#{LoginName},#{PassWord},#{CreateData},#{Email},#{Mtel})
+</insert>
+
+<update id="isShuoDing" parameterType="int">
+update users set IsLoginData=1
+where Uid=#{id}
+</update>
+
+<update id="noShuoDing" parameterType="int">
+update users set IsLoginData=0
+where Uid=#{id}
+</update>
+<delete id="deleteUsers" parameterType="int">
+delete from users where Uid=#{id}
+</delete>
+
+<select id="SelectRoles"  resultType="roles">
+select * from roles
+</select>
+<select id="SelectRolesUsers" parameterType="int" resultType="roles">
+select * from roles where Rid in (select RoleId from UserRoles where UserId=#{id})
+</select>
+<insert id="InsertUserRoles" parameterType="fenYe">
+insert into userRoles (UserId,RoleId)values(#{page},#{pageSize})
+</insert>
+<delete id="deleteUserRoles" parameterType="int">
+delete from userRoles where URrid=#{URrid}
+</delete>
 </mapper>

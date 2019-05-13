@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.lzb.dao.Modulesdao;
+import com.lzb.entity.FenYe;
 import com.lzb.entity.Modules;
 import com.lzb.entity.Roles;
 @Component
@@ -46,6 +47,30 @@ public class ModulesServiceImpl implements ModulesService{
 		}
 		System.out.println(all);
 		return all;
+	}
+	@Override
+	public FenYe SelectModuless(FenYe fen) {
+		// TODO Auto-generated method stub
+		Integer selectCount = modulesdao.SelectCount(fen);
+		List<Roles> selectModules = modulesdao.SelectModuless(fen);
+		fen.setTotal(selectCount);
+		fen.setRows(selectModules);
+		return fen;
+	}
+	@Override
+	public Integer InsertModules(Modules modules) {
+		// TODO Auto-generated method stub
+		return modulesdao.InsertModules(modules);
+	}
+	@Override
+	public Integer UpdateModules(Modules modules) {
+		// TODO Auto-generated method stub
+		return modulesdao.UpdateModules(modules);
+	}
+	@Override
+	public Integer deleteModules(Integer id) {
+		// TODO Auto-generated method stub
+		return modulesdao.deleteModules(id);
 	}
 
 }

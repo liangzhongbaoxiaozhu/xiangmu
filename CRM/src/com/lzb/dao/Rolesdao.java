@@ -3,6 +3,7 @@ package com.lzb.dao;
 import java.util.List;
 
 import com.lzb.entity.FenYe;
+import com.lzb.entity.Modules;
 import com.lzb.entity.Roles;
 
 public interface Rolesdao {
@@ -32,4 +33,12 @@ public interface Rolesdao {
 	 * @return
 	 */
 	Integer UpdateRoles(Roles roles);
+	
+	/**
+	 * É¾³ý
+	 * @param id
+	 * @return
+	 */
+	Integer deleteRoles(Integer id);
+	
 }

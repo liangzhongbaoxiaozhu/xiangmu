@@ -19,4 +19,17 @@ public interface RolesService {
 	 * @return
 	 */
 	Integer InsertRoles(Roles roles);
+	/**
+	 * ÐÞ¸Ä
+	 * @param roles
+	 * @return
+	 */
+	Integer UpdateRoles(Roles roles);
+	
+	/**
+	 * É¾³ý
+	 * @param id
+	 * @return
+	 */
+	Integer deleteRoles(Integer id);
 }

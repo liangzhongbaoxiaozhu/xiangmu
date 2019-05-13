@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.lzb.entity.FenYe;
+import com.lzb.entity.Modules;
+import com.lzb.entity.Roles;
 import com.lzb.service.ModulesService;
 
 @Controller
@@ -22,6 +25,37 @@ public class ModulesController {
 		String selectRoles = modulesService.SelectRoles(id,request);
 		/*System.out.println(selectRoles);*/
 		return selectRoles;
+	}
+	
+	
+	
+	@RequestMapping(value="/SelectModules",method=RequestMethod.POST)
+	@ResponseBody
+	public FenYe SelectModules(Integer page,Integer rows){
+		FenYe fen=new FenYe();
+		fen.setPage((page-1)*rows);
+		fen.setPageSize(rows);
+		fen = modulesService.SelectModuless(fen);
+		return fen;
+	}
+	@RequestMapping(value="/InsertModules",method=RequestMethod.POST)
+	@ResponseBody
+	public Integer InsertModules(Modules modules){
+		Integer insertRoles = modulesService.InsertModules(modules);
+		return insertRoles;
+	}
+	
+	@RequestMapping(value="/UpdateModules",method=RequestMethod.POST)
+	@ResponseBody
+	public Integer UpdateModules(Modules modules){
+		Integer updateRoles = modulesService.UpdateModules(modules);
+		return updateRoles;
+	}
+	@RequestMapping(value="/DeleteModules",method=RequestMethod.POST)
+	@ResponseBody
+	public Integer DeleteModules(Integer id){
+		Integer deleteRoles = modulesService.deleteModules(id);
+		return deleteRoles;
 	}
 
 }

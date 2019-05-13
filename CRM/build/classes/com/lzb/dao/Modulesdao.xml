@@ -16,4 +16,28 @@ select * from Modules where Mid in(select ModuleId from RoleModules where RoleId
 <select id="SelectZiModules" parameterType="int" resultType="modules">
 select * from Modules where ParentId=#{id}
 </select>
+
+
+
+<select id="SelectModuless" resultType="modules"  parameterType="fenYe">
+select * from modules
+
+limit #{page},#{pageSize}
+</select>
+<select id="SelectCount" resultType="int"  parameterType="fenYe">
+select count(Mid) from modules
+</select>
+
+<insert id="InsertModules" parameterType="modules">
+insert into modules (Mname,ParentId,Path,Weight)values(#{Mname},#{ParentId},#{Path},#{Weight})
+</insert>
+
+<update id="UpdateModules" parameterType="modules">
+update modules set Mname=#{Mname},ParentId=#{ParentId},Path=#{Path},Weight=#{Weight} 
+where Mid=#{Mid}
+</update>
+
+<delete id="deleteModules" parameterType="int">
+delete from modules where Mid=#{id}
+</delete>
 </mapper>

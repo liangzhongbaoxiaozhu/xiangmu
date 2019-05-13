@@ -27,10 +27,21 @@ public class RolesController {
 	}
 	@RequestMapping(value="/InsertRoles",method=RequestMethod.POST)
 	@ResponseBody
-	public Integer InsertRoles(String name){
-		Roles roles=new Roles();
-		roles.setRname(name);
+	public Integer InsertRoles(Roles roles){
 		Integer insertRoles = rolesService.InsertRoles(roles);
 		return insertRoles;
+	}
+	
+	@RequestMapping(value="/UpdateRoles",method=RequestMethod.POST)
+	@ResponseBody
+	public Integer UpdateRoles(Roles roles){
+		Integer updateRoles = rolesService.UpdateRoles(roles);
+		return updateRoles;
+	}
+	@RequestMapping(value="/DeleteRoles",method=RequestMethod.POST)
+	@ResponseBody
+	public Integer DeleteRoles(Integer id){
+		Integer deleteRoles = rolesService.deleteRoles(id);
+		return deleteRoles;
 	}
 }

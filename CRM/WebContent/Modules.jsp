@@ -1,25 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8"%>
+    pageEncoding="utf-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>Insert title here</title>
-<link rel="stylesheet" type="text/css"
-	href="js/jquery-easyui-1.4.5/themes/icon.css" />
-<link rel="stylesheet" type="text/css"
-	href="js/jquery-easyui-1.4.5/themes/default/easyui.css" />
-<script type="text/javascript"
-	src="js/jquery-easyui-1.4.5/jquery.min.js"></script>
-<script type="text/javascript"
-	src="js/jquery-easyui-1.4.5/jquery.easyui.min.js"></script>
-<script type="text/javascript"
-	src="js/jquery-easyui-1.4.5/locale/easyui-lang-zh_CN.js"></script>
+<link rel="stylesheet" type="text/css" href="js/jquery-easyui-1.4.5/themes/icon.css"/>
+<link rel="stylesheet" type="text/css" href="js/jquery-easyui-1.4.5/themes/default/easyui.css"/>
+<script type="text/javascript" src="js/jquery-easyui-1.4.5/jquery.min.js"></script>
+<script type="text/javascript" src="js/jquery-easyui-1.4.5/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="js/jquery-easyui-1.4.5/locale/easyui-lang-zh_CN.js"></script>
 </head>
 <script type="text/javascript">
 function init(){
 	$("#dg").datagrid({
-		url:'SelectRoles',  
+		url:'SelectModules',  
 		method:"post",
 		queryParams:{
 			
@@ -38,8 +33,8 @@ function shanchu(index) {
 	var row = data.rows[index];
 	$.messager.confirm('确认','您确认想要删除记录吗？',function(r){    
 	    if (r){    
-	    	$.post("DeleteRoles", {
-				id : row.rid,
+	    	$.post("DeleteModules", {
+				id : row.mid,
 			}, function(res) {
 				if(res>0){
 					$.messager.alert('提示','删除成功!'); 
@@ -60,14 +55,21 @@ function xinzeng(){
 }
 //新增保存
 function addbaocuen(){
-	$.post("InsertRoles",{
-		rname:$("#rname2").val(),
+	$.post("InsertModules",{
+		mname:$("#mname2").val(),
+		parentId:$("#parentId2").val(),
+		path:$("#path2").val(),
+		weight:$("#weight2").val()
 	},function(res){
 		$("#dg").datagrid("reload");
 		$("#rname2").val("");
 		
 		if(res>0){
 			$('#addwin').window('close');
+			$("#mname2").val("");
+			$("#parentId2").val("");
+			$("#path2").val("");
+			$("#weight2").val("");
 			$.messager.alert('提示','增加成功！');
 		}else{
 			$.messager.alert('提示','增加失败！');
@@ -77,6 +79,7 @@ function addbaocuen(){
 }
 //新增关闭
 function addguanbi(){
+	
 	$('#addwin').window('close');
 }
 //修改
@@ -88,9 +91,12 @@ function bianji(index){
 }
 //修改保存
 function updatebaocuen(){
-	$.post("UpdateRoles",{
-		rid:$("#rid3").val(),
-		rname:$("#rname3").val(),
+	$.post("UpdateModules",{
+		mid:$("#mid3").val(),
+		mname:$("#mname3").val(),
+		parentId:$("#parentId3").val(),
+		path:$("#path3").val(),
+		weight:$("#weight3").val()
 	},function(res){
 		$("#dg").datagrid("reload");
 		if(res>0){
@@ -106,8 +112,6 @@ function updatebaocuen(){
 function updateguanbi(){
 	$('#updatewin').window('close');
 }
-
-
 </script>
 <body>
 <div id="tool">
@@ -124,9 +128,11 @@ function updateguanbi(){
 			data-options="toolbar:'#tool',fitColumns:true,singleSelect:true,pagination:true,pageSize:10,rownumbers:true">
 			<thead>
 				<tr>
-					<th data-options="field:'rname',width:100">名称</th>
+					<th data-options="field:'mname',width:100">名称</th>
+					<th data-options="field:'parentId',width:100">父id</th>
+					<th data-options="field:'path',width:100">路径</th>
+					<th data-options="field:'weight',width:100">权重</th>
 					<th data-options="field:'a',width:100,formatter:caozuo">操作</th>
-					
 				</tr>
 			</thead>
 
@@ -139,7 +145,13 @@ function updateguanbi(){
     <div> 
     
     <label for="name">名称:</label>  
-    <input class="easyui-validatebox" type="text" id="rname2" name="rname" data-options="required:true" />   
+    <input class="easyui-validatebox" type="text" id="mname2" name="mname" data-options="required:true" />
+    <label for="name">父id:</label>  
+    <input class="easyui-validatebox" type="text" id="parentId2" name="parentId" data-options="required:true" />   
+    <label for="name">路径:</label>  
+    <input class="easyui-validatebox" type="text" id="path2" name="path" data-options="required:true" />   
+    <label for="name">路径:</label>  
+    <input class="easyui-validatebox" type="text" id="weight2" name="weight" data-options="required:true" />   
     </div>  
     
     </div>
@@ -154,9 +166,15 @@ function updateguanbi(){
         <div style="padding: 20px 150px 50px 50px">  
    <div> 
     <label for="name">id:</label>  
-    <input class="easyui-validatebox" disabled="disabled" type="text" id="rid3" name="rid" data-options="required:true" />   
-    <label for="name">名称:</label>  
-    <input class="easyui-validatebox" type="text" id="rname3" name="rname" data-options="required:true" />   
+    <input class="easyui-validatebox" disabled="disabled" type="text" id="mid3" name="mid" data-options="required:true" />   
+     <label for="name">名称:</label>  
+    <input class="easyui-validatebox" type="text" id="mname3" name="mname" data-options="required:true" />
+    <label for="name">父id:</label>  
+    <input class="easyui-validatebox" type="text" id="parentId3" name="parentId" data-options="required:true" />   
+    <label for="name">路径:</label>  
+    <input class="easyui-validatebox" type="text" id="path3" name="path" data-options="required:true" />   
+    <label for="name">路径:</label>  
+    <input class="easyui-validatebox" type="text" id="weight3" name="weight" data-options="required:true" />   
     </div>  
     </div>
     <div style="padding-left:80px ">

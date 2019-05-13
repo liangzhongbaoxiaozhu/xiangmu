@@ -2,6 +2,7 @@ package com.lzb.dao;
 
 import java.util.List;
 
+import com.lzb.entity.FenYe;
 import com.lzb.entity.Modules;
 import com.lzb.entity.Roles;
 
@@ -13,5 +14,40 @@ public interface Modulesdao {
 	List<Modules> SelectModules(Integer id);
 	/*根据父模块id查子模块id*/
 	List<Modules> SelectZiModules(Integer id);
+	
+	
+	/**
+	 * 查询所有
+	 * @param fen
+	 * @return
+	 */
+	List<Roles> SelectModuless(FenYe fen);
+	
+	/**
+	 * 查询总条数
+	 * @param fen
+	 * @return
+	 */
+	Integer SelectCount(FenYe fen);
+	/**
+	 * 新增
+	 * @param Modules
+	 * @return
+	 */
+	Integer InsertModules(Modules modules);
+	/**
+	 * 修改
+	 * @param Modules
+	 * @return
+	 */
+	Integer UpdateModules(Modules modules);
+	
+	/**
+	 * 删除
+	 * @param id
+	 * @return
+	 */
+	Integer deleteModules(Integer id);
+	
 	
 }
