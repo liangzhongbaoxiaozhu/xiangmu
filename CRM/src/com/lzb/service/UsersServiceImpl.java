@@ -25,7 +25,18 @@ public class UsersServiceImpl implements UsersService{
 	public FenYe SelectUsers(FenYe fen) {
 		// TODO Auto-generated method stub
 		Integer selectCount = usersdao.SelectCount(fen);
-		List<Users> selectUsers = usersdao.SelectUsers(fen);
+		List<Users> selectUsers = null;
+		if(fen.getPaixu()==null){
+			selectUsers= usersdao.SelectUsers(fen);
+		}else{
+			if(fen.getPaixu()==0){
+				selectUsers=usersdao.SelectUsersCuanJian(fen);
+			}
+			if(fen.getPaixu()==1){
+				selectUsers=usersdao.SelectUserszuihou(fen);
+			}
+		}
+		
 		fen.setTotal(selectCount);
 		fen.setRows(selectUsers);
 		return fen;
@@ -33,7 +44,13 @@ public class UsersServiceImpl implements UsersService{
 	@Override
 	public Integer InsertUsers(Users users) {
 		// TODO Auto-generated method stub
-		return usersdao.InsertUsers(users);
+		Integer selectName = usersdao.SelectName(users.getLoginName());
+        if(selectName>0){
+        	return 0;
+        }else{
+        	return usersdao.InsertUsers(users);	
+        }
+		
 	}
 	@Override
 	public Integer deleteUsers(Integer id) {
@@ -75,9 +92,31 @@ public class UsersServiceImpl implements UsersService{
 		return usersdao.InsertUserRoles(fen);
 	}
 	@Override
-	public Integer deleteUserRoles(Integer URrid) {
+	public Integer deleteUserRoles(Integer UserId, Integer RoleId) {
 		// TODO Auto-generated method stub
-		return usersdao.deleteUserRoles(URrid);
+		FenYe fen=new FenYe();
+		fen.setPage(UserId);
+		fen.setPageSize(RoleId);
+		return usersdao.deleteUserRoles(fen);
+	}
+	@Override
+	public Integer SelectCountUsers(Integer UserId, Integer RoleId) {
+		// TODO Auto-generated method stub
+		FenYe fen=new FenYe();
+		fen.setPage(UserId);
+		fen.setPageSize(RoleId);
+		Integer selectCountUsers = usersdao.SelectCountUsers(fen);
+		return selectCountUsers;
+	}
+	@Override
+	public Integer updateUsers(Users users) {
+		// TODO Auto-generated method stub
+		return usersdao.updateUsers(users);
+	}
+	@Override
+	public Integer updateMiMa(Integer id) {
+		// TODO Auto-generated method stub
+		return usersdao.updateMiMa(id);
 	}
 
 }

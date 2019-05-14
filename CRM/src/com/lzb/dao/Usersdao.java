@@ -22,6 +22,19 @@ public interface Usersdao {
 	List<Users> SelectUsers(FenYe fen);
 	
 	/**
+	 * 查询所有创建时间
+	 * @param fen
+	 * @return
+	 */
+	List<Users> SelectUsersCuanJian(FenYe fen);
+	
+	/**
+	 * 查询所有最后登录时间
+	 * @param fen
+	 * @return
+	 */
+	List<Users> SelectUserszuihou(FenYe fen);
+	/**
 	 * 查询总条数
 	 * @param fen
 	 * @return
@@ -33,8 +46,12 @@ public interface Usersdao {
 	 * @return
 	 */
 	Integer InsertUsers(Users users);
-	
-	
+	/**
+	 * 修改
+	 * @param users
+	 * @return
+	 */
+	Integer updateUsers(Users users);
 	/**
 	 * 删除
 	 * @param id
@@ -75,5 +92,23 @@ public interface Usersdao {
 	 * @param URrid
 	 * @return
 	 */
-	Integer deleteUserRoles(Integer URrid);
+	Integer deleteUserRoles(FenYe fen);
+	/**
+	 * 查询是否有相同的角色用户
+	 * @param fen
+	 * @return
+	 */
+	Integer SelectCountUsers(FenYe fen);
+	/**
+	 * 查询是否有相同的用户名
+	 * @param name
+	 * @return
+	 */
+	Integer SelectName(String name);
+	/**
+	 * 重置密码
+	 * @param id
+	 * @return
+	 */
+	Integer updateMiMa(Integer id);
 }

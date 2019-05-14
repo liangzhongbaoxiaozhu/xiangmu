@@ -17,15 +17,20 @@ function init(){
 		url:'SelectUsers',  
 		method:"post",
 		queryParams:{
-			
+			loginName:$("#loginName").val(),
+			isLoginData:$("#isLoginData").combobox("getValue"),
+			cuanjiankaishi:$("#cuanjiankaishi").datebox('getValue'),
+			cuanjianjieshu:$("#cuanjianjieshu").datebox('getValue'),
+			paixu:$("#paixu").combobox("getValue")
 		}
 	})
+	$("#ff").form("clear");
 } 
 $(function(){
 	   init();
 })
  function caozuo(value,row,index){
-       return "<a href='javascript:void(0)' onclick='suoding(" + index+ ")'>锁定</a>  <a href='javascript:void(0)' onclick='jiesuo(" + index+ ")'>解锁</a> <a  href='javascript:void(0)' onclick='shanchu("+ index + ")'>删除</a>"	   
+       return "<a href='javascript:void(0)' onclick='suoding(" + index+ ")'>锁定</a>  <a href='javascript:void(0)' onclick='jiesuo(" + index+ ")'>解锁</a>  <a href='javascript:void(0)' onclick='bianji(" + index+ ")'>编辑</a>   <a  href='javascript:void(0)' onclick='shanchu("+ index + ")'>删除</a>"	   
    }
 //删除
 function shanchu(index) {
@@ -58,18 +63,16 @@ function addbaocuen(){
 	$.post("InsertUsers",{
 		loginName:$("#loginName2").val(),
 		passWord:$("#passWord2").val(),
-		createData:$("#createData2").val(),
 		email:$("#email2").val(),
 		mtel:$("#mtel2").val()
+		
 	},function(res){
 		$("#dg").datagrid("reload");
-		$("#rname2").val("");
 		
 		if(res>0){
 			$('#addwin').window('close');
 			$("#loginName2").val("");
 			$("#passWord2").val("");
-			$("#createData2").val("");
 			$("#email2").val("");
 			$("#mtel2").val("");
 			$.messager.alert('提示','增加成功！');
@@ -140,7 +143,6 @@ function guanlia(index){
 	$('#addjuese').window('open');
 }
 function juesetianjia(){
-	alert("123");
 	var xuanzhong=$('#dg2').datagrid('getSelected');
 	
 	$.post("InsertUserRoles",{
@@ -150,19 +152,99 @@ function juesetianjia(){
 		if(res>0){
 			$("#dg3").datagrid("reload");
 		}else{
-			$.messager.alert('提示','解锁失败！');
+			$.messager.alert('提示','添加失败！');
 		}
 		
 	})
 }
 function jueseshanchu(){
+var xuanzhong=$('#dg3').datagrid('getSelected');
 	
+	$.post("deleteUserRoles",{
+		userId:uid,
+		roleId:xuanzhong.rid
+	},function(res){
+		if(res>0){
+			$("#dg3").datagrid("reload");
+		}else{
+			$.messager.alert('提示','删除失败！');
+		}
+		
+	})
+}
+//修改
+var id=0;
+function bianji(index){
+	var data=$("#dg").datagrid("getData");
+	var row=data.rows[index];
+	id=row.uid;
+	$('#updatewin').form("load",row);
+	$('#updatewin').window("open");
+}
+//修改保存
+
+function updatebaocuen(){
+	$.post("updateUser",{
+		uid:id,
+		loginName:$("#loginName3").val(),
+		email:$("#email3").val(),
+		mtel:$("#mtel3").val()
+	},function(res){
+		$("#dg").datagrid("reload");
+		if(res>0){
+			$('#updatewin').window('close');
+			$.messager.alert('提示','修改成功！');
+		}else{
+			$.messager.alert('提示','修改失败！');
+		}
+		
+	})
+}
+//修改关闭
+function updateguanbi(){
+	$('#updatewin').window('close');
+}
+function chongzhi(value,row,index){
+	 return "<a href='javascript:void(0)' onclick='ChongZhi(" + index+ ")'>重置密码</a>"	   
+}
+function ChongZhi(index){
+	var data=$("#dg").datagrid("getData");
+	var row=data.rows[index];
+	id=row.uid;
+	$.post("updateMiMa",{
+		id:id
+	},function(res){
+		$("#dg").datagrid("reload");
+		if(res>0){
+			$.messager.alert('提示','修改密码成功！');
+		}else{
+			$.messager.alert('提示','修改密码失败！');
+		}
+		
+	})
 }
 </script>
 <body>
 <div id="tool">
 <form id="ff">   
-        
+        <label for="name">名称:</label>   
+        <input class="easyui-validatebox" style="width: 150px;" type="text" id="loginName"   />   
+        <label for="name">是否锁定:</label>   
+        <select id="isLoginData" class="easyui-combobox" name="dept" style="width:150px;">   
+         <option value="">--请选择--</option>   
+         <option value="0">否</option>   
+         <option value="1">是</option>   
+        </select> 
+        <label for="name">创建开始时间:</label>   
+        <input  id="cuanjiankaishi"  type= "text" class= "easyui-datebox" > </input>   
+        <label for="name">创建结束时间:</label>   
+		<input  id="cuanjianjieshu"  type= "text" class= "easyui-datebox" > </input>   
+		<label for="name">排序方式:</label>   
+        <select id="paixu" class="easyui-combobox" name="dept" style="width:150px;">   
+         <option value="">--请选择--</option>   
+         <option value="0">创建时间</option>   
+         <option value="1">最后登录时间</option>   
+        </select> 
 		<a  href="javascript:void(0)" class="easyui-linkbutton" onclick="init()" data-options="iconCls:'icon-search'">搜索</a>
 		<a  href="javascript:void(0)" class="easyui-linkbutton" onclick="xinzeng()" data-options="iconCls:'icon-add'">新增</a>  
 </form>  
@@ -184,6 +266,7 @@ function jueseshanchu(){
 					<th data-options="field:'weight',width:100">分量</th>
 					<th data-options="field:'a',width:100,formatter:caozuo">操作</th>
 				    <th data-options="field:'b',width:100,formatter:guanli">管理</th>
+				    <th data-options="field:'c',width:100,formatter:chongzhi">重置密码</th>
 				</tr>
 			</thead>
 
@@ -199,8 +282,7 @@ function jueseshanchu(){
     <input class="easyui-validatebox" type="text" id="loginName2" name="loginName" data-options="required:true" />
     <label for="name">密码:</label>  
     <input class="easyui-validatebox" type="text" id="passWord2" name="passWord" data-options="required:true" />   
-    <label for="name">创建时间:</label>  
-    <input class="easyui-validatebox" type="text" id="createData2" name="createData" data-options="required:true" />   
+    
     <label for="name">邮箱:</label>  
     <input class="easyui-validatebox" type="text" id="email2" name="email" data-options="required:true" />   
     <label for="name">电话:</label>  
@@ -215,30 +297,30 @@ function jueseshanchu(){
 </div>  
 
 
-<div id="addjuese" class="easyui-window" title="角色" style="width:500px;height:400px"   
+<div id="addjuese" class="easyui-window" title="角色" style="width:334px;height:400px"   
         data-options="iconCls:'icon-save',modal:true,closed:true"> 
    
    <table>
 			<thead>
 				<tr>
 					<th>
-					 <table id="dg2" class="easyui-datagrid" style="width: 130px; height: 300px"
-			             data-options="fitColumns:true,singleSelect:true,rownumbers:true">
+					 <table id="dg2" class="easyui-datagrid" style="width: 140px; height: 300px;"
+			             data-options="fitColumns:true,singleSelect:true,rownumbers:true,scrollbarSize:0">
 		                	<thead>
 			                	<tr>
-					              <th data-options="field:'rname',width:100">名称</th>
+					              <th data-options="field:'rname',width:120">名称</th>
 				                </tr>
 			                </thead>
 
 		           </table>
 					</th>
 					<th>
-					<a onclick="juesetianjia()" href="javascript:void(0)" class="easyui-linkbutton" ">>></a><br/>
+					<a onclick="juesetianjia()" href="javascript:void(0)" class="easyui-linkbutton" ">>></a><br/><br/>
                     <a onclick="jueseshanchu()" href="javascript:void(0)" class="easyui-linkbutton" ><<</a>
 					</th>
 					 <th>
-					<table id="dg3" class="easyui-datagrid" style="width: 150px; height: 300px"
-			             data-options="fitColumns:true,singleSelect:true,rownumbers:true">
+					<table id="dg3" class="easyui-datagrid" style="width: 140px; height: 300px"
+			             data-options="fitColumns:true,singleSelect:true,rownumbers:true,scrollbarSize:0">
 		                	<thead>
 			                	<tr>
 					              <th data-options="field:'rname',width:100">名称</th>
@@ -251,11 +333,28 @@ function jueseshanchu(){
 			</thead>
 
 		</table>
-   
-    <!-- <div style="padding-left:80px ">
-    <a onclick="addbaocuen()" href="javascript:void(0)" class="easyui-linkbutton" ">保存</a>
-    <a onclick="addguanbi()" href="javascript:void(0)" class="easyui-linkbutton" ">关闭</a>
-    </div> -->
+</div>  
+
+
+<div id="updatewin" class="easyui-window" title="增加" style="width:300px;height:400px"   
+        data-options="iconCls:'icon-save',modal:true,closed:true"> 
+        <div style="padding: 20px 150px 50px 50px">  
+    <div> 
+    
+    <label for="name">名称:</label>  
+    <input class="easyui-validatebox" disabled="disabled" type="text" id="loginName3" name="loginName" data-options="required:true" />
+    
+    <label for="name">邮箱:</label>  
+    <input class="easyui-validatebox" type="text" id="email3" name="email" data-options="required:true" />   
+    <label for="name">电话:</label>  
+    <input class="easyui-validatebox" type="text" id="mtel3" name="mtel" data-options="required:true" />   
+    </div>  
+    
+    </div>
+    <div style="padding-left:80px ">
+    <a onclick="updatebaocuen()" href="javascript:void(0)" class="easyui-linkbutton" ">保存</a>
+    <a onclick="updateguanbi()" href="javascript:void(0)" class="easyui-linkbutton" ">关闭</a>
+    </div>
 </div>  
 </body>
 </html>

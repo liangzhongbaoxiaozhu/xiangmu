@@ -1,5 +1,8 @@
 package com.lzb.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,16 +26,30 @@ public class UsersController {
 	
 	@RequestMapping(value="/SelectUsers",method=RequestMethod.POST)
 	@ResponseBody
-	public FenYe SelectUsers(Integer page,Integer rows){
+	public FenYe SelectUsers(Integer page,Integer rows,String loginName,Integer isLoginData,String cuanjiankaishi,String cuanjianjieshu,Integer paixu){
 		FenYe fen=new FenYe();
 		fen.setPage((page-1)*rows);
 		fen.setPageSize(rows);
+		fen.setLoginName(loginName);
+		fen.setCuanjianjieshu(cuanjianjieshu);
+		fen.setCuanjiankaishi(cuanjiankaishi);
+		fen.setIsLoginData(isLoginData);
+		fen.setPaixu(paixu);
 		fen = usersService.SelectUsers(fen);
 		return fen;
 	}
 	@RequestMapping(value="/InsertUsers",method=RequestMethod.POST)
 	@ResponseBody
-	public Integer InsertUsers(Users users){
+	public Integer InsertUsers(String loginName,String passWord,String email,Integer mtel){
+		Date t = new Date();
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		/*System.out.println(df.format(t));*/
+		Users users=new Users();
+		users.setCreateData(df.format(t));
+		users.setLoginName(loginName);
+		users.setPassWord(passWord);
+		users.setEmail(email);
+		users.setMtel(mtel);
 		Integer insertRoles = usersService.InsertUsers(users);
 		return insertRoles;
 	}
@@ -75,15 +92,43 @@ public class UsersController {
 	@RequestMapping(value="/InsertUserRoles",method=RequestMethod.POST)
 	@ResponseBody
 	public Integer InsertUserRoles(Integer userId, Integer roleId){
-		Integer insertUserRoles = usersService.InsertUserRoles(userId, roleId);
-		return insertUserRoles;
+		Integer selectCountUsers = usersService.SelectCountUsers(userId, roleId);
+		if(selectCountUsers==null||selectCountUsers==0){
+			Integer insertUserRoles = usersService.InsertUserRoles(userId, roleId);
+			return insertUserRoles;
+		}else{
+			return 0;
+		}
+		
 	}
 
 	//删除用户角色
 	@RequestMapping(value="/deleteUserRoles",method=RequestMethod.POST)
 	@ResponseBody
-	public Integer deleteUserRoles(Integer uRrid){
-		Integer deleteUserRoles = usersService.deleteUserRoles(uRrid);
-		return deleteUserRoles;
+	public Integer deleteUserRoles(Integer userId, Integer roleId){
+		Integer selectCountUsers = usersService.SelectCountUsers(userId, roleId);
+		if(selectCountUsers>0){
+			Integer deleteUserRoles = usersService.deleteUserRoles(userId,roleId);
+			return deleteUserRoles;
+		}else{
+			return 0;
+		}
 	}
+	
+	
+	//修改
+		@RequestMapping(value="/updateUser",method=RequestMethod.POST)
+		@ResponseBody
+		public Integer updateUser(Users users){
+			Integer updateUsers = usersService.updateUsers(users);
+				return updateUsers;
+			}
+		
+		//修改密码
+				@RequestMapping(value="/updateMiMa",method=RequestMethod.POST)
+				@ResponseBody
+				public Integer updateMiMa(Integer id){
+					Integer updateMiMa = usersService.updateMiMa(id);
+						return updateMiMa;
+					}
 }

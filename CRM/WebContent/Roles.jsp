@@ -107,7 +107,52 @@ function updateguanbi(){
 	$('#updatewin').window('close');
 }
 
+function quanxian(value,row,index){
+    return "<a href='javascript:void(0)' onclick='quanxianshezhi(" + index+ ")'>权限设置</a>"	   
+}
+var rid;
+function quanxianshezhi(index){
+				var data=$("#dg").datagrid("getData");
+				var row=data.rows[index];
+				rid=row.rid;
+					$("#menuTree").tree({
+						url:"SelectShu",
+						checkbox:true,
+						queryParams:{
+							id:rid
+						}
+				}
+			); 
+			
+	$('#updatequanxian').window("open");
+}
+function updateQXBC(){
+	var a=$("#menuTree").tree("getChecked"); 
+	var b="";
+	for(var i=0;i<a.length;i++){
+		var node = $('#menuTree').tree('find', a[i].id);
 
+		if(b!=""){
+			if(node.children==""){
+		        b=b+","+a[i].id;
+			}
+		}else{
+			if(node.children==""){
+	            b=a[i].id;	
+			}
+		}
+	}
+	alert(b)
+	 $.post("InsertRoleModule",{
+		Mid:b,
+		Rid:rid
+	},function(){
+		
+	}) 
+}
+function updateQXGB(){
+	$('#updatequanxian').window('close');
+}
 </script>
 <body>
 <div id="tool">
@@ -126,6 +171,7 @@ function updateguanbi(){
 				<tr>
 					<th data-options="field:'rname',width:100">名称</th>
 					<th data-options="field:'a',width:100,formatter:caozuo">操作</th>
+					<th data-options="field:'b',width:100,formatter:quanxian">权限</th>
 					
 				</tr>
 			</thead>
@@ -163,6 +209,17 @@ function updateguanbi(){
     <a onclick="updatebaocuen()" href="javascript:void(0)" class="easyui-linkbutton" ">保存</a>
     <a onclick="updateguanbi()" href="javascript:void(0)" class="easyui-linkbutton" ">关闭</a>
     </div>
+</div>
+
+<div id="updatequanxian" class="easyui-window" title="权限修改" style="width:300px;height:400px"   
+        data-options="iconCls:'icon-save',modal:true,closed:true"> 
+        <div id="menuTree">
+					<!--这个地方显示树状结构-->
+
+		</div>
+		<div style="padding-left:80px ">
+    <a onclick="updateQXBC()" href="javascript:void(0)" class="easyui-linkbutton" ">保存</a>
+    <a onclick="updateQXGB()" href="javascript:void(0)" class="easyui-linkbutton" ">关闭</a>
 </div>
 </body>
 </html>

@@ -67,5 +67,23 @@ public interface UsersService {
 	 * @param URrid
 	 * @return
 	 */
-	Integer deleteUserRoles(Integer URrid);
+	Integer deleteUserRoles(Integer UserId, Integer RoleId);
+	/**
+	 * 查询是否有相同的角色用户
+	 * @param fen
+	 * @return
+	 */
+	Integer SelectCountUsers(Integer UserId, Integer RoleId);
+	/**
+	 * 修改
+	 * @param users
+	 * @return
+	 */
+	Integer updateUsers(Users users);
+	/**
+	 * 重置密码
+	 * @param id
+	 * @return
+	 */
+	Integer updateMiMa(Integer id);
 }
