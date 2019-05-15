@@ -81,14 +81,20 @@ public class RolesController {
 		String mid=Mid.toString();
 		String[] list=mid.split(",");
 		for(String lis:list){
-			System.out.println(lis);
-		FenYe fen=new FenYe();
-		fen.setPage(Integer.parseInt(lis));
-		fen.setPageSize(Rid);
-		Integer integerRolesModules = rolesService.IntegerRolesModules(fen);
-		if(integerRolesModules<1){
-			return integerRolesModules;
-		}
+			/*System.out.println(lis);*/
+			Integer lis2=null;
+			if(lis!=""){
+				lis2=Integer.parseInt(lis);
+			}
+				FenYe fen=new FenYe();
+				fen.setPage(lis2);
+				fen.setPageSize(Rid);
+				Integer integerRolesModules = rolesService.IntegerRolesModules(fen);
+				if(integerRolesModules<1){
+					return integerRolesModules;
+				
+			}
+		
 		}
 		return 1;
 	}

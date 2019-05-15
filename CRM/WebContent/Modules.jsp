@@ -12,21 +12,35 @@
 <script type="text/javascript" src="js/jquery-easyui-1.4.5/locale/easyui-lang-zh_CN.js"></script>
 </head>
 <script type="text/javascript">
+
+
 function init(){
-	$("#dg").datagrid({
-		url:'SelectModules',  
-		method:"post",
-		queryParams:{
-			
-		}
-	})
+	$("#tt").tree({
+		method:'post',
+		url:"SelectMoKuaiShu",
+		lines:"true"
+		
+});
 } 
 $(function(){
 	   init();
+	   
+	   
+	   $(function(){
+			$("#tt").tree({
+				onContextMenu:function(e,node){
+					e.preventDefault(); 
+					//查找节点
+					$("#tt").tree("select",node.target);
+					//显示右键菜单
+					$("#mm").menu("show",{
+						left:e.pageX,
+						top:e.pageY
+					})
+				}
+		});
+		})
 })
- function caozuo(value,row,index){
-       return "<a href='javascript:void(0)' onclick='bianji(" + index+ ")'>编辑</a> <a  href='javascript:void(0)' onclick='shanchu("+ index + ")'>删除</a>"	   
-   }
 //删除
 function shanchu(index) {
 	var data = $("#dg").datagrid("getData");
@@ -114,32 +128,20 @@ function updateguanbi(){
 }
 </script>
 <body>
-<div id="tool">
-<form id="ff">   
-        
-		<a  href="javascript:void(0)" class="easyui-linkbutton" onclick="init()" data-options="iconCls:'icon-search'">搜索</a>
-		<a  href="javascript:void(0)" class="easyui-linkbutton" onclick="xinzeng()" data-options="iconCls:'icon-add'">新增</a>  
-</form>  
+<div style="color:red;font-size:13px;">提示:右击节点进行操作</div>
+  <hr/>
+  <div>
+  <ul id="tt"></ul>
+  </div>
+  <div id="mm" class="easyui-menu" data-options="" style="width:160px;">
+  <div onclick="xinzeng()" data-options="iconCls:'icon-add'">追加</div>
+  <div onclick="xiugai()" data-options="iconCls:'icon-edit'">修改</div>
+  <div onclick="remove()" data-options="iconCls:'icon-remove'">移除</div>
+ </div> 
 
-</div>
-	<div>
-		<table id="dg" class="easyui-datagrid"
-			style="width: 100%; height: 400px"
-			data-options="toolbar:'#tool',fitColumns:true,singleSelect:true,pagination:true,pageSize:10,rownumbers:true">
-			<thead>
-				<tr>
-					<th data-options="field:'mname',width:100">名称</th>
-					<th data-options="field:'parentId',width:100">父id</th>
-					<th data-options="field:'path',width:100">路径</th>
-					<th data-options="field:'weight',width:100">权重</th>
-					<th data-options="field:'a',width:100,formatter:caozuo">操作</th>
-				</tr>
-			</thead>
 
-		</table>
-	</div>
-	
-	<div id="addwin" class="easyui-window" title="增加" style="width:300px;height:400px"   
+
+<div id="addwin" class="easyui-window" title="增加" style="width:300px;height:400px"   
         data-options="iconCls:'icon-save',modal:true,closed:true"> 
         <div style="padding: 20px 150px 50px 50px">  
     <div> 
@@ -182,5 +184,6 @@ function updateguanbi(){
     <a onclick="updateguanbi()" href="javascript:void(0)" class="easyui-linkbutton" ">关闭</a>
     </div>
 </div>
+
 </body>
 </html>

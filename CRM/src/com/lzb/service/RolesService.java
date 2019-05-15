@@ -47,8 +47,7 @@ public interface RolesService {
 	 * @return
 	 */
 	List<Modules> SelectModulesFuid2();
-	/*根据父模块id查子模块id*/
-	/*List<Modules> SelectZiModules2(Integer id);*/
+	
 	
 	/**
 	 * 新增角色模块

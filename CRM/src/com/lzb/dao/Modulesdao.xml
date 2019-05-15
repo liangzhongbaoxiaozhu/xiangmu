@@ -40,4 +40,18 @@ where Mid=#{Mid}
 <delete id="deleteModules" parameterType="int">
 delete from modules where Mid=#{id}
 </delete>
+
+
+<!-- 查询所有父id -->
+<select id="SelectFuidMoKuai" resultType="modules">
+select * from Modules where Weight=1
+</select>
+<!-- 根据父模块id查子模块id -->
+<select id="SelectFuChaZiMoKuai" resultType="modules">
+select * from Modules where ParentId=#{id}
+</select>
+<!-- 根据id查询 -->
+<select id="SelectChaZiMoKuai" resultType="modules" parameterType="int">
+select * from Modules where Mid=#{id}
+</select>
 </mapper>

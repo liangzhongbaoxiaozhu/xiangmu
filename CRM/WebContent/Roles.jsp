@@ -142,12 +142,11 @@ function updateQXBC(){
 			}
 		}
 	}
-	alert(b)
 	 $.post("InsertRoleModule",{
 		Mid:b,
 		Rid:rid
 	},function(){
-		
+		$('#updatequanxian').window('close');
 	}) 
 }
 function updateQXGB(){
@@ -211,14 +210,16 @@ function updateQXGB(){
     </div>
 </div>
 
-<div id="updatequanxian" class="easyui-window" title="权限修改" style="width:300px;height:400px"   
+<div id="updatequanxian" class="easyui-window" title="权限修改" style="width:200px;height:300px"   
         data-options="iconCls:'icon-save',modal:true,closed:true"> 
+        <div style="padding-left:25px;padding-top: 30px ">
         <div id="menuTree">
 					<!--这个地方显示树状结构-->
 
 		</div>
-		<div style="padding-left:80px ">
-    <a onclick="updateQXBC()" href="javascript:void(0)" class="easyui-linkbutton" ">保存</a>
+		</div>
+		<div style="padding-left:50px;padding-top: 30px ">
+    <a onclick="updateQXBC()" href="javascript:void(0)" class="easyui-linkbutton" ">保存    </a>
     <a onclick="updateQXGB()" href="javascript:void(0)" class="easyui-linkbutton" ">关闭</a>
 </div>
 </body>

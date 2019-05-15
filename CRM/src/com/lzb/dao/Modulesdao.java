@@ -49,5 +49,18 @@ public interface Modulesdao {
 	 */
 	Integer deleteModules(Integer id);
 	
+	//新做的
 	
+	/**
+	 * 查询所有父id
+	 * @return
+	 */
+	List<Modules> SelectFuidMoKuai();
+	/*根据父模块id查子模块id*/
+	List<Modules> SelectFuChaZiMoKuai(Integer id);
+	/**
+	 * 根据id查询模块
+	 * @return
+	 */
+	Modules SelectChaZiMoKuai(Integer id);
 }

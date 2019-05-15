@@ -1,6 +1,9 @@
 package com.lzb.service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -14,6 +17,7 @@ import com.lzb.dao.Modulesdao;
 import com.lzb.entity.FenYe;
 import com.lzb.entity.Modules;
 import com.lzb.entity.Roles;
+import com.lzb.entity.TreeNode;
 @Component
 public class ModulesServiceImpl implements ModulesService{
 
@@ -71,6 +75,81 @@ public class ModulesServiceImpl implements ModulesService{
 	public Integer deleteModules(Integer id) {
 		// TODO Auto-generated method stub
 		return modulesdao.deleteModules(id);
+	}
+	@Override
+	public List<Modules> SelectFuidMoKuai() {
+		// TODO Auto-generated method stub
+		List<Modules> selectFuidMoKuai = modulesdao.SelectFuidMoKuai();
+		return selectFuidMoKuai;
+	}
+	@Override
+	public TreeNode SelectFuChaZiMoKuai(Integer id) {
+		// TODO Auto-generated method stub
+		
+		Modules Module = modulesdao.SelectChaZiMoKuai(id);
+		//封装
+		TreeNode nod=new TreeNode();
+		nod.setId(Module.getMid().toString());
+		nod.setText(Module.getMname());
+		nod.setParentid(""+Module.getParentId()+"");
+		Map<String, Object> attributes = new HashMap<String, Object>();
+		 attributes.put("url",Module.getPath());
+		nod.setAttributes(attributes);
+		//查询子
+		List<Modules> Zi = modulesdao.SelectFuChaZiMoKuai(Module.getMid());
+		 List<TreeNode> arrList = new ArrayList<TreeNode>();
+		for(Modules yi:Zi){
+			/*System.out.println(yi.getMid());*/
+			TreeNode nod2=new TreeNode();
+			nod2.setId(yi.getMid().toString());
+			nod2.setText(yi.getMname());
+			nod2.setParentid(yi.getParentId().toString());
+			Map<String, Object> attributes2 = new HashMap<String, Object>();
+			 attributes.put("url",yi.getPath());
+			nod2.setAttributes(attributes);
+			
+			arrList.add(nod2);
+		}
+		for (TreeNode child :arrList) {
+            TreeNode n = SelectDiGui(Integer.parseInt(child.getId())); // 递归(查询所有的子模块)
+            nod.getChildren().add(child);
+        }
+	            return nod;
+	}
+	
+	//用来递归
+	public TreeNode SelectDiGui(Integer id) {
+		// TODO Auto-generated method stub
+		
+		Modules Module = modulesdao.SelectChaZiMoKuai(id);
+		//封装
+		TreeNode nod=new TreeNode();
+		nod.setId(Module.getMid().toString());
+		nod.setText(Module.getMname());
+		nod.setParentid(""+Module.getParentId()+"");
+		Map<String, Object> attributes = new HashMap<String, Object>();
+		 attributes.put("url",Module.getPath());
+		nod.setAttributes(attributes);
+		//查询子
+		List<Modules> Zi = modulesdao.SelectFuChaZiMoKuai(Module.getMid());
+		 List<TreeNode> arrList = new ArrayList<TreeNode>();
+		for(Modules yi:Zi){
+			/*System.out.println(yi.getMid());*/
+			TreeNode nod2=new TreeNode();
+			nod2.setId(yi.getMid().toString());
+			nod2.setText(yi.getMname());
+			nod2.setParentid(yi.getParentId().toString());
+			Map<String, Object> attributes2 = new HashMap<String, Object>();
+			 attributes.put("url",yi.getPath());
+			nod2.setAttributes(attributes);
+			
+			arrList.add(nod2);
+		}
+		for (TreeNode child :arrList) {
+            TreeNode n = SelectDiGui(Integer.parseInt(child.getId())); // 递归(查询所有的子模块)
+            nod.getChildren().add(child);
+        }
+	            return nod;
 	}
 
 }

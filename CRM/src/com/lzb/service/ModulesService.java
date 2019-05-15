@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import com.lzb.entity.FenYe;
 import com.lzb.entity.Modules;
 import com.lzb.entity.Roles;
+import com.lzb.entity.TreeNode;
 
 public interface ModulesService {
 
@@ -41,4 +42,15 @@ public interface ModulesService {
 	 * @return
 	 */
 	Integer deleteModules(Integer id);
+	
+	
+	/**
+	 * 查询所有父id
+	 * @return
+	 */
+	List<Modules> SelectFuidMoKuai();
+	/*根据父模块id查子模块id*/
+	TreeNode SelectFuChaZiMoKuai(Integer id);
+	
+	
 }
