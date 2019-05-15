@@ -15,6 +15,16 @@ public class FenYe<T> {
     private String cuanjianjieshu;
     private Integer paixu;
     
+    
+  //¸ú×ÙËÑË÷Ìõ¼þ
+  	private String StudentName;
+  	private String UserName;
+  	private String TrackStartData;
+  	private String TrackEndData;
+  	private String ReturnVisit;
+  	private String TrackingMode;
+  	
+  	
 	public Integer getPage() {
 		return page;
 	}
@@ -73,6 +83,44 @@ public class FenYe<T> {
 	}
 	public void setPaixu(Integer paixu) {
 		this.paixu = paixu;
-	} 
+	}
+	
+	public String getTrackStartData() {
+		return TrackStartData;
+	}
+	public void setTrackStartData(String trackStartData) {
+		TrackStartData = trackStartData;
+	}
+	public String getTrackEndData() {
+		return TrackEndData;
+	}
+	public void setTrackEndData(String trackEndData) {
+		TrackEndData = trackEndData;
+	}
+	public String getReturnVisit() {
+		return ReturnVisit;
+	}
+	public void setReturnVisit(String returnVisit) {
+		ReturnVisit = returnVisit;
+	}
+	public String getTrackingMode() {
+		return TrackingMode;
+	}
+	public void setTrackingMode(String trackingMode) {
+		TrackingMode = trackingMode;
+	}
+	public String getStudentName() {
+		return StudentName;
+	}
+	public void setStudentName(String studentName) {
+		StudentName = studentName;
+	}
+	public String getUserName() {
+		return UserName;
+	}
+	public void setUserName(String userName) {
+		UserName = userName;
+	}
+	
     
 }

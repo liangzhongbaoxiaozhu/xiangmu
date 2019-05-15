@@ -336,7 +336,7 @@ function ChongZhi(index){
 </div>  
 
 
-<div id="updatewin" class="easyui-window" title="增加" style="width:300px;height:400px"   
+<div id="updatewin" class="easyui-window" title="修改" style="width:300px;height:400px"   
         data-options="iconCls:'icon-save',modal:true,closed:true"> 
         <div style="padding: 20px 150px 50px 50px">  
     <div> 

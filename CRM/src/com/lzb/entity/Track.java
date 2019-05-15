@@ -12,6 +12,10 @@ public class Track {
 	private String Content;
 	private String NextTrackingData;
 	private String Operation;
+	
+	private String UsersName;
+	private String StudentName;
+	
 	public Integer getTid() {
 		return Tid;
 	}
@@ -71,6 +75,18 @@ public class Track {
 	}
 	public void setOperation(String operation) {
 		Operation = operation;
+	}
+	public String getUsersName() {
+		return UsersName;
+	}
+	public void setUsersName(String usersName) {
+		UsersName = usersName;
+	}
+	public String getStudentName() {
+		return StudentName;
+	}
+	public void setStudentName(String studentName) {
+		StudentName = studentName;
 	}
 	
 }

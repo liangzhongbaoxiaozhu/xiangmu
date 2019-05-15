@@ -12,7 +12,7 @@ import com.lzb.entity.TreeNode;
 public interface ModulesService {
 
 	/*根据用户id查角色*/
-	String SelectRoles(Integer id,HttpServletRequest request);
+	TreeNode SelectCaiDan(Integer id,Integer uid);
 	
 	
 	

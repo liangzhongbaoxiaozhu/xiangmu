@@ -24,11 +24,29 @@ public class ModulesController {
 	
 	@RequestMapping(value="/SelectModul",method={RequestMethod.POST},produces = "text/plain;charset=utf-8")
 	@ResponseBody
-	public String SelectModul(int id,HttpServletRequest request){
+	public String SelectModul(Integer uid){
 		
-		String selectRoles = modulesService.SelectRoles(id,request);
-		/*System.out.println(selectRoles);*/
-		return selectRoles;
+		TreeNode node=new TreeNode();
+		List<Modules> Fuid = modulesService.SelectFuidMoKuai();
+		String chucuen=null;
+		for(Modules m:Fuid){
+			TreeNode selectModulesFuid = modulesService.SelectCaiDan(m.getMid(),uid);
+			System.out.println(selectModulesFuid.getChildren());
+			String jsonText="";
+			if(selectModulesFuid.getChildren().toString()!="[]"){
+				 jsonText = JSON.toJSONString(selectModulesFuid, true); 
+			}
+			
+			/*System.out.println(jsonText);*/
+			if(chucuen==null){
+				chucuen=jsonText;
+			}else{
+				chucuen=chucuen+","+jsonText;
+			}
+		}
+		chucuen="["+chucuen+"]";
+		/*System.out.println(chucuen);*/
+		return chucuen;
 	}
 	
 	

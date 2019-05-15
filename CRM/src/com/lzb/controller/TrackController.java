@@ -22,11 +22,21 @@ public class TrackController {
 	
 	@RequestMapping(value="/TrackList",method={RequestMethod.POST})
 	@ResponseBody
-    public FenYe TrackList(Integer page,Integer rows) {
+    public FenYe TrackList(Integer page,Integer rows,String studentName,String userName,
+  	String trackStartData,String trackEndData,String returnVisit,String trackingMode) {
 		FenYe fen=new FenYe();
 		fen.setPage((page-1)*rows);
 		fen.setPageSize(rows);
-		
+		fen.setStudentName(studentName);
+		fen.setUserName(userName);
+		fen.setTrackStartData(trackStartData);
+		fen.setTrackEndData(trackEndData);
+		fen.setReturnVisit(returnVisit);
+		fen.setTrackingMode(trackingMode);
+		/*System.out.println(trackStartData);
+		System.out.println(trackEndData);
+		System.out.println(returnVisit);
+		System.out.println(trackingMode);*/
 		//多条件查询
 		fen = trackService.SelectTrack(fen);
 		/*System.out.println(fen);*/

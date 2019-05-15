@@ -62,6 +62,7 @@ public class RolesServiceImpl implements RolesService{
 			nod.setParentid(""+Module.getParentId()+"");
 			Map<String, Object> attributes = new HashMap<String, Object>();
 			 attributes.put("url",Module.getPath());
+			 attributes.put("weight",Module.getWeight());
 			nod.setAttributes(attributes);
 			//查询子
 			List<Modules> Zi = rolesdao.SelectZiModules2(Module.getMid());
@@ -73,8 +74,9 @@ public class RolesServiceImpl implements RolesService{
 				nod2.setText(yi.getMname());
 				nod2.setParentid(yi.getParentId().toString());
 				Map<String, Object> attributes2 = new HashMap<String, Object>();
-				 attributes.put("url",yi.getPath());
-				nod2.setAttributes(attributes);
+				 attributes2.put("url",yi.getPath());
+				 attributes2.put("weight",yi.getWeight());
+				nod2.setAttributes(attributes2);
 				
 				for(Modules s:selectRolesModulesid){
 					if(s.getMid()==yi.getMid()){
@@ -107,6 +109,7 @@ public class RolesServiceImpl implements RolesService{
 			nod.setParentid(""+Module.getParentId()+"");
 			Map<String, Object> attributes = new HashMap<String, Object>();
 			 attributes.put("url",Module.getPath());
+			 attributes.put("weight",Module.getWeight());
 			nod.setAttributes(attributes);
 			nod.setChecked(banduan);
 			//查询子
@@ -119,8 +122,9 @@ public class RolesServiceImpl implements RolesService{
 				nod2.setText(yi.getMname());
 				nod2.setParentid(yi.getParentId().toString());
 				Map<String, Object> attributes2 = new HashMap<String, Object>();
-				 attributes.put("url",yi.getPath());
-				nod2.setAttributes(attributes);
+				 attributes2.put("url",yi.getPath());
+				 attributes2.put("weight",yi.getWeight());
+				nod2.setAttributes(attributes2);
 				
 				for(Modules s:selectRolesModulesid){
 					//System.out.println(s.getMid());

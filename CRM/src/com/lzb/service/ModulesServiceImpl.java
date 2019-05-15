@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.lzb.dao.Modulesdao;
+import com.lzb.dao.Rolesdao;
 import com.lzb.entity.FenYe;
 import com.lzb.entity.Modules;
 import com.lzb.entity.Roles;
@@ -23,35 +24,103 @@ public class ModulesServiceImpl implements ModulesService{
 
 	@Autowired
 	private Modulesdao modulesdao;
+	@Autowired
+	private Rolesdao rolesdao;
 	@Override
-	public String SelectRoles(Integer id,HttpServletRequest request) {
+	public TreeNode SelectCaiDan(Integer id,Integer uid) {
 		// TODO Auto-generated method stub
-		String all="";
-		String beiyong="";
-		List<Roles> selectRoles = modulesdao.SelectRoles(id);
+		//调用角色表的dao
+		List<Modules> selectRolesModulesid = rolesdao.SelectRolesModulesid(uid);
 		
-		
-		for(int i=0;i<selectRoles.size();i++){
-			List<Modules> selectModules = modulesdao.SelectModules(selectRoles.get(i).getRid());
-			request.getSession().setAttribute("shu", selectModules.size());
-			for(int j=0;j<selectModules.size();j++){
-				beiyong=beiyong+"<ul id='treeUlId"+(j+1)+"' class='easyui-tree'><li><span><a title='"+selectModules.get(j).getMid()+"' onclick='navTab(\""+selectModules.get(j).getMname()+"\",\""+selectModules.get(j).getPath()+"\")'>"+selectModules.get(j).getMname()+"</a></span><ul>";
-				List<Modules> selectZiModules = modulesdao.SelectZiModules(selectModules.get(j).getMid());
-				for(int z=0;z<selectZiModules.size();z++){
-					beiyong=beiyong+"<li><span><a title="+selectZiModules.get(z).getMid()+" onclick='navTab(\""+selectZiModules.get(z).getMname()+"\",\""+selectZiModules.get(z).getPath()+"\")'>"+selectZiModules.get(z).getMname()+"</a></span></li>";
+		Modules Module = modulesdao.SelectChaZiMoKuai(id);
+		//封装
+		TreeNode nod=new TreeNode();
+		nod.setId(Module.getMid().toString());
+		nod.setText(Module.getMname());
+		nod.setParentid(""+Module.getParentId()+"");
+		Map<String, Object> attributes = new HashMap<String, Object>();
+		 attributes.put("url",Module.getPath());
+		 attributes.put("weight",Module.getWeight());
+		nod.setAttributes(attributes);
+		//查询子
+		List<Modules> Zi = modulesdao.SelectFuChaZiMoKuai(Module.getMid());
+		 List<TreeNode> arrList = new ArrayList<TreeNode>();
+		for(Modules yi:Zi){
+			/*System.out.println(yi.getMid());*/
+			TreeNode nod2=new TreeNode();
+			nod2.setId(yi.getMid().toString());
+			nod2.setText(yi.getMname());
+			nod2.setParentid(yi.getParentId().toString());
+			Map<String, Object> attributes2 = new HashMap<String, Object>();
+			 attributes2.put("url",yi.getPath());
+			 attributes2.put("weight",yi.getWeight());
+			nod2.setAttributes(attributes2);
+			for(Modules s:selectRolesModulesid){
+				if(s.getMid()==yi.getMid()){
+					arrList.add(nod2);
+					break;
 				}
-				beiyong=beiyong+"</ul></li></ul>";
-			}
-			if(all!=null){
-				all=all+beiyong;
-			}else{
-				all=beiyong;
 			}
 			
 		}
-		System.out.println(all);
-		return all;
+		for (TreeNode child :arrList) {
+            TreeNode n = SelectDiGuiCaiDan(Integer.parseInt(child.getId()),uid,child.isChecked()); // 递归(查询所有的子模块)
+            nod.getChildren().add(n);
+        }
+	            return nod;
 	}
+	
+	//用来递归
+			public TreeNode SelectDiGuiCaiDan(Integer id,Integer uid,boolean banduan) {
+				// TODO Auto-generated method stub
+				
+				List<Modules> selectRolesModulesid = rolesdao.SelectRolesModulesid(uid);
+				
+				
+				Modules Module = rolesdao.SelectModule(id);
+				//封装
+				TreeNode nod=new TreeNode();
+				nod.setId(Module.getMid().toString());
+				nod.setText(Module.getMname());
+				nod.setParentid(""+Module.getParentId()+"");
+				Map<String, Object> attributes = new HashMap<String, Object>();
+				 attributes.put("url",Module.getPath());
+				 attributes.put("weight",Module.getWeight());
+				nod.setAttributes(attributes);
+				nod.setChecked(banduan);
+				//查询子
+				List<Modules> Zi = rolesdao.SelectZiModules2(Module.getMid());
+				 List<TreeNode> arrList = new ArrayList<TreeNode>();
+				for(Modules yi:Zi){
+					/*System.out.println(yi.getMid());*/
+					TreeNode nod2=new TreeNode();
+					nod2.setId(yi.getMid().toString());
+					nod2.setText(yi.getMname());
+					nod2.setParentid(yi.getParentId().toString());
+					Map<String, Object> attributes2 = new HashMap<String, Object>();
+					 attributes2.put("url",yi.getPath());
+					 attributes2.put("weight",yi.getWeight());
+					nod2.setAttributes(attributes2);
+					
+					for(Modules s:selectRolesModulesid){
+						//System.out.println(s.getMid());
+						if(s.getMid()==yi.getMid()){
+							arrList.add(nod2);
+							break;
+						}
+					}
+					
+				}
+				for (TreeNode child :arrList) {
+					/*System.out.println(child.getId()+","+child.isChecked()+","+uid);*/
+		            TreeNode n = SelectDiGuiCaiDan(Integer.parseInt(child.getId()),uid,child.isChecked()); // 递归(查询所有的子模块)
+		            nod.getChildren().add(n);
+		        }
+				
+			return nod;
+			}
+	
+	
 	@Override
 	public FenYe SelectModuless(FenYe fen) {
 		// TODO Auto-generated method stub
@@ -94,6 +163,7 @@ public class ModulesServiceImpl implements ModulesService{
 		nod.setParentid(""+Module.getParentId()+"");
 		Map<String, Object> attributes = new HashMap<String, Object>();
 		 attributes.put("url",Module.getPath());
+		 attributes.put("weight",Module.getWeight());
 		nod.setAttributes(attributes);
 		//查询子
 		List<Modules> Zi = modulesdao.SelectFuChaZiMoKuai(Module.getMid());
@@ -105,14 +175,15 @@ public class ModulesServiceImpl implements ModulesService{
 			nod2.setText(yi.getMname());
 			nod2.setParentid(yi.getParentId().toString());
 			Map<String, Object> attributes2 = new HashMap<String, Object>();
-			 attributes.put("url",yi.getPath());
-			nod2.setAttributes(attributes);
+			 attributes2.put("url",yi.getPath());
+			 attributes2.put("weight",yi.getWeight());
+			nod2.setAttributes(attributes2);
 			
 			arrList.add(nod2);
 		}
 		for (TreeNode child :arrList) {
             TreeNode n = SelectDiGui(Integer.parseInt(child.getId())); // 递归(查询所有的子模块)
-            nod.getChildren().add(child);
+            nod.getChildren().add(n);
         }
 	            return nod;
 	}
@@ -129,6 +200,7 @@ public class ModulesServiceImpl implements ModulesService{
 		nod.setParentid(""+Module.getParentId()+"");
 		Map<String, Object> attributes = new HashMap<String, Object>();
 		 attributes.put("url",Module.getPath());
+		 attributes.put("weight",Module.getWeight());
 		nod.setAttributes(attributes);
 		//查询子
 		List<Modules> Zi = modulesdao.SelectFuChaZiMoKuai(Module.getMid());
@@ -140,14 +212,15 @@ public class ModulesServiceImpl implements ModulesService{
 			nod2.setText(yi.getMname());
 			nod2.setParentid(yi.getParentId().toString());
 			Map<String, Object> attributes2 = new HashMap<String, Object>();
-			 attributes.put("url",yi.getPath());
-			nod2.setAttributes(attributes);
+			 attributes2.put("url",yi.getPath());
+			 attributes2.put("weight",yi.getWeight());
+			nod2.setAttributes(attributes2);
 			
 			arrList.add(nod2);
 		}
 		for (TreeNode child :arrList) {
             TreeNode n = SelectDiGui(Integer.parseInt(child.getId())); // 递归(查询所有的子模块)
-            nod.getChildren().add(child);
+            nod.getChildren().add(n);
         }
 	            return nod;
 	}

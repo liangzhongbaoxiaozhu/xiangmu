@@ -42,13 +42,12 @@ $(function(){
 		})
 })
 //删除
-function shanchu(index) {
-	var data = $("#dg").datagrid("getData");
-	var row = data.rows[index];
+function remove() {
+	var row=$("#tt").tree("getSelected");
 	$.messager.confirm('确认','您确认想要删除记录吗？',function(r){    
 	    if (r){    
 	    	$.post("DeleteModules", {
-				id : row.mid,
+				id : row.id,
 			}, function(res) {
 				if(res>0){
 					$.messager.alert('提示','删除成功!'); 
@@ -56,7 +55,7 @@ function shanchu(index) {
 					$.messager.alert('提示','删除失败!'); 
 				}
 			})
-			$("#dg").datagrid("reload");  
+			$("#tt").tree("reload");  
 	    }
 	});  
 
@@ -66,22 +65,21 @@ function shanchu(index) {
 function xinzeng(){
 	$('#addwin').window("open");  
 	
+	
 }
 //新增保存
 function addbaocuen(){
+	var id=$("#tt").tree("getSelected").id;
 	$.post("InsertModules",{
 		mname:$("#mname2").val(),
-		parentId:$("#parentId2").val(),
+		parentId:id,
 		path:$("#path2").val(),
 		weight:$("#weight2").val()
 	},function(res){
-		$("#dg").datagrid("reload");
-		$("#rname2").val("");
-		
+		$("#tt").tree("reload");
 		if(res>0){
 			$('#addwin').window('close');
 			$("#mname2").val("");
-			$("#parentId2").val("");
 			$("#path2").val("");
 			$("#weight2").val("");
 			$.messager.alert('提示','增加成功！');
@@ -97,22 +95,25 @@ function addguanbi(){
 	$('#addwin').window('close');
 }
 //修改
-function bianji(index){
-	var data=$("#dg").datagrid("getData");
-	var row=data.rows[index];
+function xiugai(){
+	var row=$("#tt").tree("getSelected");
+	$("#path3").val(row.attributes.url);
+	$("#weight3").val(row.attributes.weight);
 	$('#updatewin').form("load",row);
 	$('#updatewin').window("open");
 }
 //修改保存
 function updatebaocuen(){
+	var id=$("#tt").tree("getSelected").id;
+	var fuid=$("#tt").tree("getSelected").parentid;
 	$.post("UpdateModules",{
-		mid:$("#mid3").val(),
+		mid:id,
 		mname:$("#mname3").val(),
-		parentId:$("#parentId3").val(),
+		parentId:fuid,
 		path:$("#path3").val(),
 		weight:$("#weight3").val()
 	},function(res){
-		$("#dg").datagrid("reload");
+		$("#tt").tree("reload");
 		if(res>0){
 			$('#updatewin').window('close');
 			$.messager.alert('提示','修改成功！');
@@ -148,11 +149,9 @@ function updateguanbi(){
     
     <label for="name">名称:</label>  
     <input class="easyui-validatebox" type="text" id="mname2" name="mname" data-options="required:true" />
-    <label for="name">父id:</label>  
-    <input class="easyui-validatebox" type="text" id="parentId2" name="parentId" data-options="required:true" />   
     <label for="name">路径:</label>  
     <input class="easyui-validatebox" type="text" id="path2" name="path" data-options="required:true" />   
-    <label for="name">路径:</label>  
+    <label for="name">权重:</label>  
     <input class="easyui-validatebox" type="text" id="weight2" name="weight" data-options="required:true" />   
     </div>  
     
@@ -167,15 +166,11 @@ function updateguanbi(){
         data-options="iconCls:'icon-save',modal:true,closed:true"> 
         <div style="padding: 20px 150px 50px 50px">  
    <div> 
-    <label for="name">id:</label>  
-    <input class="easyui-validatebox" disabled="disabled" type="text" id="mid3" name="mid" data-options="required:true" />   
      <label for="name">名称:</label>  
-    <input class="easyui-validatebox" type="text" id="mname3" name="mname" data-options="required:true" />
-    <label for="name">父id:</label>  
-    <input class="easyui-validatebox" type="text" id="parentId3" name="parentId" data-options="required:true" />   
+    <input class="easyui-validatebox" type="text" id="mname3" name="text" data-options="required:true" />
     <label for="name">路径:</label>  
-    <input class="easyui-validatebox" type="text" id="path3" name="path" data-options="required:true" />   
-    <label for="name">路径:</label>  
+    <input class="easyui-validatebox" type="text" id="path3" name="url" data-options="required:true" />   
+    <label for="name">权重:</label>  
     <input class="easyui-validatebox" type="text" id="weight3" name="weight" data-options="required:true" />   
     </div>  
     </div>
