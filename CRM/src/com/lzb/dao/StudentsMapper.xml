@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lzb.dao.StudentsMapper">
+<select id="selectStuCounta" parameterType="fenye" resultType="int">
+select count(sid) from students s,Users u
+    <where>
+    u.Uid=s.ConsultantId
+    <!-- <if test="sname !='' and sname !=null">
+        and sname like "%"#{sname}"%"
+    </if>
+    <if test="Smtel !='' and Smtel !=null">
+        and Smtel=#{Smtel}
+    </if>
+    <if test="zixunshi !='' and zixunshi !=null">
+        and u.LoginName=#{zixunshi}
+    </if>
+    <if test="QQ !='' and QQ !=null">
+        and QQ=#{QQ}
+    </if>
+    <if test="StartData!=null and StartData!=''">
+		and CreateData &gt; #{StartData}
+	</if>
+	<if test="EndData!=null and EndData!=''">
+		and CreateData &lt; #{EndData}
+	</if>
+	<if test="IsEffective !='' and IsEffective !=null">
+        and IsEffective=#{IsEffective}
+    </if>
+    <if test="IsPay !='' and IsPay !=null">
+        and IsPay=#{IsPay}
+    </if>
+    <if test="IsReturnVisit !='' and IsReturnVisit !=null">
+        and IsReturnVisit=#{IsReturnVisit}
+    </if> -->
+</where>
+</select>
+<select id="selectStu" parameterType="fenye" resultType="students">
+select * from students s,Users u
+<where>
+    u.Uid=s.ConsultantId
+    <!-- <if test="sname !='' and sname !=null">
+        and sname like "%"#{sname}"%"
+    </if>
+    <if test="Smtel !='' and Smtel !=null">
+        and Smtel=#{Smtel}
+    </if>
+    <if test="zixunshi !='' and zixunshi !=null">
+        and u.LoginName=#{zixunshi}
+    </if>
+    <if test="QQ !='' and QQ !=null">
+        and QQ=#{QQ}
+    </if>
+    <if test="StartData!=null and StartData!=''">
+		and CreateData &gt; #{StartData}
+	</if>
+	<if test="EndData!=null and EndData!=''">
+		and CreateData &lt; #{EndData}
+	</if>
+	<if test="IsEffective !='' and IsEffective !=null">
+        and IsEffective=#{IsEffective}
+    </if>
+    <if test="IsPay !='' and IsPay !=null">
+        and IsPay=#{IsPay}
+    </if>
+    <if test="IsReturnVisit !='' and IsReturnVisit !=null">
+        and IsReturnVisit=#{IsReturnVisit}
+    </if> -->
+</where>
+limit #{page},#{pageSize}
+</select>
+
+<insert id="insertStu" parameterType="students">
+insert into students(sname,sex,age,smtel,education,state,channel,website,qq,weiXin,isEnroll,remarks)
+values(#{sname},#{sex},#{age},#{smtel},#{education},#{state},#{channel},#{website},#{qq},#{weiXin},#{isEnroll},#{remarks})
+<!-- <set>
+   <if test="sname !='' and sname != null">
+       sname=#{sname}
+   </if>
+   <if test="sex !='' and sex != null">
+       sex=#{sex}
+   </if>
+   <if test="smtel !='' and smtel !=null">
+       smtel=#{smtel}
+   </if>
+   <if test="channel !='' and channel !=null">
+       channel=#{channel}
+   </if>
+   <if test="website !='' and website !=null">
+       website=#{website}
+   </if>
+   <if test="department !='' and department !=null">
+       department=#{department}
+   </if>
+   <if test="nameConsultation !='' and nameConsultation !=null">
+       nameConsultation=#{nameConsultation}
+   </if>
+   <if test="region !='' and region !=null">
+       region=#{region}
+   </if>
+   
+   <if test="curriculum !='' and curriculum !=null">
+       curriculum=#{curriculum}
+   </if>
+   <if test="scoring !='' and scoring !=null">
+       scoring=#{scoring}
+   </if>
+   <if test="isEffective !='' and isEffective !=null">
+       isEffective=#{isEffective}
+   </if>
+   <if test="isReturnVisit !='' and isReturnVisit !=null">
+       isReturnVisit=#{isReturnVisit}
+   </if>
+   <if test="door !='' and door !=null">
+       door=#{door}
+   </if>
+   <if test="reason !='' and reason !=null">
+       reason=#{reason}
+   </if>
+   <if test="isPay !='' and isPay !=null">
+       isPay=#{isPay}
+   </if>
+   <if test="payData !='' and payData !=null">
+       payData=#{payData}
+   </if>
+   <if test="isRefund !='' and isRefund !=null">
+       isRefund=#{isRefund}
+   </if>
+   <if test="isClassEntry !='' and isClassEntry !=null">
+       isClassEntry=#{isClassEntry}
+   </if>
+   <if test="classEntryData !='' and classEntryData !=null">
+       classEntryData=#{classEntryData}
+   </if>
+   <if test="classEntryRemarks !='' and classEntryRemarks !=null">
+       classEntryRemarks=#{classEntryRemarks}
+   </if>
+   <if test="reasonsRefund !='' and reasonsRefund !=null">
+       reasonsRefund=#{reasonsRefund}
+   </if>
+   <if test="follow !='' and follow !=null">
+       follow=#{follow}
+   </if>
+   <if test="isEnroll !='' and isEnroll !=null">
+       isEnroll=#{isEnroll}
+   </if>
+   <if test="remarks !='' and remarks !=null">
+       remarks=#{remarks}
+   </if>
+   <if test="consultantId !='' and consultantId !=null">
+       consultantId=#{consultantId}
+   </if>
+   <if test="networkConsultantId !='' and networkConsultantId !=null">
+       networkConsultantId=#{networkConsultantId}
+   </if>
+   <if test="entryPersonId !='' and entryPersonId !=null">
+       entryPersonId=#{entryPersonId}
+   </if>
+   <if test="consultantRemarks !='' and consultantRemarks !=null">
+       consultantRemarks=#{consultantRemarks}
+   </if>
+</set> -->
+</insert>
+<delete id="deleteStu" parameterType="int">
+delete from students where sid=#{sid};
+</delete>
+<update id="updateStu" parameterType="students">
+update students
+<set>
+   <if test="sid !='' and sid != null">
+       sid=#{sid}
+   </if>
+   <if test="sname !='' and sname != null">
+       sname=#{sname}
+   </if>
+   <if test="sex !='' and sex != null">
+       sex=#{sex}
+   </if>
+   <if test="smtel !='' and smtel !=null">
+       smtel=#{smtel}
+   </if>
+   <if test="channel !='' and channel !=null">
+       channel=#{channel}
+   </if>
+   <if test="website !='' and website !=null">
+       website=#{website}
+   </if>
+   <if test="department !='' and department !=null">
+       department=#{department}
+   </if>
+   <if test="nameConsultation !='' and nameConsultation !=null">
+       nameConsultation=#{nameConsultation}
+   </if>
+   <if test="region !='' and region !=null">
+       region=#{region}
+   </if>
+   
+   <if test="curriculum !='' and curriculum !=null">
+       curriculum=#{curriculum}
+   </if>
+   <if test="scoring !='' and scoring !=null">
+       scoring=#{scoring}
+   </if>
+   <if test="isEffective !='' and isEffective !=null">
+       isEffective=#{isEffective}
+   </if>
+   <if test="isReturnVisit !='' and isReturnVisit !=null">
+       isReturnVisit=#{isReturnVisit}
+   </if>
+   <if test="door !='' and door !=null">
+       door=#{door}
+   </if>
+   <if test="reason !='' and reason !=null">
+       reason=#{reason}
+   </if>
+   <if test="isPay !='' and isPay !=null">
+       isPay=#{isPay}
+   </if>
+   <if test="payData !='' and payData !=null">
+       payData=#{payData}
+   </if>
+   <if test="isRefund !='' and isRefund !=null">
+       isRefund=#{isRefund}
+   </if>
+   <if test="isClassEntry !='' and isClassEntry !=null">
+       isClassEntry=#{isClassEntry}
+   </if>
+   <if test="classEntryData !='' and classEntryData !=null">
+       classEntryData=#{classEntryData}
+   </if>
+   <if test="classEntryRemarks !='' and classEntryRemarks !=null">
+       classEntryRemarks=#{classEntryRemarks}
+   </if>
+   <if test="reasonsRefund !='' and reasonsRefund !=null">
+       reasonsRefund=#{reasonsRefund}
+   </if>
+   <if test="follow !='' and follow !=null">
+       follow=#{follow}
+   </if>
+   <if test="isEnroll !='' and isEnroll !=null">
+       isEnroll=#{isEnroll}
+   </if>
+   <if test="remarks !='' and remarks !=null">
+       remarks=#{remarks}
+   </if>
+   <if test="consultantId !='' and consultantId !=null">
+       consultantId=#{consultantId}
+   </if>
+   <if test="networkConsultantId !='' and networkConsultantId !=null">
+       networkConsultantId=#{networkConsultantId}
+   </if>
+   <if test="entryPersonId !='' and entryPersonId !=null">
+       entryPersonId=#{entryPersonId}
+   </if>
+   <if test="consultantRemarks !='' and consultantRemarks !=null">
+       consultantRemarks=#{consultantRemarks}
+   </if>
+</set>
+<where>
+sid=#{sid}
+</where>
+</update>
+
+
+</mapper>

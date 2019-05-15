@@ -24,6 +24,16 @@ public class FenYe<T> {
   	private String ReturnVisit;
   	private String TrackingMode;
   	
+  	//学生条件
+  	 private String sname;
+     private String Smtel;
+     private String zixunshi;
+     private String QQ;
+     private String StartData;
+     private String EndData;
+     private String IsPay;
+     private String IsEffective;
+     private String IsReturnVisit;
   	
 	public Integer getPage() {
 		return page;
@@ -121,6 +131,61 @@ public class FenYe<T> {
 	public void setUserName(String userName) {
 		UserName = userName;
 	}
+	public String getSname() {
+		return sname;
+	}
+	public void setSname(String sname) {
+		this.sname = sname;
+	}
+	public String getSmtel() {
+		return Smtel;
+	}
+	public void setSmtel(String smtel) {
+		Smtel = smtel;
+	}
+	public String getZixunshi() {
+		return zixunshi;
+	}
+	public void setZixunshi(String zixunshi) {
+		this.zixunshi = zixunshi;
+	}
+	public String getQQ() {
+		return QQ;
+	}
+	public void setQQ(String qQ) {
+		QQ = qQ;
+	}
+	public String getStartData() {
+		return StartData;
+	}
+	public void setStartData(String startData) {
+		StartData = startData;
+	}
+	public String getEndData() {
+		return EndData;
+	}
+	public void setEndData(String endData) {
+		EndData = endData;
+	}
+	public String getIsPay() {
+		return IsPay;
+	}
+	public void setIsPay(String isPay) {
+		IsPay = isPay;
+	}
+	public String getIsEffective() {
+		return IsEffective;
+	}
+	public void setIsEffective(String isEffective) {
+		IsEffective = isEffective;
+	}
+	public String getIsReturnVisit() {
+		return IsReturnVisit;
+	}
+	public void setIsReturnVisit(String isReturnVisit) {
+		IsReturnVisit = isReturnVisit;
+	}
+	
 	
     
 }
