@@ -111,4 +111,17 @@ public interface Usersdao {
 	 * @return
 	 */
 	Integer updateMiMa(Integer id);
+	
+	/**
+	 * 查看个人信息
+	 * @param uid
+	 * @return
+	 */
+	List<Users> SelectGeRen(Integer uid);
+	/**
+	 * 签到
+	 * @param uid
+	 * @return
+	 */
+	Integer QianDao(Users user);
 }

@@ -17,10 +17,11 @@ $(function(){
 })
 function init(){
 	$('#stutab').datagrid({    
-	    url:'aaa',    
+	    url:'GeRen',    
 	    method:'post',
 	    toolbar:"#stubar",
 	    queryParams: {
+	    	uid:"1",
 	    	sname:$("#Sname2").val(),
 	        smtel:$("#Smtel2").val(),
 	        zixunshi:$("#zixunshi2").val(),

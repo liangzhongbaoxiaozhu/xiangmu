@@ -124,4 +124,13 @@ update users set Email=#{Email},Mtel=#{Mtel} where Uid=#{Uid}
 <update id="updateMiMa" parameterType="int">
 update users set PassWord='ysd123' where Uid=#{id}
 </update>
+
+	 <!-- 查看个人信息 -->
+<select id="SelectGeRen" parameterType="int" resultType="users">
+select * from users where uid=#{id}
+</select>
+	<!--  签到 -->
+	<update id="QianDao" parameterType="users">
+	update users set SignIn=1,SignInData=#{SignInData} where uid=#{uid}
+	</update>
 </mapper>

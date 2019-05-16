@@ -31,7 +31,7 @@ public class ModulesController {
 		String chucuen=null;
 		for(Modules m:Fuid){
 			TreeNode selectModulesFuid = modulesService.SelectCaiDan(m.getMid(),uid);
-			System.out.println(selectModulesFuid.getChildren());
+			/*System.out.println(selectModulesFuid.getChildren());*/
 			String jsonText="";
 			if(selectModulesFuid.getChildren().toString()!="[]"){
 				 jsonText = JSON.toJSONString(selectModulesFuid, true); 
@@ -41,7 +41,9 @@ public class ModulesController {
 			if(chucuen==null){
 				chucuen=jsonText;
 			}else{
-				chucuen=chucuen+","+jsonText;
+				if(jsonText!=""){
+					chucuen=chucuen+","+jsonText;
+				}
 			}
 		}
 		chucuen="["+chucuen+"]";

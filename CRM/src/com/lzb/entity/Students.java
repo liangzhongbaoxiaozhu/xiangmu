@@ -13,6 +13,7 @@ public class Students {
     private String state;
     private String channel;
     private String website;
+    private String KeyWord;
     private String department;
     private String nameConsultation;
     private String region;
@@ -294,6 +295,12 @@ public class Students {
 	}
 	public void setConsultantRemarks(String consultantRemarks) {
 		this.consultantRemarks = consultantRemarks;
+	}
+	public String getKeyWord() {
+		return KeyWord;
+	}
+	public void setKeyWord(String keyWord) {
+		KeyWord = keyWord;
 	}
 	
 	

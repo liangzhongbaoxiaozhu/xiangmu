@@ -118,5 +118,18 @@ public class UsersServiceImpl implements UsersService{
 		// TODO Auto-generated method stub
 		return usersdao.updateMiMa(id);
 	}
+	@Override
+	public FenYe SelectGeRen(Integer uid) {
+		// TODO Auto-generated method stub
+		List<Users> selectGeRen = usersdao.SelectGeRen(uid);
+		FenYe fen=new FenYe();
+		fen.setRows(selectGeRen);
+		return fen;
+	}
+	@Override
+	public Integer QianDao(Users user) {
+		// TODO Auto-generated method stub
+		return usersdao.QianDao(user);
+	}
 
 }

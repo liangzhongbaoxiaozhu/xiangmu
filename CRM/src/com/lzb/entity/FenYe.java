@@ -34,6 +34,7 @@ public class FenYe<T> {
      private String IsPay;
      private String IsEffective;
      private String IsReturnVisit;
+     private Integer JiaoXueid;
   	
 	public Integer getPage() {
 		return page;
@@ -184,6 +185,12 @@ public class FenYe<T> {
 	}
 	public void setIsReturnVisit(String isReturnVisit) {
 		IsReturnVisit = isReturnVisit;
+	}
+	public Integer getJiaoXueid() {
+		return JiaoXueid;
+	}
+	public void setJiaoXueid(Integer jiaoXueid) {
+		JiaoXueid = jiaoXueid;
 	}
 	
 	

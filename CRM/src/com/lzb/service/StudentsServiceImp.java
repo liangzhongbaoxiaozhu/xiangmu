@@ -43,6 +43,31 @@ public class StudentsServiceImp implements StudentsService {
 		// TODO Auto-generated method stub
 		return studentsMapper.updateStu(students);
 	}
+
+
+
+	@Override
+	public List<Students> selectStuQuanBu() {
+		// TODO Auto-generated method stub
+		List<Students> selectStuQuanBu = studentsMapper.selectStuQuanBu();
+		return selectStuQuanBu;
+	}
+
+
+
+	@Override
+	public FenYe selectStuGeRen(FenYe fenye) {
+		// TODO Auto-generated method stub
+		Integer selectStuCountGeRen = studentsMapper.selectStuCountGeRen(fenye);
+		List<Students> selectStuGeRen = studentsMapper.selectStuGeRen(fenye);
+		fenye.setTotal(selectStuCountGeRen);
+		fenye.setRows(selectStuGeRen);
+		return fenye;
+	}
+
+
+
+	
     
 	
 }

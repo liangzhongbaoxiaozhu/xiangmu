@@ -18,7 +18,7 @@ public class StudentsController {
 	@ResponseBody
 	public FenYe selectStu(Integer page,Integer rows,
 	String sname,String smtel,String zixunshi,String QQ,String startData,String endData,String isPay,String isEffective,String isReturnVisit) {
-    	 FenYe fenye=new FenYe();
+    	FenYe fenye=new FenYe();
 		fenye.setPage((page-1)*rows);
 		fenye.setPageSize(rows);
 		fenye.setSname(sname);
@@ -34,6 +34,27 @@ public class StudentsController {
 		return fenye;
 	}
 	
+    @RequestMapping(value="/GeRen",method=RequestMethod.POST)
+	@ResponseBody
+	public FenYe selectStuGeRen(Integer page,Integer rows,Integer uid,
+	String sname,String smtel,String zixunshi,String QQ,String startData,String endData,String isPay,String isEffective,String isReturnVisit) {
+    	FenYe fenye=new FenYe();
+		fenye.setPage((page-1)*rows);
+		fenye.setPageSize(rows);
+		fenye.setJiaoXueid(uid);
+		fenye.setSname(sname);
+		fenye.setSmtel(smtel);
+		fenye.setZixunshi(zixunshi);
+		fenye.setQQ(QQ);
+		fenye.setStartData(startData);
+		fenye.setEndData(endData);
+		fenye.setIsPay(isPay);
+		fenye.setIsEffective(isEffective);
+		fenye.setIsReturnVisit(isReturnVisit);
+		fenye=studentsService.selectStuGeRen(fenye);
+		return fenye;
+	}
+    
     /*@RequestMapping(value="/updateStu",method=RequestMethod.POST)
     @ResponseBody
     public Integer updateStu(Students students){
@@ -55,5 +76,9 @@ public class StudentsController {
     public Integer deleteStu(Integer sid) {
     	return studentsService.deleteStu(sid);
     }
+    
+    
+    
+    
     
 }

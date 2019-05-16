@@ -2,6 +2,7 @@ package com.lzb.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -125,10 +126,30 @@ public class UsersController {
 			}
 		
 		//修改密码
-				@RequestMapping(value="/updateMiMa",method=RequestMethod.POST)
-				@ResponseBody
-				public Integer updateMiMa(Integer id){
-					Integer updateMiMa = usersService.updateMiMa(id);
-						return updateMiMa;
-					}
+		@RequestMapping(value="/updateMiMa",method=RequestMethod.POST)
+	    @ResponseBody
+		public Integer updateMiMa(Integer id){
+		    Integer updateMiMa = usersService.updateMiMa(id);
+			return updateMiMa;
+		}
+	//查询个人
+		@RequestMapping(value="/SelectGe",method=RequestMethod.POST)
+	    @ResponseBody
+		public FenYe SelectGe(Integer uid){
+			FenYe fen=usersService.SelectGeRen(uid);
+			return fen;
+		}
+		
+		//签到
+				@RequestMapping(value="/Qian",method=RequestMethod.POST)
+			    @ResponseBody
+				public Integer Qian(Integer uid){
+					Users user =new Users();
+					user.setUid(uid);
+					Date t = new Date();
+					SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+					user.setSignInData(df.format(t));
+				    Integer SelectGeRen = usersService.QianDao(user);
+					return SelectGeRen;
+				}
 }

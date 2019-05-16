@@ -16,5 +16,11 @@ public interface StudentsMapper {
 	Integer deleteStu(Integer sid);
 	
 	Integer insertStu(Students students);
-	
+	List<Students> selectStuQuanBu();
+	//批量操作
+	Integer PiLiangCaoZuo();
+	//个人的学生
+	List<Students> selectStuGeRen(FenYe fenye);
+	//个人的学生数量
+	Integer selectStuCountGeRen(FenYe fenye);
 }
