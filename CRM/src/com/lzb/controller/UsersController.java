@@ -141,15 +141,53 @@ public class UsersController {
 		}
 		
 		//«©µΩ
-				@RequestMapping(value="/Qian",method=RequestMethod.POST)
-			    @ResponseBody
-				public Integer Qian(Integer uid){
-					Users user =new Users();
-					user.setUid(uid);
-					Date t = new Date();
-					SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-					user.setSignInData(df.format(t));
-				    Integer SelectGeRen = usersService.QianDao(user);
-					return SelectGeRen;
+		@RequestMapping(value="/Qian",method=RequestMethod.POST)
+		@ResponseBody
+		public Integer Qian(Integer uid){
+			Users user =new Users();
+			user.setUid(uid);
+			Date t = new Date();
+			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			user.setSignInData(df.format(t));
+			Integer SelectGeRen = usersService.QianDao(user);
+			return SelectGeRen;
+		}
+		//–ﬁ∏ƒ√‹¬Î
+		@RequestMapping(value="/UpdateGeReMiMa",method=RequestMethod.POST)
+		@ResponseBody
+		public Integer UpdateGeReMiMa(Integer uid,String passWord,String mima){
+			Users user =new Users();
+			user.setUid(uid);
+			user.setPassWord(passWord);
+			user.setMiMa(mima);
+			Integer UpdateGeRenMiMa = usersService.UpdateGeRenMiMa(user);
+			return UpdateGeRenMiMa;
+		}
+		//≤È—Ø«©µΩ“≥√Ê
+		@RequestMapping(value="/SelectQianDao",method=RequestMethod.POST)
+		@ResponseBody
+		public FenYe SelectQianDao(Integer page,Integer rows,String loginName,Integer signIn,String cuanjiankaishi,String cuanjianjieshu){
+			FenYe fen=new FenYe();
+			fen.setCuanjianjieshu(cuanjianjieshu);
+			fen.setCuanjiankaishi(cuanjiankaishi);
+			fen.setPage((page-1)*rows);
+			fen.setPageSize(rows);
+			fen.setLoginName(loginName);
+			fen.setSignIn(signIn);
+			FenYe selectQianDao = usersService.SelectQianDao(fen);
+			return selectQianDao;
+		}	
+		//«©ÕÀ
+		@RequestMapping(value="/UpdateQianTui",method=RequestMethod.POST)
+		@ResponseBody
+		public Integer UpdateQianTui(String uid){
+			String[] split = uid.split(",");
+			for(int i=0;i<split.length;i++){
+				Integer selectQianTui = usersService.SelectQianTui(Integer.parseInt(split[i]));
+				if(selectQianTui<1){
+					return selectQianTui;
 				}
+			}
+			return 1;
+		}				
 }

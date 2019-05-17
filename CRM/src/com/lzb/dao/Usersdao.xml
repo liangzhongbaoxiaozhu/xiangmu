@@ -3,134 +3,199 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.lzb.dao.Usersdao">
 
-   <!-- 登录 -->
-   <select id="DengLu" parameterType="users" resultType="users">
-   select * from users where LoginName=#{LoginName} and PassWord=#{PassWord}
-   </select>
+	<!-- 登录 -->
+	<select id="DengLu" parameterType="users" resultType="users">
+		select *
+		from users where LoginName=#{LoginName} and PassWord=#{PassWord}
+	</select>
 
-<!-- 查询所有 -->
-<select id="SelectUsers" resultType="users"  parameterType="fenYe">
-select * from users
-<where>
-<if test="LoginName!='' and LoginName!=null">
- and LoginName like "%"#{LoginName}"%"
-</if>
-<if test="IsLoginData!='' and IsLoginData!=null">
- and IsLoginData=#{IsLoginData}
-</if>
-<if test="(cuanjiankaishi!='' and cuanjiankaishi!=null) and (cuanjianjieshu!='' and cuanjianjieshu!=null)">
- and CreateData BETWEEN #{cuanjiankaishi} AND #{cuanjianjieshu}
-</if>
-<if test="paixu==0">
- ORDER BY CreateData
-</if>
-<if test="paixu>0">
- ORDER BY LastLoginData
-</if>
-</where>
-limit #{page},#{pageSize}
-</select>
-<!-- 查询所有创建时间 -->
-<select id="SelectUsersCuanJian" resultType="users"  parameterType="fenYe">
-select * from users
-<where>
-<if test="LoginName!='' and LoginName!=null">
- and LoginName like "%"#{LoginName}"%"
-</if>
-<if test="IsLoginData!='' and IsLoginData!=null">
- and IsLoginData=#{IsLoginData}
-</if>
-<if test="(cuanjiankaishi!='' and cuanjiankaishi!=null) and (cuanjianjieshu!='' and cuanjianjieshu!=null)">
- and CreateData BETWEEN #{cuanjiankaishi} AND #{cuanjianjieshu}
-</if>
-</where>
- ORDER BY CreateData
-limit #{page},#{pageSize}
-</select>
+	<!-- 查询所有 -->
+	<select id="SelectUsers" resultType="users" parameterType="fenYe">
+		select * from users
+		<where>
+			<if test="LoginName!='' and LoginName!=null">
+				and LoginName like "%"#{LoginName}"%"
+			</if>
+			<if test="IsLoginData!='' and IsLoginData!=null">
+				and IsLoginData=#{IsLoginData}
+			</if>
+			<if
+				test="(cuanjiankaishi!='' and cuanjiankaishi!=null) and (cuanjianjieshu!='' and cuanjianjieshu!=null)">
+				and CreateData BETWEEN #{cuanjiankaishi} AND #{cuanjianjieshu}
+			</if>
+			<if test="paixu==0">
+				ORDER BY CreateData
+			</if>
+			<if test="paixu>0">
+				ORDER BY LastLoginData
+			</if>
+		</where>
+		limit #{page},#{pageSize}
+	</select>
+	<!-- 查询所有创建时间 -->
+	<select id="SelectUsersCuanJian" resultType="users"
+		parameterType="fenYe">
+		select * from users
+		<where>
+			<if test="LoginName!='' and LoginName!=null">
+				and LoginName like "%"#{LoginName}"%"
+			</if>
+			<if test="IsLoginData!='' and IsLoginData!=null">
+				and IsLoginData=#{IsLoginData}
+			</if>
+			<if
+				test="(cuanjiankaishi!='' and cuanjiankaishi!=null) and (cuanjianjieshu!='' and cuanjianjieshu!=null)">
+				and CreateData BETWEEN #{cuanjiankaishi} AND #{cuanjianjieshu}
+			</if>
+		</where>
+		ORDER BY CreateData
+		limit #{page},#{pageSize}
+	</select>
 
-<!-- 查询所有最后登录时间 -->
-<select id="SelectUserszuihou" resultType="users"  parameterType="fenYe">
-select * from users
-<where>
-<if test="LoginName!='' and LoginName!=null">
- and LoginName like "%"#{LoginName}"%"
-</if>
-<if test="IsLoginData!='' and IsLoginData!=null">
- and IsLoginData=#{IsLoginData}
-</if>
-<if test="(cuanjiankaishi!='' and cuanjiankaishi!=null) and (cuanjianjieshu!='' and cuanjianjieshu!=null)">
- and CreateData BETWEEN #{cuanjiankaishi} AND #{cuanjianjieshu}
-</if>
-</where>
- ORDER BY LastLoginData
-limit #{page},#{pageSize}
-</select>
+	<!-- 查询所有最后登录时间 -->
+	<select id="SelectUserszuihou" resultType="users" parameterType="fenYe">
+		select * from users
+		<where>
+			<if test="LoginName!='' and LoginName!=null">
+				and LoginName like "%"#{LoginName}"%"
+			</if>
+			<if test="IsLoginData!='' and IsLoginData!=null">
+				and IsLoginData=#{IsLoginData}
+			</if>
+			<if
+				test="(cuanjiankaishi!='' and cuanjiankaishi!=null) and (cuanjianjieshu!='' and cuanjianjieshu!=null)">
+				and CreateData BETWEEN #{cuanjiankaishi} AND #{cuanjianjieshu}
+			</if>
+		</where>
+		ORDER BY LastLoginData
+		limit #{page},#{pageSize}
+	</select>
 
-<select id="SelectCount" resultType="int"  parameterType="fenYe">
-select count(Uid) from users
-<where>
-<if test="LoginName!='' and LoginName!=null">
- and LoginName like "%"#{LoginName}"%"
-</if>
-<if test="IsLoginData!='' and IsLoginData!=null">
- and IsLoginData=#{IsLoginData}
-</if>
-<if test="(cuanjiankaishi!='' and cuanjiankaishi!=null) and (cuanjianjieshu!='' and cuanjianjieshu!=null)">
- and CreateData BETWEEN #{cuanjiankaishi} AND #{cuanjianjieshu}
-</if>
-</where>
-</select>
+	<select id="SelectCount" resultType="int" parameterType="fenYe">
+		select count(Uid) from users
+		<where>
+			<if test="LoginName!='' and LoginName!=null">
+				and LoginName like "%"#{LoginName}"%"
+			</if>
+			<if test="IsLoginData!='' and IsLoginData!=null">
+				and IsLoginData=#{IsLoginData}
+			</if>
+			<if
+				test="(cuanjiankaishi!='' and cuanjiankaishi!=null) and (cuanjianjieshu!='' and cuanjianjieshu!=null)">
+				and CreateData BETWEEN #{cuanjiankaishi} AND #{cuanjianjieshu}
+			</if>
+		</where>
+	</select>
 
-<insert id="InsertUsers" parameterType="users">
-insert into users (LoginName,PassWord,CreateData,Email,Mtel,IsLoginData)
-values(#{LoginName},#{PassWord},#{CreateData},#{Email},#{Mtel},0)
-</insert>
+	<insert id="InsertUsers" parameterType="users">
+		insert into users
+		(LoginName,PassWord,CreateData,Email,Mtel,IsLoginData)
+		values(#{LoginName},#{PassWord},#{CreateData},#{Email},#{Mtel},0)
+	</insert>
 
-<update id="isShuoDing" parameterType="int">
-update users set IsLoginData=1
-where Uid=#{id}
-</update>
+	<update id="isShuoDing" parameterType="int">
+		update users set
+		IsLoginData=1
+		where Uid=#{id}
+	</update>
 
-<update id="noShuoDing" parameterType="int">
-update users set IsLoginData=0
-where Uid=#{id}
-</update>
-<delete id="deleteUsers" parameterType="int">
-delete from users where Uid=#{id}
-</delete>
+	<update id="noShuoDing" parameterType="int">
+		update users set
+		IsLoginData=0
+		where Uid=#{id}
+	</update>
+	<delete id="deleteUsers" parameterType="int">
+		delete from users where
+		Uid=#{id}
+	</delete>
 
-<select id="SelectRoles"  resultType="roles">
-select * from roles
-</select>
-<select id="SelectRolesUsers" parameterType="int" resultType="roles">
-select * from roles where Rid in (select RoleId from UserRoles where UserId=#{id})
-</select>
-<insert id="InsertUserRoles" parameterType="fenYe">
-insert into userRoles (UserId,RoleId)values(#{page},#{pageSize})
-</insert>
-<delete id="deleteUserRoles" parameterType="fenYe">
-delete from userRoles where UserId=#{page} and RoleId=#{pageSize}
-</delete>
-<select id="SelectCountUsers" parameterType="fenYe" resultType="int">
-select count(*) from userRoles where UserId=#{page} and RoleId=#{pageSize}
-</select>
-<select id="SelectName" parameterType="String" resultType="int">
-select count(*) from users where LoginName=#{name}
-</select>
+	<select id="SelectRoles" resultType="roles">
+		select * from roles
+	</select>
+	<select id="SelectRolesUsers" parameterType="int" resultType="roles">
+		select * from roles where Rid in (select RoleId from UserRoles where
+		UserId=#{id})
+	</select>
+	<insert id="InsertUserRoles" parameterType="fenYe">
+		insert into userRoles
+		(UserId,RoleId)values(#{page},#{pageSize})
+	</insert>
+	<delete id="deleteUserRoles" parameterType="fenYe">
+		delete from userRoles
+		where UserId=#{page} and RoleId=#{pageSize}
+	</delete>
+	<select id="SelectCountUsers" parameterType="fenYe" resultType="int">
+		select count(*) from userRoles where UserId=#{page} and
+		RoleId=#{pageSize}
+	</select>
+	<select id="SelectName" parameterType="String" resultType="int">
+		select count(*) from users where LoginName=#{name}
+	</select>
 
-<update id="updateUsers" parameterType="users">
-update users set Email=#{Email},Mtel=#{Mtel} where Uid=#{Uid}
-</update>
-<update id="updateMiMa" parameterType="int">
-update users set PassWord='ysd123' where Uid=#{id}
-</update>
+	<update id="updateUsers" parameterType="users">
+		update users set
+		Email=#{Email},Mtel=#{Mtel} where Uid=#{Uid}
+	</update>
+	<update id="updateMiMa" parameterType="int">
+		update users set
+		PassWord='ysd123' where Uid=#{id}
+	</update>
 
-	 <!-- 查看个人信息 -->
-<select id="SelectGeRen" parameterType="int" resultType="users">
-select * from users where uid=#{id}
-</select>
-	<!--  签到 -->
+	<!-- 查看个人信息 -->
+	<select id="SelectGeRen" parameterType="int" resultType="users">
+		select *
+		from users where uid=#{id}
+	</select>
+	<!-- 签到 -->
 	<update id="QianDao" parameterType="users">
-	update users set SignIn=1,SignInData=#{SignInData} where uid=#{uid}
+		update users set
+		SignIn=1,SignInData=#{SignInData} where uid=#{uid} and
+		SignIn=0
+	</update>
+	<!-- 个人修改密码 -->
+	<update id="UpdateGeRenMiMa" parameterType="users">
+		update users set
+		PassWord=#{MiMa} where uid=#{uid} and PassWord=#{PassWord}
+	</update>
+
+	<!-- 查询签到 -->
+	<select id="SelectQianDao" parameterType="fenYe" resultType="users">
+		select Uid,LoginName,SignIn,SignInData from users
+		<where>
+			IsLoginData=0
+			<if test="LoginName!=null and LoginName!=''">
+				and LoginName like "%"#{LoginName}"%"
+			</if>
+			<if test="signIn==0 || signIn==1">
+				and SignIn=#{signIn}
+			</if>
+			<if
+				test="(cuanjiankaishi!='' and cuanjiankaishi!=null) and (cuanjianjieshu!='' and cuanjianjieshu!=null)">
+				and SignInData BETWEEN #{cuanjiankaishi} AND #{cuanjianjieshu}
+			</if>
+		</where>
+		limit #{page},#{pageSize}
+	</select>
+	<!-- 查询签到总条数 -->
+	<select id="SelectQianDaoCount" parameterType="fenYe"
+		resultType="int">
+		select count(Uid) from users
+		<where>
+			IsLoginData=0
+			<if test="LoginName!=null and LoginName!=''">
+				and LoginName like "%"#{LoginName}"%"
+			</if>
+			<if test="signIn==0 || signIn==1">
+				and SignIn=#{signIn}
+			</if>
+			<if
+				test="(cuanjiankaishi!='' and cuanjiankaishi!=null) and (cuanjianjieshu!='' and cuanjianjieshu!=null)">
+				and SignInData BETWEEN #{cuanjiankaishi} AND #{cuanjianjieshu}
+			</if>
+		</where>
+	</select>
+	<!-- 签退 -->
+	<update id="SelectQianTui" parameterType="int">
+	update users set SignIn=0    where Uid=#{uid} and SignIn=1
 	</update>
 </mapper>

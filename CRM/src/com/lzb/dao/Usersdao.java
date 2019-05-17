@@ -124,4 +124,29 @@ public interface Usersdao {
 	 * @return
 	 */
 	Integer QianDao(Users user);
+	/**
+	 * 修改个人密码
+	 * @param fen
+	 * @return
+	 */
+	Integer UpdateGeRenMiMa(Users user);
+	
+	/**
+	 * 查询签到
+	 * @param fen
+	 * @return
+	 */
+	List<Users> SelectQianDao(FenYe fen);
+	/**
+	 * 查询签到总条数
+	 * @param fen
+	 * @return
+	 */
+	Integer SelectQianDaoCount(FenYe fen);
+	/**
+	 * 签退
+	 * @param uid
+	 * @return
+	 */
+	Integer SelectQianTui(Integer uid);
 }

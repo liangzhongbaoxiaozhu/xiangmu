@@ -101,5 +101,23 @@ public interface UsersService {
 	 */
 	Integer QianDao(Users user);
 
-
+	/**
+	 * 修改个人密码
+	 * @param fen
+	 * @return
+	 */
+	Integer UpdateGeRenMiMa(Users user);
+	/**
+	 * 查询签到
+	 * @param fen
+	 * @return
+	 */
+	FenYe SelectQianDao(FenYe fen);
+	/**
+	 * 签退
+	 * @param uid
+	 * @return
+	 */
+	Integer SelectQianTui(Integer uid);
+	
 }

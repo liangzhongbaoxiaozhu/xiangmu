@@ -12,6 +12,16 @@ public class Users {
 	private Integer Mtel;
 	private Integer SignIn;
 	private String SignInData;
+	
+	//ĞÂÃÜÂë
+	private String MiMa;
+	
+	public String getMiMa() {
+		return MiMa;
+	}
+	public void setMiMa(String miMa) {
+		MiMa = miMa;
+	}
 	public Integer getUid() {
 		return Uid;
 	}

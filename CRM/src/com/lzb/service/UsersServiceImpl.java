@@ -131,5 +131,26 @@ public class UsersServiceImpl implements UsersService{
 		// TODO Auto-generated method stub
 		return usersdao.QianDao(user);
 	}
+	//ĞŞ¸Ä¸öÈËÃÜÂë
+	@Override
+	public Integer UpdateGeRenMiMa(Users user) {
+		// TODO Auto-generated method stub
+		Integer updateGeRenMiMa = usersdao.UpdateGeRenMiMa(user);
+		return updateGeRenMiMa;
+	}
+	@Override
+	public FenYe SelectQianDao(FenYe fen) {
+		// TODO Auto-generated method stub
+		Integer selectQianDaoCount = usersdao.SelectQianDaoCount(fen);
+		List<Users> selectQianDao = usersdao.SelectQianDao(fen);
+		fen.setTotal(selectQianDaoCount);
+		fen.setRows(selectQianDao);
+		return fen;
+	}
+	@Override
+	public Integer SelectQianTui(Integer uid) {
+		// TODO Auto-generated method stub
+		return usersdao.SelectQianTui(uid);
+	}
 
 }

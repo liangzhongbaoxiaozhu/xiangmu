@@ -14,7 +14,7 @@ public class FenYe<T> {
     private String cuanjiankaishi;
     private String cuanjianjieshu;
     private Integer paixu;
-    
+    private Integer SignIn;
     
   //¸ú×ÙËÑË÷Ìõ¼þ
   	private String StudentName;
@@ -36,6 +36,13 @@ public class FenYe<T> {
      private String IsReturnVisit;
      private Integer JiaoXueid;
   	
+     
+	public Integer getSignIn() {
+		return SignIn;
+	}
+	public void setSignIn(Integer signIn) {
+		SignIn = signIn;
+	}
 	public Integer getPage() {
 		return page;
 	}
