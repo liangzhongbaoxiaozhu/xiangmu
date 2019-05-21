@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.lzb.entity.FenYe;
 import com.lzb.entity.Students;
+import com.lzb.entity.Track;
 import com.lzb.service.StudentsService;
 @Controller
 public class StudentsController {
@@ -58,16 +59,18 @@ public class StudentsController {
     /*@RequestMapping(value="/updateStu",method=RequestMethod.POST)
     @ResponseBody
     public Integer updateStu(Students students){
-    	return studentsService.updateStu(students);
+    	return studentsService.updateStu(students);SelectCountDengJi
     }*/
     @RequestMapping(value="/updateStu",method=RequestMethod.POST)
     @ResponseBody
     public Integer updateStu(Students students) {
+    	System.out.println("123");
     	return studentsService.updateStu(students);
     }
     @RequestMapping(value="/addStu",method=RequestMethod.POST)
     @ResponseBody
     public Integer insertStu(Students students) {
+    	
     	return studentsService.insertStu(students);
     }
     
@@ -77,8 +80,25 @@ public class StudentsController {
     	return studentsService.deleteStu(sid);
     }
     
+    //添加日志
+    @RequestMapping(value="/Insertrizhi",method=RequestMethod.POST)
+    @ResponseBody
+    public Integer Insertrizhi(Track track) {
+    	Integer updateTrack = studentsService.InsertTrack(track);
+    	return updateTrack;
+    }
     
     
-    
+  //查看日志
+    @RequestMapping(value="/selectrizi",method=RequestMethod.POST)
+    @ResponseBody
+    public FenYe selectrizi(Integer page,Integer rows,Integer uid) {
+    	FenYe fen=new FenYe();
+		fen.setPage((page-1)*rows);
+		fen.setPageSize(rows);
+		fen.setSid(uid);
+		FenYe selectTrackstu = studentsService.SelectTrackstu(fen);
+    	return selectTrackstu;
+    }
     
 }

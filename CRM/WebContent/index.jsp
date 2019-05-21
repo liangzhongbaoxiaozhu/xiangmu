@@ -28,7 +28,7 @@
 			YanZhengMa:$("#YanZhengMa").val()
 		},function(res){
 			if(res==1){
-				alert("登录成功");
+				/* alert("登录成功"); */
 				window.location.href='ZhanShi.jsp';
 			}else{
 				alert("登录失败");

@@ -46,10 +46,18 @@ public class Students {
     private Integer entryPersonId;
     private String consultantRemarks;
     
-    
+    private Integer Int0;
     //×ÉÑ¯Ê¦ĞÕÃû
     private String zixunshi;
     
+    
+    
+	public Integer getInt0() {
+		return Int0;
+	}
+	public void setInt0(Integer int0) {
+		Int0 = int0;
+	}
 	public String getZixunshi() {
 		return zixunshi;
 	}

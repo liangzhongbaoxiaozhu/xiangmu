@@ -149,4 +149,26 @@ public interface Usersdao {
 	 * @return
 	 */
 	Integer SelectQianTui(Integer uid);
+	/**
+	 * 分配权重
+	 * @param user
+	 * @return Integer
+	 */
+	Integer updateQuanZhong(Users user);
+	/**
+	 * 查询自动分配
+	 * @return
+	 */
+	String SelectZiDongFenPei();
+	/**
+	 * 开启
+	 * @param zidong
+	 * @return
+	 */
+	Integer updateZiDongFenPei();
+	/**
+	 * 关闭
+	 * @return
+	 */
+	Integer updateguanbiZiDong();
 }

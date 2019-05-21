@@ -36,7 +36,17 @@ public class FenYe<T> {
      private String IsReturnVisit;
      private Integer JiaoXueid;
   	
+     private Integer sid;
      
+     
+     
+	
+	public Integer getSid() {
+		return sid;
+	}
+	public void setSid(Integer sid) {
+		this.sid = sid;
+	}
 	public Integer getSignIn() {
 		return SignIn;
 	}

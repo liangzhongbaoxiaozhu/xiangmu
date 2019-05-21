@@ -33,6 +33,7 @@ public class ModulesServiceImpl implements ModulesService{
 		List<Modules> selectRolesModulesid = rolesdao.SelectRolesModulesid(uid);
 		
 		Modules Module = modulesdao.SelectChaZiMoKuai(id);
+		
 		//封装
 		TreeNode nod=new TreeNode();
 		nod.setId(Module.getMid().toString());
@@ -44,9 +45,10 @@ public class ModulesServiceImpl implements ModulesService{
 		nod.setAttributes(attributes);
 		//查询子
 		List<Modules> Zi = modulesdao.SelectFuChaZiMoKuai(Module.getMid());
+		
 		 List<TreeNode> arrList = new ArrayList<TreeNode>();
 		for(Modules yi:Zi){
-			/*System.out.println(yi.getMid());*/
+			
 			TreeNode nod2=new TreeNode();
 			nod2.setId(yi.getMid().toString());
 			nod2.setText(yi.getMname());
@@ -56,6 +58,7 @@ public class ModulesServiceImpl implements ModulesService{
 			 attributes2.put("weight",yi.getWeight());
 			nod2.setAttributes(attributes2);
 			for(Modules s:selectRolesModulesid){
+				/*System.out.println(s.getMid());*/
 				if(s.getMid()==yi.getMid()){
 					arrList.add(nod2);
 					break;
@@ -75,7 +78,6 @@ public class ModulesServiceImpl implements ModulesService{
 				// TODO Auto-generated method stub
 				
 				List<Modules> selectRolesModulesid = rolesdao.SelectRolesModulesid(uid);
-				
 				
 				Modules Module = rolesdao.SelectModule(id);
 				//封装

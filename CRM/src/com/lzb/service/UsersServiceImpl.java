@@ -152,5 +152,25 @@ public class UsersServiceImpl implements UsersService{
 		// TODO Auto-generated method stub
 		return usersdao.SelectQianTui(uid);
 	}
+	@Override
+	public Integer updateQuanZhong(Users user) {
+		// TODO Auto-generated method stub
+		return usersdao.updateQuanZhong(user);
+	}
+	@Override
+	public Integer updateZiDongFenPei() {
+		// TODO Auto-generated method stub
+		return usersdao.updateZiDongFenPei();
+	}
+	@Override
+	public Integer updateguanbiZiDong() {
+		// TODO Auto-generated method stub
+		return usersdao.updateguanbiZiDong();
+	}
+	@Override
+	public String SelectZiDongFenPei() {
+		// TODO Auto-generated method stub
+		return usersdao.SelectZiDongFenPei();
+	}
 
 }

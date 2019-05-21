@@ -30,7 +30,11 @@ $(function(){
 	   init();
 })
  function caozuo(value,row,index){
-       return "<a href='javascript:void(0)' onclick='suoding(" + index+ ")'>锁定</a>  <a href='javascript:void(0)' onclick='jiesuo(" + index+ ")'>解锁</a>  <a href='javascript:void(0)' onclick='bianji(" + index+ ")'>编辑</a>   <a  href='javascript:void(0)' onclick='shanchu("+ index + ")'>删除</a>"	   
+       return "<a href='javascript:void(0)' onclick='bianji(" + index+ ")'>编辑</a>   <a  href='javascript:void(0)' onclick='shanchu("+ index + ")'>删除</a>"	   
+   }
+   //锁定
+   function suodings(value,row,index){
+	   return "<a href='javascript:void(0)' onclick='suoding(" + index+ ")'>锁定</a>  <a href='javascript:void(0)' onclick='jiesuo(" + index+ ")'>解锁</a>"   
    }
 //删除
 function shanchu(index) {
@@ -223,6 +227,79 @@ function ChongZhi(index){
 		
 	})
 }
+//把锁定的0和1换成是否
+function zhanshi(value,row,index){
+	return value==0?"否":"是";
+}
+//权重
+function quanzhong(value,row,index){
+	return "<a href='javascript:void(0)' onclick='quanzhongguanli(" + index+ ")'>权重</a>";
+}
+var zid;
+function quanzhongguanli(index){
+	var data=$("#dg").datagrid("getData");
+	var row=data.rows[index];
+	zid=row.uid;
+	$('#updatewinquanzhong').form("load",row);
+	$('#updatewinquanzhong').window("open");
+}
+
+function updatequanzhongbaocuen(){
+	$.post("UpdateQuanZhong",{
+		uid:zid,
+		weight:$("#weight4").val(),
+		remarks:$("#remarks4").val()
+	},function(res){
+		$("#dg").datagrid("reload");
+		if(res>0){
+			alert("权重修改成功");
+			$('#updatewinquanzhong').window('close');
+		}else{
+			alert("权重修改失败");
+		}
+	})
+}
+function updatequanzhongguanbi(){
+	$('#updatewinquanzhong').window('close');
+	
+}
+function zidong(){
+	$('#zidongfenpei').window("open");
+	$.post("selectzidongfen",{
+		
+	},function(res){
+		if(res=="true"){
+			$('#sb').switchbutton("check");
+		}else{
+			$('#sb').switchbutton("uncheck");
+		}
+		 
+	})
+	
+	
+	$('#sb').switchbutton({ 
+	      onChange: function(checked){ 
+	        if(checked){
+	        	$.post("kaiqizidong",{
+	        		
+	        	},function(res){
+	        		if(res<1){
+	        			alert("修改失败");
+	        		}
+	        	})
+	        }else{
+				$.post("guanbizidong",{
+	        		
+	        	},function(res){
+	        		if(res<1){
+	        			alert("修改失败");
+	        		}
+	        	})
+	        }
+	      } 
+	    }) 
+
+}
 </script>
 <body>
 <div id="tool">
@@ -244,9 +321,10 @@ function ChongZhi(index){
          <option value="">--请选择--</option>   
          <option value="0">创建时间</option>   
          <option value="1">最后登录时间</option>   
-        </select> 
+        </select> <br/>
 		<a  href="javascript:void(0)" class="easyui-linkbutton" onclick="init()" data-options="iconCls:'icon-search'">搜索</a>
-		<a  href="javascript:void(0)" class="easyui-linkbutton" onclick="xinzeng()" data-options="iconCls:'icon-add'">新增</a>  
+		<a  href="javascript:void(0)" class="easyui-linkbutton" onclick="xinzeng()" data-options="iconCls:'icon-add'">新增</a>
+		<a  href="javascript:void(0)" class="easyui-linkbutton" onclick="zidong()" data-options="iconCls:'icon-add'">变量自动分配</a>  
 </form>  
 
 </div>
@@ -258,15 +336,19 @@ function ChongZhi(index){
 				<tr>
 					<th data-options="field:'loginName',width:100">名称</th>
 					<th data-options="field:'passWord',width:100">密码</th>
-					<th data-options="field:'isLoginData',width:100">锁定</th>
+					<th data-options="field:'isLoginData',width:100,formatter:zhanshi">锁定</th>
 					<th data-options="field:'lastLoginData',width:100">最后登录时间</th>
 					<th data-options="field:'createData',width:100">创建时间</th>
 					<th data-options="field:'email',width:100">邮箱</th>
 					<th data-options="field:'mtel',width:100">电话</th>
 					<th data-options="field:'weight',width:100">分量</th>
+					<th data-options="field:'remarks',width:100">备注</th>
+					<th data-options="field:'e',width:100,formatter:suodings">锁定</th>
 					<th data-options="field:'a',width:100,formatter:caozuo">操作</th>
+					<th data-options="field:'c',width:100,formatter:chongzhi">重置密码</th>
+					<th data-options="field:'D',width:100,formatter:quanzhong">权重</th>
 				    <th data-options="field:'b',width:100,formatter:guanli">管理</th>
-				    <th data-options="field:'c',width:100,formatter:chongzhi">重置密码</th>
+				    
 				</tr>
 			</thead>
 
@@ -356,5 +438,31 @@ function ChongZhi(index){
     <a onclick="updateguanbi()" href="javascript:void(0)" class="easyui-linkbutton" ">关闭</a>
     </div>
 </div>  
+
+
+<div id="updatewinquanzhong" class="easyui-window" title="修改权重" style="width:300px;height:400px"   
+        data-options="iconCls:'icon-save',modal:true,closed:true"> 
+        <div style="padding: 20px 150px 50px 50px">  
+    <div> 
+    <label for="name">权重:</label>  
+    <input class="easyui-validatebox"  type="text"  id="weight4" name="weight" data-options="required:true" />
+    <label for="name">备注:</label>  
+    <input class="easyui-validatebox" type="text" id="remarks4" name="remarks" data-options="required:true" />   
+    </div>  
+    
+    </div>
+    <div style="padding-left:80px ">
+    <a onclick="updatequanzhongbaocuen()" href="javascript:void(0)" class="easyui-linkbutton" ">保存</a>
+    <a onclick="updatequanzhongguanbi()" href="javascript:void(0)" class="easyui-linkbutton" ">关闭</a>
+    </div>
+</div>  
+<div id="zidongfenpei" class="easyui-window" title="变量自动分配" style="width:300px;height:120px"   
+        data-options="iconCls:'icon-save',modal:true,closed:true"> 
+        <div style="padding: 20px 10px 10px 50px">  
+        
+        <input id="sb" style="width:200px;height:30px"> 
+   
+        </div>
+</div>
 </body>
 </html>

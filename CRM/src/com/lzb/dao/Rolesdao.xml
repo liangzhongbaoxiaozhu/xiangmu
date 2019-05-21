@@ -26,7 +26,9 @@ delete from roles where Rid=#{id}
 </delete>
 <!-- 查询角色所有的子模块id -->
 <select id="SelectRolesModulesid" resultType="modules" parameterType="int">
-select distinct Mid from modules where  Mid in (select ModuleId from RoleModules where RoleId=#{id}) 
+select distinct Mid from modules where  Mid in (
+select ModuleId from RoleModules where RoleId in (
+select RoleId from userroles where UserId=2)) 
 </select>
 <!-- 查询所有父id -->
 <select id="SelectModulesFuid" resultType="modules">

@@ -16,6 +16,16 @@ public class Track {
 	private String UsersName;
 	private String StudentName;
 	
+	private String String0;
+	
+	
+	
+	public String getString0() {
+		return String0;
+	}
+	public void setString0(String string0) {
+		String0 = string0;
+	}
 	public Integer getTid() {
 		return Tid;
 	}

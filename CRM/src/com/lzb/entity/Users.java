@@ -12,10 +12,34 @@ public class Users {
 	private Integer Mtel;
 	private Integer SignIn;
 	private String SignInData;
-	
+	private Integer weight;
+	private String Remarks;
+	private String String0;
+	private String Int0;
 	//ÐÂÃÜÂë
 	private String MiMa;
 	
+	
+	
+	
+	public String getInt0() {
+		return Int0;
+	}
+	public void setInt0(String int0) {
+		Int0 = int0;
+	}
+	public String getString0() {
+		return String0;
+	}
+	public void setString0(String string0) {
+		String0 = string0;
+	}
+	public String getRemarks() {
+		return Remarks;
+	}
+	public void setRemarks(String remarks) {
+		Remarks = remarks;
+	}
 	public String getMiMa() {
 		return MiMa;
 	}
@@ -81,6 +105,12 @@ public class Users {
 	}
 	public void setSignInData(String signInData) {
 		SignInData = signInData;
+	}
+	public Integer getWeight() {
+		return weight;
+	}
+	public void setWeight(Integer weight) {
+		this.weight = weight;
 	}
 	
 }

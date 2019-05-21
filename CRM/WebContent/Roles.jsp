@@ -130,18 +130,37 @@ function updateQXBC(){
 	var a=$("#menuTree").tree("getChecked"); 
 	var b="";
 	for(var i=0;i<a.length;i++){
+		/* alert(a[i].id); */
 		var node = $('#menuTree').tree('find', a[i].id);
-
+         /* alert(a[i].id+","+node.attributes.weight); */
+        if(node.attributes.weight!="1"){
+        	var fuid=$("#menuTree").tree("getParent",a[i].target);
+        	if(fuid.parentid==null){
+        		
+    		}else{
+    			if(b!=""){
+        			if(fuid.attributes.weight!="1"){
+        		        b=b+","+fuid.id;
+        			}
+        		}else{
+        			if(fuid.attributes.weight!="1"){
+        	            b=fuid.id;	
+        			}
+        		}
+    		}
+        	}
+        	
 		if(b!=""){
-			if(node.children==""){
+			if(node.attributes.weight!="1"){
 		        b=b+","+a[i].id;
 			}
 		}else{
-			if(node.children==""){
+			if(node.attributes.weight!="1"){
 	            b=a[i].id;	
 			}
 		}
 	}
+	/* alert(b);  */
 	 $.post("InsertRoleModule",{
 		Mid:b,
 		Rid:rid
@@ -157,7 +176,7 @@ function updateQXGB(){
 <div id="tool">
 <form id="ff">   
         
-		<a  href="javascript:void(0)" class="easyui-linkbutton" onclick="init()" data-options="iconCls:'icon-search'">搜索</a>
+		
 		<a  href="javascript:void(0)" class="easyui-linkbutton" onclick="xinzeng()" data-options="iconCls:'icon-add'">新增</a>  
 </form>  
 

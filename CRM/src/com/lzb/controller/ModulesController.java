@@ -38,7 +38,7 @@ public class ModulesController {
 			}
 			
 			/*System.out.println(jsonText);*/
-			if(chucuen==null){
+			if(chucuen==null&&jsonText!=""){
 				chucuen=jsonText;
 			}else{
 				if(jsonText!=""){

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.lzb.entity.FenYe;
 import com.lzb.entity.Students;
+import com.lzb.entity.Track;
 
 public interface StudentsService {
     
@@ -19,5 +20,16 @@ public interface StudentsService {
 	
 	    //个人的学生
 		FenYe selectStuGeRen(FenYe fenye);
+		
+		
+		/**
+		 * 添加日志
+		 * @param track
+		 * @return
+		 */
+		Integer InsertTrack(Track track);
+		
+		/*多条件分页查询*/
+		FenYe SelectTrackstu(FenYe fen);
 		
 }

@@ -107,7 +107,7 @@
 			
 			if(xin==yanzheng){
 				$.post("UpdateGeReMiMa",{
-					uid:<%=1%>, <%-- <%=session.getAttribute("Uid")%> --%>
+					uid: <%=session.getAttribute("Uid")%>,<%-- <%=1%> --%>
 					passWord:jiu,
 					mima:yanzheng
 				},function(res){

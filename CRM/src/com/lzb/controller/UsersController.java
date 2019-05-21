@@ -189,5 +189,38 @@ public class UsersController {
 				}
 			}
 			return 1;
-		}				
+		}		
+	    //修改权重
+		@RequestMapping(value="/UpdateQuanZhong",method=RequestMethod.POST)
+		@ResponseBody
+		public Integer UpdateQuanZhong(Integer uid,Integer weight,String remarks){
+			Users user=new Users();
+			user.setUid(uid);
+			user.setWeight(weight);
+			user.setRemarks(remarks);
+			
+			Integer updateQuanZhong = usersService.updateQuanZhong(user);
+			return updateQuanZhong;
+		}
+		//查询自动分配
+		@RequestMapping(value="/selectzidongfen",method=RequestMethod.POST)
+		@ResponseBody
+		public String selectzidongfen(){
+			String selectZiDongFenPei = usersService.SelectZiDongFenPei();
+			return selectZiDongFenPei;
+		}
+		//开启自动分配
+		@RequestMapping(value="/kaiqizidong",method=RequestMethod.POST)
+		@ResponseBody
+		public Integer kaiqizidong(){
+			Integer updateZiDongFenPei = usersService.updateZiDongFenPei();
+			return updateZiDongFenPei;
+		}
+		//关闭自动分配
+		@RequestMapping(value="/guanbizidong",method=RequestMethod.POST)
+		@ResponseBody
+		public Integer guanbizidong(){
+			Integer updateguanbiZiDong = usersService.updateguanbiZiDong();
+			return updateguanbiZiDong;
+		}		
 }

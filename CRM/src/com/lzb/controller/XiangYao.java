@@ -41,7 +41,7 @@ public class XiangYao {
 //生成对应宽高的初始图片
 
               randomText = VerifyCode.drawRandomText(width,height,verifyImg);
-                       /*System.out.println(randomText);*/
+                       System.out.println(randomText);
 //单独的一个类方法，出于代码复用考虑，进行了封装。
 
 //功能是生成验证码字符并加上噪点，干扰线，返回值为验证码字符                   

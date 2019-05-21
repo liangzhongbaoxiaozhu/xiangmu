@@ -198,4 +198,19 @@
 	<update id="SelectQianTui" parameterType="int">
 	update users set SignIn=0    where Uid=#{uid} and SignIn=1
 	</update>
+	
+	<update id="updateQuanZhong" parameterType="users"> 
+	update users set  weight=#{weight},Remarks=#{Remarks}   where uid=#{uid}
+	</update>
+	
+	<!-- 查询自动分配 -->
+	<select id="SelectZiDongFenPei" resultType="string">
+	select String0 from users where uid=1
+	</select>
+	<update id="updateZiDongFenPei">
+	update users set  String0="true"   where uid=1
+	</update>
+	<update id="updateguanbiZiDong">
+	update users set  String0="false"  where uid=1
+	</update>
 </mapper>

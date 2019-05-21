@@ -44,7 +44,7 @@ function qiandao(){
 <div>
 <div id="tool">
 <form id="ff">   
-		<a  href="javascript:void(0)" class="easyui-linkbutton" onclick="qiandao()" data-options="iconCls:'icon-ok'">签到</a>
+		<!-- <a  href="javascript:void(0)" class="easyui-linkbutton" onclick="qiandao()" data-options="iconCls:'icon-ok'">签到</a> -->
 </form>  
 </div>
 		<table id="dg" class="easyui-datagrid"
