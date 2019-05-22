@@ -22,7 +22,7 @@
    			method:'post',
    			url:"SelectModul",
    			queryParams:{
-   				uid:<%=2%>    <%--<%=1%>  <%=session.getAttribute("Uid")%>--%>
+   				uid:<%=session.getAttribute("Uid")%>    <%--<%=1%>  <%=session.getAttribute("Uid")%>--%>
    			}
 
    	});

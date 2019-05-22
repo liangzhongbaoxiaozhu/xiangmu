@@ -58,5 +58,15 @@ public interface StudentsMapper {
 	 * @return
 	 */
 	Integer UpdateFenLiangQuanBu();
-	
+	/**
+	 * 查询所有咨询师
+	 * @return
+	 */
+	List<Users> SelectChaXunZiXunShi();
+	/**
+	 * 给学生修改咨询师
+	 * @return
+	 */
+	Integer UpdateXueShengZiXunShi(FenYe fen);
+	List<Students> selectStudent_xuanzhong(List list);
 }

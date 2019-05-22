@@ -49,9 +49,17 @@ public class Students {
     private Integer Int0;
     //咨询师姓名
     private String zixunshi;
+    //录入人
+    private String lururen;
     
     
-    
+	
+	public String getLururen() {
+		return lururen;
+	}
+	public void setLururen(String lururen) {
+		this.lururen = lururen;
+	}
 	public Integer getInt0() {
 		return Int0;
 	}

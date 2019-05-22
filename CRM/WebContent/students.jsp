@@ -47,7 +47,8 @@ function edit(index){
 /* 修改 */
  
 function saveEdit1(){
-	$("updateStu",{
+	alert("123");
+	$.post("updateStu",{
 	    Sid:$("#sid4").val(),
 		Sname:$("#sname4").val(),
 		Sex:$("#sex4").combobox("getValues").toString(),
@@ -66,20 +67,20 @@ function saveEdit1(){
 		IsEffective:$("#isEffective4").combobox("getValues").toString(),
 		Scoring:$("#scoring4").val(),
 		IsReturnVisit:$("#isReturnVisit4").val(),
-		ReturnVisitData:$("#returnVisitData4").val(),
+		ReturnVisitData:$("#returnVisitData4").datebox("getValues").toString(),
 		Door:$("#door4").combobox("getValues").toString(),
-		DoorData:$("#doorData4").val(),
+		DoorData:$("#doorData4").datebox("getValues").toString(),
 		Reason:$("#reason4").val(),
 		IsPay:$("#isPay4").combobox("getValues").toString(),
-		PayData:$("#payData4").val(),
+		PayData:$("#payData4").datebox("getValues").toString(),
 		Money:$("#money4").val(),
 		IsRefund:$("#isRefund4").combobox("getValues").toString(),
 		IsClassEntry:$("#isClassEntry4").combobox("getValues").toString(),
-		ClassEntryData:$("#classEntryData4").val(),
+		ClassEntryData:$("#classEntryData4").datebox("getValues").toString(),
 		ClassEntryRemarks:$("#classEntryRemarks4").val(),
 		ReasonsRefund:$("#reasonsRefund4").val(),
 		EarnestMoney:$("#earnestMoney4").val(),
-		EarnestMoneyData:$("#earnestMoneyData4").val(),
+		EarnestMoneyData:$("#earnestMoneyData4").datebox("getValues").toString(),
 		Follow:$("#follow4").val(),
 		QQ:$("#qQ4").val(),
 		WeiXin:$("#weiXin4").val(),
@@ -91,6 +92,7 @@ function saveEdit1(){
 		ConsultantRemarks:$("#consultantRemarks4").val()
     	
 	},function(res){
+		$("#stutab").datagrid("reload");
 		if(res>0){
 			$("#stutab").form("clear");
 			$("#upds").dialog("close");
@@ -256,6 +258,76 @@ function ck_genzong(index){
 			});
 	$("#ck_gzrz_win").window("open");
 }
+function xiugaizixunshi(){
+	$("#xg_xs_zxs").window('open');
+	$('#zxs').combobox({    
+	    url:'selectZiXunShi',    
+	    valueField:'uid',    
+	    textField:'loginName'   
+	});  
+}
+function addzxs(){
+	var shu=$("#stutab").datagrid("getSelections");
+	if(shu==""){
+		alert("请选中学生在操作!");
+	}else if($("#zxs").combobox("getValue")=="--请选择--"){
+		alert("请选择咨询师！");
+	}else{
+		var arr=null;
+		for(var i=0;i<shu.length;i++){
+			if(arr==null){
+				arr=shu[i].sid;
+			}else{
+				arr=arr+","+shu[i].sid;	
+			}
+		}
+		alert(arr);
+		$.post("updateXueShengZiXunShi",{
+			uid:$("#zxs").combobox("getValue"),
+			sid:arr
+		},function(res){
+			$("#stutab").datagrid("reload");
+			$("#xg_xs_zxs").window('close');
+			if(res<1){
+				alert("修改失败!");
+			}
+		})
+	}
+	
+}
+function addzxsgb(){
+	$("#xg_xs_zxs").window('close');
+}
+function daochuexcel() {
+	var row = $("#stutab").datagrid("getSelections");
+	if (row != null && row != "") {
+		var s_ids = "";
+		for (var i = 0; i < row.length; i++) {
+			if (i == 0) {
+				s_ids = s_ids + row[i].sid;
+			} else {
+				s_ids = s_ids + "," + row[i].sid;
+			}
+		}
+		$.messager.confirm('确认', '您确认想要把当前数据导出Excel吗？', function(r) {
+			if (r) {
+				window.location.href = "daochuexcel?s_ids=" + s_ids;
+			}
+		});
+
+	} else {
+		$.messager.show({
+			title : '我的消息',
+			msg : '还未选择学生，请选择！',
+			timeout : 1000,
+			showType : 'slide',
+			style : {
+				top : document.body.scrollTop
+						+ document.documentElement.scrollTop,
+			}
+		});
+	}
+}
 </script>
 </head>
 <body>
@@ -295,17 +367,19 @@ function ck_genzong(index){
          <option value="已回访">已回访</option>   
         </select> 
        <a href="javascript:void(0)" onclick="init()" class="easyui-linkbutton" data-options="iconCls:'icon-search'">搜索</a>  
-       <a href="javascript:void(0)" onclick="insertStu()" class="easyui-linkbutton" data-options="iconCls:'icon-add'">添加</a> 
-       
+       <a href="javascript:void(0)" onclick="insertStu()" class="easyui-linkbutton" data-options="iconCls:'icon-add'">添加</a>
+       <a href="javascript:void(0)" onclick="xiugaizixunshi()" class="easyui-linkbutton" data-options="iconCls:'icon-add'">修改咨询师</a>  
+       <a href="javascript:void(0)" class="easyui-linkbutton" onclick="daochuexcel()" data-options="iconCls:'icon-redo'">导出Excel</a>
      </form>  
    </div>
     
     
     <!-- 数据表格 -->
-    <table id="stutab" class="easyui-datagrid" style="width:100%;height:400px" data-options="fitColumns:true,singleSelect:true,pagination:true">   
+    <table id="stutab" class="easyui-datagrid" style="width:100%;height:400px" data-options="fitColumns:true,pagination:true">   
     <thead>   
         <tr>   
             <!-- <th data-options="field:'sid'">ID</th>    -->
+            <th field="ck" checkbox="true"></th>
             <th data-options="field:'sname'">姓名</th>   
             <th data-options="field:'sex'">性别</th>
             <th data-options="field:'age'">年龄</th>   
@@ -344,7 +418,7 @@ function ck_genzong(index){
             <th data-options="field:'remarks'">在线备注</th> 
             <th data-options="field:'zixunshi'">咨询师</th>   
            <!--  <th data-options="field:'networkConsultantId'">网络咨询师</th>    -->
-            <th data-options="field:'entryPersonId'">录入人</th>
+            <th data-options="field:'lururen'">录入人</th>
             <th data-options="field:'consultantRemarks'">咨询师备注</th>
             <th data-options="field:'caozuo',formatter:formatterCaozuo">操作</th>   
         </tr>   
@@ -522,7 +596,7 @@ function ck_genzong(index){
 					</tr>
 					<tr>
 						<td>首访时间:</td>
-						<td><input class="easyui-textbox" type="text"
+						<td><input class="easyui-datebox" type="text"
 							id="returnVisitData4" name="returnVisitData" /></td>
 					</tr>
 					<tr>
@@ -536,7 +610,7 @@ function ck_genzong(index){
 					</tr>
 					<tr>
 						<td>上门时间:</td>
-						<td><input class="easyui-textbox" type="text"
+						<td><input class="easyui-datebox" type="text"
 							id="doorData4" name="doorData" /></td>
 					</tr>
 					<tr>
@@ -546,7 +620,7 @@ function ck_genzong(index){
 					</tr>
 					<tr>
 						<td>定金时间:</td>
-						<td><input class="easyui-textbox" type="text"
+						<td><input class="easyui-datebox" type="text"
 							id="earnestMoneyData4" name="earnestMoneyData" /></td>
 					</tr>
 					<tr>
@@ -560,7 +634,7 @@ function ck_genzong(index){
 					</tr>
 					<tr>
 						<td>缴费时间:</td>
-						<td><input class="easyui-textbox" type="text"
+						<td><input class="easyui-datebox" type="text"
 							id="payData4" name="payData" /></td>
 					</tr>
 					<tr>
@@ -594,7 +668,7 @@ function ck_genzong(index){
 					<tr>
 
 						<td>进班时间:</td>
-						<td><input class="easyui-textbox" type="text"
+						<td><input class="easyui-datebox" type="text"
 							id="classEntryData4" name="classEntryData" /></td>
 					</tr>
 					<tr>
@@ -1010,5 +1084,21 @@ function ck_genzong(index){
 		</thead>
 	</table>
 	</div>
+	
+	
+	
+	<div id="xg_xs_zxs" class="easyui-window" title="修改学生的咨询师"
+		style="width: 400px; height: 200px; text-align: center;"
+		data-options="iconCls:'icon-save',modal:true,closed:true">
+		<h3>选择咨询师</h3>
+			<input id="zxs" name="aaa" value="--请选择--">
+			<div style="padding-top: 30px">
+           <a href="javascript:void(0)" class="easyui-linkbutton" onclick="addzxs()">保存</a>
+           <a href="javascript:void(0)" class="easyui-linkbutton" onclick="addzxsgb()">关闭</a>
+        </div>
+	</div>
 </body>
+
+
+
 </html>

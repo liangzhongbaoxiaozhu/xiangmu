@@ -74,7 +74,7 @@ s.IsEnroll,
 s.Remarks,
 s.ConsultantId,
 s.NetworkConsultantId,
-s.EntryPersonId,
+(select LoginName from  Users where Uid=1) as lururen,
 s.ConsultantRemarks,
 s.Int0,u.LoginName as zixunshi,s.String0
   from students s,Users u
@@ -120,96 +120,127 @@ values(#{sname},#{sex},#{age},#{smtel},#{education},#{state},#{channel},#{websit
 delete from students where sid=#{sid};
 </delete>
 <update id="updateStu" parameterType="students">
-update students
+update students 
 <set>
-   <if test="sid !='' and sid != null">
-       sid=#{sid}
-   </if>
    <if test="sname !='' and sname != null">
-       sname=#{sname}
+       sname=#{sname},
    </if>
-   <if test="sex !='' and sex != null">
-       sex=#{sex}
+  <if test="sex!='' and sex != null">
+       sex=#{sex},
    </if>
-   <if test="smtel !='' and smtel !=null">
-       smtel=#{smtel}
+   <if test="age!='' and age != null">
+       age=#{age},
    </if>
-   <if test="channel !='' and channel !=null">
-       channel=#{channel}
+   <if test="smtel!='' and smtel != null">
+       smtel=#{smtel},
    </if>
-   <if test="website !='' and website !=null">
-       website=#{website}
+   <if test="education !='' and education != null">
+       education=#{education},
    </if>
-   <if test="department !='' and department !=null">
-       department=#{department}
+   <if test="state !='' and state != null">
+       state=#{state},
    </if>
-   <if test="nameConsultation !='' and nameConsultation !=null">
-       nameConsultation=#{nameConsultation}
+   <if test="channel !='' and channel != null">
+       channel=#{channel},
    </if>
-   <if test="region !='' and region !=null">
-       region=#{region}
+   <if test="website !='' and website != null">
+       website=#{website},
    </if>
-   
-   <if test="curriculum !='' and curriculum !=null">
-       curriculum=#{curriculum}
+   <if test="keyWord !='' and keyWord != null">
+       keyWord=#{keyWord},
    </if>
-   <if test="scoring !='' and scoring !=null">
-       scoring=#{scoring}
+   <if test="department !='' and department != null">
+       department=#{department},
    </if>
-   <if test="isEffective !='' and isEffective !=null">
-       isEffective=#{isEffective}
+   <if test="nameConsultation !='' and nameConsultation != null">
+       nameConsultation=#{nameConsultation},
    </if>
-   <if test="isReturnVisit !='' and isReturnVisit !=null">
-       isReturnVisit=#{isReturnVisit}
+   <if test="region !='' and region != null">
+       region=#{region},
    </if>
-   <if test="door !='' and door !=null">
-       door=#{door}
+   <if test="isReport !='' and isReport != null">
+       isReport=#{isReport},
    </if>
-   <if test="reason !='' and reason !=null">
-       reason=#{reason}
+   <if test="curriculum !='' and curriculum != null">
+       curriculum=#{curriculum},
    </if>
-   <if test="isPay !='' and isPay !=null">
-       isPay=#{isPay}
+    <if test="isEffective !='' and isEffective != null">
+       isEffective=#{isEffective},
    </if>
-   <if test="payData !='' and payData !=null">
-       payData=#{payData}
+   <if test="scoring !='' and scoring != null">
+       scoring=#{scoring},
    </if>
-   <if test="isRefund !='' and isRefund !=null">
-       isRefund=#{isRefund}
+   <if test="isReturnVisit !='' and isReturnVisit != null">
+       isReturnVisit=#{isReturnVisit},
    </if>
-   <if test="isClassEntry !='' and isClassEntry !=null">
-       isClassEntry=#{isClassEntry}
+   <if test="returnVisitData !='' and returnVisitData != null">
+       returnVisitData=#{returnVisitData},
    </if>
-   <if test="classEntryData !='' and classEntryData !=null">
-       classEntryData=#{classEntryData}
+   <if test="door !='' and door != null">
+       door=#{door},
    </if>
-   <if test="classEntryRemarks !='' and classEntryRemarks !=null">
-       classEntryRemarks=#{classEntryRemarks}
+   <if test="doorData !='' and doorData != null">
+       doorData=#{doorData},
    </if>
-   <if test="reasonsRefund !='' and reasonsRefund !=null">
-       reasonsRefund=#{reasonsRefund}
+   <if test="reason !='' and reason != null">
+       reason=#{reason},
    </if>
-   <if test="follow !='' and follow !=null">
-       follow=#{follow}
+   <if test="isPay !='' and isPay != null">
+       isPay=#{isPay},
    </if>
-   <if test="isEnroll !='' and isEnroll !=null">
-       isEnroll=#{isEnroll}
+   <if test="payData !='' and payData != null">
+       payData=#{payData},
    </if>
-   <if test="remarks !='' and remarks !=null">
-       remarks=#{remarks}
+   <if test="money !='' and money != null">
+       money=#{money},
    </if>
-   <if test="consultantId !='' and consultantId !=null">
-       consultantId=#{consultantId}
+   <if test="isRefund !='' and isRefund != null">
+       isRefund=#{isRefund},
    </if>
-   <if test="networkConsultantId !='' and networkConsultantId !=null">
-       networkConsultantId=#{networkConsultantId}
+   <if test="isClassEntry !='' and isClassEntry != null">
+       isClassEntry=#{isClassEntry},
    </if>
-   <if test="entryPersonId !='' and entryPersonId !=null">
-       entryPersonId=#{entryPersonId}
+   <if test="classEntryData !='' and classEntryData != null">
+       classEntryData=#{classEntryData},
    </if>
-   <if test="consultantRemarks !='' and consultantRemarks !=null">
+   <if test="classEntryRemarks !='' and classEntryRemarks != null">
+       classEntryRemarks=#{classEntryRemarks},
+   </if>
+   <if test="reasonsRefund !='' and reasonsRefund != null">
+       reasonsRefund=#{reasonsRefund},
+   </if>
+   <if test="earnestMoney !='' and earnestMoney != null">
+       earnestMoney=#{earnestMoney},
+   </if>
+   <if test="earnestMoneyData !='' and earnestMoneyData != null">
+       earnestMoneyData=#{earnestMoneyData},
+   </if>
+   <if test="follow !='' and follow != null">
+       follow=#{follow},
+   </if>
+   <if test="qq !='' and qq != null">
+       qq=#{qq},
+   </if>
+    <if test="weiXin !='' and weiXin != null">
+       weiXin=#{weiXin},
+   </if>
+   <if test="isEnroll !='' and isEnroll != null">
+       isEnroll=#{isEnroll},
+   </if>
+    <if test="remarks !='' and remarks != null">
+       remarks=#{remarks},
+   </if>
+   <if test="consultantId !='' and consultantId != null">
+       consultantId=#{consultantId},
+   </if>
+   <if test="entryPersonId !='' and entryPersonId != null">
+       entryPersonId=#{entryPersonId},
+   </if>
+   <if test="consultantRemarks !='' and consultantRemarks != null">
        consultantRemarks=#{consultantRemarks}
    </if>
+
+
 </set>
 <where>
 sid=#{sid}
@@ -349,5 +380,63 @@ update Users set Int0=#{page} where Uid=#{pageSize}
 <update id="UpdateFenLiangQuanBu"  >
 update Users set Int0=0
 </update>
+<!-- 查询所有咨询师 -->
+<select id="SelectChaXunZiXunShi" resultType="users">
+select uid,LoginName  from Users where Uid in (select UserId from  UserRoles where RoleId=3)
+</select>
+<!-- 给学生修改咨询师 -->
+<update id="UpdateXueShengZiXunShi" parameterType="fenYe">
+update Students set ConsultantId=#{pageSize} where Sid=#{page}
+</update>
 
+<select id="selectStudent_xuanzhong" parameterType="list" resultType="students">
+select s.Sid,
+s.Sname,
+s.Sex,
+s.Age,
+s.Smtel,
+s.Education,
+s.State,
+s.Channel,
+s.Website,
+s.KeyWord,
+s.Department,
+s.NameConsultation,
+s.Region,
+s.IsReport,
+s.Curriculum,
+s.IsEffective,
+s.Scoring,
+s.IsReturnVisit,
+s.ReturnVisitData,
+s.Door,
+s.DoorData,
+s.Reason,
+s.IsPay,
+s.PayData,
+s.Money,
+s.IsRefund,
+s.IsClassEntry,
+s.ClassEntryData,
+s.ClassEntryRemarks,
+s.ReasonsRefund,
+s.EarnestMoney,
+s.EarnestMoneyData,
+s.Follow,
+s.QQ,
+s.WeiXin,
+s.IsEnroll,
+s.Remarks,
+s.ConsultantId,
+s.NetworkConsultantId,
+(select LoginName from  Users where Uid=1) as lururen,
+s.ConsultantRemarks,
+s.Int0,u.LoginName as zixunshi,s.String0
+  from students s,Users u
+where u.Uid=s.ConsultantId and s.sid in
+		<foreach collection="list" item="item" open="(" separator=","
+			close=")">
+			#{item}
+		</foreach>
+	</select>
 </mapper>
