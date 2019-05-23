@@ -22,12 +22,14 @@ public interface Rolesdao {
 	 * @return
 	 */
 	Integer SelectCount(FenYe fen);
+	
 	/**
 	 * 新增
 	 * @param roles
 	 * @return
 	 */
 	Integer InsertRoles(Roles roles);
+	
 	/**
 	 * 修改
 	 * @param roles
@@ -41,31 +43,48 @@ public interface Rolesdao {
 	 * @return
 	 */
 	Integer deleteRoles(Integer id);
+	
 	/**
 	 * 查询角色所有的子模块id
 	 * @return
 	 */
 	List<Modules> SelectRolesModulesid(Integer id);
+	
 	/**
 	 * 查询所有父id
 	 * @return
 	 */
 	List<Modules> SelectModulesFuid();
-	/*根据父模块id查子模块id*/
+	
+	/**
+	 * 根据父模块id查子模块id
+	 * @param id
+	 * @return
+	 */
 	List<Modules> SelectZiModules2(Integer id);
+	
 	/**
 	 * 根据id查询模块
 	 * @return
 	 */
 	Modules SelectModule(Integer id);
+	
 	/**
 	 * 新增角色模块
 	 * @param fen
 	 * @return
 	 */
 	Integer IntegerRolesModules(FenYe fen);
-	/*
+	
+	/**
 	 * 删除有关的角色模块
 	 */
 	Integer DeleteRolesModules(Integer id);
+	
+	/**
+	 * 跟据角色id查询用户角色是否存在
+	 * @param id
+	 * @return
+	 */
+	Integer selectUserRolesCount(Integer id);
 }

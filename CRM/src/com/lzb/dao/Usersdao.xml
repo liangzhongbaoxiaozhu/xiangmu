@@ -6,7 +6,8 @@
 	<!-- 登录 -->
 	<select id="DengLu" parameterType="users" resultType="users">
 		select *
-		from users where LoginName=#{LoginName} and PassWord=#{PassWord}
+		from users
+		where IsLoginData=0 and LoginName=#{LoginName} and PassWord=#{PassWord}
 	</select>
 
 	<!-- 查询所有 -->
@@ -196,21 +197,21 @@
 	</select>
 	<!-- 签退 -->
 	<update id="SelectQianTui" parameterType="int">
-	update users set SignIn=0    where Uid=#{uid} and SignIn=1
+		update users set SignIn=0 where Uid=#{uid} and SignIn=1
 	</update>
-	
-	<update id="updateQuanZhong" parameterType="users"> 
-	update users set  weight=#{weight},Remarks=#{Remarks}   where uid=#{uid}
+
+	<update id="updateQuanZhong" parameterType="users">
+		update users set weight=#{weight},Remarks=#{Remarks} where uid=#{uid}
 	</update>
-	
+
 	<!-- 查询自动分配 -->
 	<select id="SelectZiDongFenPei" resultType="string">
-	select String0 from users where uid=1
+		select String0 from users where uid=1
 	</select>
 	<update id="updateZiDongFenPei">
-	update users set  String0="true"   where uid=1
+		update users set String0="true" where uid=1
 	</update>
 	<update id="updateguanbiZiDong">
-	update users set  String0="false"  where uid=1
+		update users set String0="false" where uid=1
 	</update>
 </mapper>

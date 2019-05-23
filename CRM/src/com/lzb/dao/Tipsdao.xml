@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lzb.dao.Tipsdao">
+
+	<!-- 添加提醒消息 -->
+	<insert id="IntegerTips" parameterType="tips">
+		insert into tips
+		(Usersid,Tips)values(#{Usersid},#{Tips})
+	</insert>
+	<!-- 根据id查询消息 -->
+	<select id="selectTips" parameterType="int" resultType="tips">
+		select * from tips where usersid=#{tid}
+	</select>
+	<delete id="deleteTips" parameterType="int">
+		delete from tips where tid=#{tid}
+	</delete>
+</mapper>

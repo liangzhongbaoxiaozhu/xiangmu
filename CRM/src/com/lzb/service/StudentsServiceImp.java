@@ -17,14 +17,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lzb.dao.StudentsMapper;
+import com.lzb.dao.Tipsdao;
 import com.lzb.entity.FenYe;
 import com.lzb.entity.Students;
+import com.lzb.entity.Tips;
 import com.lzb.entity.Track;
 import com.lzb.entity.Users;
 @Service
 public class StudentsServiceImp implements StudentsService {
     @Autowired
 	private StudentsMapper studentsMapper;
+    @Autowired
+	private Tipsdao tipsdao;
 	
 	@Override
 	public FenYe selectStu(FenYe fenye) {
@@ -40,6 +44,9 @@ public class StudentsServiceImp implements StudentsService {
 	@Override
 	public Integer insertStu(Students students) {
 		// TODO Auto-generated method stub
+		String selectFenLiangShiFouKaiQi = studentsMapper.SelectFenLiangShiFouKaiQi();
+		/*System.out.println(selectFenLiangShiFouKaiQi);*/
+		if(Boolean.parseBoolean(selectFenLiangShiFouKaiQi)){
 		FenYe fen=new FenYe();
 		
 		for(int i=4;i>0;i--){
@@ -62,7 +69,7 @@ public class StudentsServiceImp implements StudentsService {
 			
 			
     	}
-		
+		}
 		return studentsMapper.insertStu(students);
 	}
 
@@ -235,6 +242,30 @@ public class StudentsServiceImp implements StudentsService {
 			e.printStackTrace();
 		}
 		
+	}
+
+
+
+	@Override
+	public Integer IntegerTips(Tips tips) {
+		// TODO Auto-generated method stub
+		return tipsdao.IntegerTips(tips);
+	}
+
+
+
+	@Override
+	public List<Tips> selectTips(Integer tid) {
+		// TODO Auto-generated method stub
+		return tipsdao.selectTips(tid);
+	}
+
+
+
+	@Override
+	public Integer deleteTips(Integer tid) {
+		// TODO Auto-generated method stub
+		return tipsdao.deleteTips(tid);
 	}
 
 

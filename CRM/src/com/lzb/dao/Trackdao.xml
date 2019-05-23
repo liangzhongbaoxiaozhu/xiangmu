@@ -3,56 +3,58 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.lzb.dao.Trackdao">
 
-<select id="SelectTrack" parameterType="fenYe" resultType="track">
-select Tid,Studentid,UserId,TrackStartData,TrackEndData,ReturnVisit,TrackingMode,Content,NextTrackingData,Operation,s.Sname as StudentName,u.LoginName as UsersName 
-from track t,Students s,Users u
-<where>
-t.Studentid=s.Sid and t.UserId=u.Uid
-<if test="StudentName!=null and StudentName!=''">
-and s.Sname like "%"#{StudentName}"%"
-</if>
-<if test="UserName!=null and UserName!=''">
-and u.LoginName like "%"#{UserName}"%"
-</if>
-<if test="TrackStartData!=null and TrackStartData!=''">
-and TrackStartData &gt; #{TrackStartData}
-</if>
-<if test="TrackEndData!=null and TrackEndData!=''">
-and TrackEndData &lt; #{TrackEndData}
-</if>
-<if test="ReturnVisit!=null and ReturnVisit!=''">
-and ReturnVisit =#{ReturnVisit}
-</if>
-<if test="TrackingMode!=null and TrackingMode!=''">
-and TrackingMode=#{TrackingMode}
-</if>
-</where>
-limit #{page},#{pageSize}
-</select>
+	<select id="SelectTrack" parameterType="fenYe" resultType="track">
+		select
+		Tid,Studentid,UserId,TrackStartData,TrackEndData,ReturnVisit,TrackingMode,Content,NextTrackingData,Operation,s.Sname
+		as StudentName,u.LoginName as UsersName
+		from track t,Students s,Users u
+		<where>
+			t.Studentid=s.Sid and t.UserId=u.Uid
+			<if test="StudentName!=null and StudentName!=''">
+				and s.Sname like "%"#{StudentName}"%"
+			</if>
+			<if test="UserName!=null and UserName!=''">
+				and u.LoginName like "%"#{UserName}"%"
+			</if>
+			<if test="TrackStartData!=null and TrackStartData!=''">
+				and TrackStartData &gt; #{TrackStartData}
+			</if>
+			<if test="TrackEndData!=null and TrackEndData!=''">
+				and TrackEndData &lt; #{TrackEndData}
+			</if>
+			<if test="ReturnVisit!=null and ReturnVisit!=''">
+				and ReturnVisit =#{ReturnVisit}
+			</if>
+			<if test="TrackingMode!=null and TrackingMode!=''">
+				and TrackingMode=#{TrackingMode}
+			</if>
+		</where>
+		limit #{page},#{pageSize}
+	</select>
 
 
-<select id="SelectCount" parameterType="fenYe" resultType="int">
-select count(Tid) from track t,Students s,Users u
-<where>
-t.Studentid=s.Sid and t.UserId=u.Uid
-<if test="StudentName!=null and StudentName!=''">
-and s.Sname like "%"#{StudentName}"%"
-</if>
-<if test="UserName!=null and UserName!=''">
-and u.LoginName like "%"#{UserName}"%"
-</if>
-<if test="TrackStartData!=null and TrackStartData!=''">
-and TrackStartData &gt; #{TrackStartData}
-</if>
-<if test="TrackEndData!=null and TrackEndData!=''">
-and TrackEndData &lt; #{TrackEndData}
-</if>
-<if test="ReturnVisit!=null and ReturnVisit!=''">
-and ReturnVisit =#{ReturnVisit}
-</if>
-<if test="TrackingMode!=null and TrackingMode!=''">
-and TrackingMode=#{TrackingMode}
-</if>
-</where>
-</select>
+	<select id="SelectCount" parameterType="fenYe" resultType="int">
+		select count(Tid) from track t,Students s,Users u
+		<where>
+			t.Studentid=s.Sid and t.UserId=u.Uid
+			<if test="StudentName!=null and StudentName!=''">
+				and s.Sname like "%"#{StudentName}"%"
+			</if>
+			<if test="UserName!=null and UserName!=''">
+				and u.LoginName like "%"#{UserName}"%"
+			</if>
+			<if test="TrackStartData!=null and TrackStartData!=''">
+				and TrackStartData &gt; #{TrackStartData}
+			</if>
+			<if test="TrackEndData!=null and TrackEndData!=''">
+				and TrackEndData &lt; #{TrackEndData}
+			</if>
+			<if test="ReturnVisit!=null and ReturnVisit!=''">
+				and ReturnVisit =#{ReturnVisit}
+			</if>
+			<if test="TrackingMode!=null and TrackingMode!=''">
+				and TrackingMode=#{TrackingMode}
+			</if>
+		</where>
+	</select>
 </mapper>

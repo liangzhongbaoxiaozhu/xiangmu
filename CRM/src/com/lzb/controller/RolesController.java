@@ -45,10 +45,10 @@ public class RolesController {
 		Integer updateRoles = rolesService.UpdateRoles(roles);
 		return updateRoles;
 	}
-	@RequestMapping(value="/DeleteRoles",method=RequestMethod.POST)
+	@RequestMapping(value="/DeleteRoles",method=RequestMethod.POST,produces = "text/plain;charset=utf-8")
 	@ResponseBody
-	public Integer DeleteRoles(Integer id){
-		Integer deleteRoles = rolesService.deleteRoles(id);
+	public String DeleteRoles(Integer id){
+		String deleteRoles = rolesService.deleteRoles(id);
 		return deleteRoles;
 	}
 

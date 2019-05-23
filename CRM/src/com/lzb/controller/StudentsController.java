@@ -6,14 +6,28 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
+
+
+
+
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+
+
+
+
 import com.lzb.entity.FenYe;
 import com.lzb.entity.Students;
+import com.lzb.entity.Tips;
 import com.lzb.entity.Track;
 import com.lzb.entity.Users;
 import com.lzb.service.StudentsService;
@@ -140,7 +154,36 @@ public class StudentsController {
     }     
     @RequestMapping(value="/daochuexcel")
 	@ResponseBody
+	//导出表格
 	public void daochuexcel(HttpServletRequest request,HttpServletResponse response,String s_ids) throws IOException {
     	studentsService.daochuexcel(request, response, s_ids);
 	}
+    
+    @RequestMapping(value="/InsertXiaoXi",method={RequestMethod.POST},produces = "text/plain;charset=utf-8")
+   	@ResponseBody
+   	//添加提醒消息
+   	public String InsertXiaoXi(Tips tips)  {
+       	Integer integerTips = studentsService.IntegerTips(tips);
+       	String tishi="添加成功！";
+       	if(integerTips<1){
+       		tishi="添加失败！";
+       	}
+       	return tishi;
+   	}
+    
+    @RequestMapping(value="/SelectXiaoXi",method={RequestMethod.POST})
+   	@ResponseBody
+   	//根据uid查询提醒消息
+   	public JSONArray SelectXiaoXi(Integer tid)  {
+    	List<Tips> selectTips = studentsService.selectTips(tid);
+    	if(selectTips.size()>0){
+    		JSONArray json = JSONArray.fromObject(selectTips.get(0));    
+    		Integer deleteTips = studentsService.deleteTips(selectTips.get(0).getTid());
+           	return json;
+    	}else{
+    		return null;
+    	}
+    	 
+       	
+   	}
 }

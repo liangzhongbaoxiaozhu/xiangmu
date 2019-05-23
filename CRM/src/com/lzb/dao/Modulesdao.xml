@@ -2,56 +2,62 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.lzb.dao.Modulesdao">
-<!-- 根据用户id查角色 -->
-<select id="SelectRoles" parameterType="int" resultType="roles"> 
-select * from Roles where Rid in(select RoleId from UserRoles where UserId=#{id})
-</select>
 
-<!-- 根据角色查模块id -->
-<select id="SelectModules" parameterType="int" resultType="modules">
-select * from Modules where Mid in(select ModuleId from RoleModules where RoleId=#{id})
-</select>
+	<!-- 根据用户id查角色 -->
+	<select id="SelectRoles" parameterType="int" resultType="roles">
+		select * from Roles where Rid in(select RoleId from UserRoles where
+		UserId=#{id})
+	</select>
 
-<!-- 根据父模块id查子模块id -->
-<select id="SelectZiModules" parameterType="int" resultType="modules">
-select * from Modules where ParentId=#{id}
-</select>
+	<!-- 根据角色查模块id -->
+	<select id="SelectModules" parameterType="int" resultType="modules">
+		select * from Modules where Mid in(select ModuleId from RoleModules
+		where RoleId=#{id})
+	</select>
 
-
-
-<select id="SelectModuless" resultType="modules"  parameterType="fenYe">
-select * from modules
-
-limit #{page},#{pageSize}
-</select>
-<select id="SelectCount" resultType="int"  parameterType="fenYe">
-select count(Mid) from modules
-</select>
-
-<insert id="InsertModules" parameterType="modules">
-insert into modules (Mname,ParentId,Path,Weight)values(#{Mname},#{ParentId},#{Path},#{Weight})
-</insert>
-
-<update id="UpdateModules" parameterType="modules">
-update modules set Mname=#{Mname},ParentId=#{ParentId},Path=#{Path},Weight=#{Weight} 
-where Mid=#{Mid}
-</update>
-
-<delete id="deleteModules" parameterType="int">
-delete from modules where Mid=#{id}
-</delete>
+	<!-- 根据父模块id查子模块id -->
+	<select id="SelectZiModules" parameterType="int" resultType="modules">
+		select * from Modules where ParentId=#{id}
+	</select>
 
 
-<!-- 查询所有父id -->
-<select id="SelectFuidMoKuai" resultType="modules">
-select * from Modules where Weight=1
-</select>
-<!-- 根据父模块id查子模块id -->
-<select id="SelectFuChaZiMoKuai" resultType="modules">
-select * from Modules where ParentId=#{id}
-</select>
-<!-- 根据id查询 -->
-<select id="SelectChaZiMoKuai" resultType="modules" parameterType="int">
-select * from Modules where Mid=#{id}
-</select>
+
+	<select id="SelectModuless" resultType="modules" parameterType="fenYe">
+		select * from modules
+
+		limit #{page},#{pageSize}
+	</select>
+	<select id="SelectCount" resultType="int" parameterType="fenYe">
+		select count(Mid) from modules
+	</select>
+
+	<insert id="InsertModules" parameterType="modules">
+		insert into modules
+		(Mname,ParentId,Path,Weight)values(#{Mname},#{ParentId},#{Path},#{Weight})
+	</insert>
+
+	<update id="UpdateModules" parameterType="modules">
+		update modules set
+		Mname=#{Mname},ParentId=#{ParentId},Path=#{Path},Weight=#{Weight}
+		where Mid=#{Mid}
+	</update>
+
+	<delete id="deleteModules" parameterType="int">
+		delete from modules where Mid=#{id}
+	</delete>
+
+
+	<!-- 查询所有父id -->
+	<select id="SelectFuidMoKuai" resultType="modules">
+		select * from Modules where Weight=1
+	</select>
+	<!-- 根据父模块id查子模块id -->
+	<select id="SelectFuChaZiMoKuai" resultType="modules">
+		select * from Modules where ParentId=#{id}
+	</select>
+	<!-- 根据id查询 -->
+	<select id="SelectChaZiMoKuai" resultType="modules"
+		parameterType="int">
+		select * from Modules where Mid=#{id}
+	</select>
 </mapper>

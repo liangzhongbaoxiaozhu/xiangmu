@@ -40,9 +40,19 @@ public class RolesServiceImpl implements RolesService{
 		return rolesdao.UpdateRoles(roles);
 	}
 	@Override
-	public Integer deleteRoles(Integer id) {
+	public String deleteRoles(Integer id) {
 		// TODO Auto-generated method stub
-		return rolesdao.deleteRoles(id);
+		Integer selectUserRolesCount = rolesdao.selectUserRolesCount(id);
+		String jieguo="失败";
+		if(selectUserRolesCount==0){
+			Integer deleteRoles = rolesdao.deleteRoles(id);
+			if(deleteRoles>0){
+				jieguo="成功";
+			}
+		}else{
+			jieguo=jieguo+",某用户拥有该角色不能删除";
+		}
+		return jieguo;
 	}
 	
 	//根据父id查询子id

@@ -22,11 +22,11 @@
    			method:'post',
    			url:"SelectModul",
    			queryParams:{
-   				uid:<%=session.getAttribute("Uid")%>    <%--<%=1%>  <%=session.getAttribute("Uid")%>--%>
+   				uid:<%=1%>    <%--<%=1%>  <%=session.getAttribute("Uid")%>--%>
    			}
 
    	});
-    	   
+    	   tixingxiaoxi(); 
        })
         $(function(){
         	   $("#menuTree").tree({
@@ -60,7 +60,27 @@
 		}
 	})
 }  
-		
+		function tixingxiaoxi(){
+			$.post("SelectXiaoXi",{
+				tid:<%=1%>
+			},function(res){
+				if(res!=null){
+					$.messager.show({
+						title:'我的消息',
+						msg:res[0].tips,
+						timeout:4000,
+						showType:'show',
+						
+					});
+					
+					 var len = $(".messager-body").length;  
+					 setTimeout("tixingxiaoxi()",5000);
+				}
+				 
+				
+
+			},"json")
+		}
 	</script>
 
 </head>

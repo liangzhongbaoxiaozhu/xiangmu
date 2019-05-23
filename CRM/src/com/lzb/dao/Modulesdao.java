@@ -8,13 +8,26 @@ import com.lzb.entity.Roles;
 
 public interface Modulesdao {
 
-	/*根据用户id查角色*/
+	/**
+	 * 根据用户id查角色
+	 * @param id
+	 * @return
+	 */
 	List<Roles> SelectRoles(Integer id);
-	/*根据角色查模块id*/
-	List<Modules> SelectModules(Integer id);
-	/*根据父模块id查子模块id*/
-	List<Modules> SelectZiModules(Integer id);
 	
+	/**
+	 * 根据角色查模块id
+	 * @param id
+	 * @return
+	 */
+	List<Modules> SelectModules(Integer id);
+	
+	/**
+	 * 根据父模块id查子模块id
+	 * @param id
+	 * @return
+	 */
+	List<Modules> SelectZiModules(Integer id);
 	
 	/**
 	 * 查询所有
@@ -29,12 +42,14 @@ public interface Modulesdao {
 	 * @return
 	 */
 	Integer SelectCount(FenYe fen);
+	
 	/**
 	 * 新增
 	 * @param Modules
 	 * @return
 	 */
 	Integer InsertModules(Modules modules);
+	
 	/**
 	 * 修改
 	 * @param Modules
@@ -56,8 +71,14 @@ public interface Modulesdao {
 	 * @return
 	 */
 	List<Modules> SelectFuidMoKuai();
-	/*根据父模块id查子模块id*/
+	
+	/**
+	 * 根据父模块id查子模块id
+	 * @param id
+	 * @return
+	 */
 	List<Modules> SelectFuChaZiMoKuai(Integer id);
+	
 	/**
 	 * 根据id查询模块
 	 * @return

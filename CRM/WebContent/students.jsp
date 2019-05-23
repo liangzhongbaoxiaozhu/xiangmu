@@ -36,7 +36,7 @@ function init(){
 }
 
 function formatterCaozuo(value,row,index){
-	return "<a href='javascript:void(0)' onclick='genzong("+index+")' class='easyui-linkbutton' >添加跟踪日志</a>    <a href='javascript:void(0)' onclick='edit("+ index +")'>修改</a>   <a href='javascript:void(0)' onclick='del("+ index +")'>删除</a>   <a href='javascript:void(0)' onclick='updateUU("+ index +")'>查看</a>    <a href='javascript:void(0)' onclick='ck_genzong("+ index +")'>查看日志</a>"
+	return "<a href='javascript:void(0)' onclick='genzong("+index+")' class='easyui-linkbutton' >添加跟踪日志</a>    <a href='javascript:void(0)' onclick='edit("+ index +")'>修改</a>   <a href='javascript:void(0)' onclick='del("+ index +")'>删除</a>   <a href='javascript:void(0)' onclick='updateUU("+ index +")'>查看</a>    <a href='javascript:void(0)' onclick='ck_genzong("+ index +")'>查看日志</a>  <a href='javascript:void(0)' onclick='tx_xiaoxi("+ index +")'>提醒消息</a>"
 }
 function edit(index){
 	
@@ -47,7 +47,6 @@ function edit(index){
 /* 修改 */
  
 function saveEdit1(){
-	alert("123");
 	$.post("updateStu",{
 	    Sid:$("#sid4").val(),
 		Sname:$("#sname4").val(),
@@ -125,8 +124,8 @@ function addb(){
 		qq:$("#qq1").val(),
 		weiXin:$("#weiXin1").val(),
 		isEnroll:$("#isEnroll1").combobox("getValues").toString(),
-    	remarks:$("#remarks1").val()
-    	
+    	remarks:$("#remarks1").val(),
+    	entryPersonId:<%=session.getAttribute("Uid")%>
 	},function(res){
 		$("#stutab").datagrid("reload");
 		$("#sname1").val(""),
@@ -151,7 +150,7 @@ function addb(){
 	})
 }
 function addc(){
-	$("#adds").window("close");
+	$("#inse").window("close");
 }
 
 /* 删除  */
@@ -281,7 +280,7 @@ function addzxs(){
 				arr=arr+","+shu[i].sid;	
 			}
 		}
-		alert(arr);
+		/* alert(arr); */
 		$.post("updateXueShengZiXunShi",{
 			uid:$("#zxs").combobox("getValue"),
 			sid:arr
@@ -327,6 +326,33 @@ function daochuexcel() {
 			}
 		});
 	}
+}
+function tx_xiaoxi(index){
+	var data = $("#stutab").datagrid("getData");
+	var row = data.rows[index];
+	$("#frm4").form("load", row);
+	$("#tj_txxx").window("open");
+}
+function addtxxx(){
+	$.post("InsertXiaoXi",{
+		usersid:$("#consultantId7").val(),
+		tips:$("#tips7").val()
+	},function(res){
+		$.messager.show({
+			title:'我的消息',
+			msg:res,
+			timeout:1000,
+			showType:'slide',
+			style:{
+					
+				}
+		});
+		$("#frm4").form("clear");
+		$("#tj_txxx").window('close');
+	})
+}
+function addtxxxgb(){
+	$("#tj_txxx").window('close');
 }
 </script>
 </head>
@@ -1097,8 +1123,38 @@ function daochuexcel() {
            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="addzxsgb()">关闭</a>
         </div>
 	</div>
+	
+	
+	
+	<div id="tj_txxx" class="easyui-window" title="添加提醒消息"
+		style="width: 400px; height: 200px; text-align: center;"
+		data-options="iconCls:'icon-save',modal:true,closed:true">
+		<h3>添加提醒消息</h3> 
+	<form id="frm4" class="easyui-form" style="padding-left: 100px">
+		<input    type="text"  
+				id="consultantId7" name="consultantId"  style="display:none;"/>
+			<div style="text-align: center;">
+		<table >
+		
+		  <tr>
+		    <td>咨询师姓名</td>
+		    <td><input disabled="disabled" class="easyui-textbox" type="text"
+				id="zixunshi7" name="zixunshi" /></td>
+		  </tr>
+		  <tr>
+		    <td>提醒消息</td>
+		    <td><input class="easyui-textbox" type="text"
+				id="tips7" name="tips" /></td>
+		  </tr>
+		</table>
+		</div>
+        </form>
+        <div style="padding-top: 30px">
+           <a href="javascript:void(0)" class="easyui-linkbutton" onclick="addtxxx()">保存</a>
+           <a href="javascript:void(0)" class="easyui-linkbutton" onclick="addtxxxgb()">关闭</a>
+        </div>
+	</div>
 </body>
-
 
 
 </html>

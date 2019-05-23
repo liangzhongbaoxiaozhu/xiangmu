@@ -36,16 +36,12 @@ $(function(){
 function shanchu(index) {
 	var data = $("#dg").datagrid("getData");
 	var row = data.rows[index];
-	$.messager.confirm('确认','您确认想要删除记录吗？',function(r){    
+	$.messager.confirm('确认','您确认想要删除角色吗？',function(r){    
 	    if (r){    
 	    	$.post("DeleteRoles", {
 				id : row.rid,
 			}, function(res) {
-				if(res>0){
-					$.messager.alert('提示','删除成功!'); 
-				}else{
-					$.messager.alert('提示','删除失败!'); 
-				}
+					$.messager.alert('提示','删除'+res+'!'); 
 			})
 			$("#dg").datagrid("reload");  
 	    }
