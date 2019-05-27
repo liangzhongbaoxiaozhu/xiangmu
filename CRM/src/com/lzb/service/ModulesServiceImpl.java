@@ -135,16 +135,28 @@ public class ModulesServiceImpl implements ModulesService{
 	@Override
 	public Integer InsertModules(Modules modules) {
 		// TODO Auto-generated method stub
+		List<Modules> selectMiZi = modulesdao.SelectMiZi(modules.getMname());
+		if(selectMiZi.size()>0){
+			return 2;
+		}
 		return modulesdao.InsertModules(modules);
 	}
 	@Override
 	public Integer UpdateModules(Modules modules) {
 		// TODO Auto-generated method stub
+		List<Modules> selectMiZi = modulesdao.SelectMiZi(modules.getMname());
+		if(selectMiZi.size()>0){
+			return 2;
+		}
 		return modulesdao.UpdateModules(modules);
 	}
 	@Override
 	public Integer deleteModules(Integer id) {
 		// TODO Auto-generated method stub
+		Modules selectMoKuai = modulesdao.SelectMoKuai(id);
+		if(selectMoKuai!=null){
+			return 2;
+		}
 		return modulesdao.deleteModules(id);
 	}
 	@Override

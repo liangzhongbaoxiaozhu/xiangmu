@@ -193,39 +193,56 @@ function updateQXGB(){
 		</table>
 	</div>
 	
-	<div id="addwin" class="easyui-window" title="增加" style="width:300px;height:400px"   
+	<div id="addwin" class="easyui-window" title="增加" style="width:300px;height:150px"   
         data-options="iconCls:'icon-save',modal:true,closed:true"> 
-        <div style="padding: 20px 150px 50px 50px">  
-    <div> 
-    
+        <div style="text-align: center;padding-top: 20px;">  
+    <table style=" margin: auto;">
+    <tr>
+    <td>
     <label for="name">名称:</label>  
-    <input class="easyui-validatebox" type="text" id="rname2" name="rname" data-options="required:true" />   
-    </div>  
-    
+    </td>
+    <td>
+    <input class="easyui-textbox" type="text" id="rname2" name="rname"  />   
+    </td>
+    </tr>
+    </table>
     </div>
-    <div style="padding-left:80px ">
+    <div style="text-align: center;padding-top: 20px;">
     <a onclick="addbaocuen()" href="javascript:void(0)" class="easyui-linkbutton" ">保存</a>
     <a onclick="addguanbi()" href="javascript:void(0)" class="easyui-linkbutton" ">关闭</a>
     </div>
 </div>  
 
-<div id="updatewin" class="easyui-window" title="修改" style="width:300px;height:400px"   
+<div id="updatewin" class="easyui-window" title="修改" style="width:300px;height:180px"   
         data-options="iconCls:'icon-save',modal:true,closed:true"> 
-        <div style="padding: 20px 150px 50px 50px">  
-   <div> 
+        <div style="text-align: center;padding-top: 20px;">  
+    <table style=" margin: auto;">
+    <tr>
+    <td>
     <label for="name">id:</label>  
-    <input class="easyui-validatebox" disabled="disabled" type="text" id="rid3" name="rid" data-options="required:true" />   
-    <label for="name">名称:</label>  
-    <input class="easyui-validatebox" type="text" id="rname3" name="rname" data-options="required:true" />   
-    </div>  
+    </td>
+    <td>
+    <input class="easyui-textbox" disabled="disabled" type="text" id="rid3" name="rid"  />   
+    </td>
+    </tr>
+    
+    <tr>
+    <td>
+    <label for="name">名称:</label>
+    </td>
+    <td>  
+    <input class="easyui-textbox" type="text" id="rname3" name="rname"  />   
+    </td>
+    </tr>
+    </table>
     </div>
-    <div style="padding-left:80px ">
+    <div style="text-align: center;padding-top: 20px;">
     <a onclick="updatebaocuen()" href="javascript:void(0)" class="easyui-linkbutton" ">保存</a>
     <a onclick="updateguanbi()" href="javascript:void(0)" class="easyui-linkbutton" ">关闭</a>
     </div>
 </div>
 
-<div id="updatequanxian" class="easyui-window" title="权限修改" style="width:200px;height:300px"   
+<div id="updatequanxian" class="easyui-window" title="权限修改" style="width:200px;height:400px"   
         data-options="iconCls:'icon-save',modal:true,closed:true"> 
         <div style="padding-left:25px;padding-top: 30px ">
         <div id="menuTree">
@@ -233,7 +250,7 @@ function updateQXGB(){
 
 		</div>
 		</div>
-		<div style="padding-left:50px;padding-top: 30px ">
+		<div style="text-align: center;padding-top: 20px;">
     <a onclick="updateQXBC()" href="javascript:void(0)" class="easyui-linkbutton" ">保存    </a>
     <a onclick="updateQXGB()" href="javascript:void(0)" class="easyui-linkbutton" ">关闭</a>
 </div>

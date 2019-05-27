@@ -26,7 +26,7 @@ function init(){
 	    method:'post',
 	    toolbar:"#stubar",
 	    queryParams: {
-	    	uid:"1",
+	    	uid:<%=session.getAttribute("Uid")%>,
 	    	sname:$("#Sname2").val(),
 	        smtel:$("#Smtel2").val(),
 	        zixunshi:$("#zixunshi2").val(),
@@ -53,7 +53,11 @@ function edit(index){
 /* 修改 */
  
 function saveEdit1(){
-	alert("123");
+	var checkRole = /^((13[0-9])|(14[5,7,9])|(15([0-3]|[5-9]))|(166)|(17[0,1,3,5,6,7,8])|(18[0-9])|(19[8|9]))\d{8}$/;
+	var phone = $("#state4").val();
+	if (!checkRole.test(phone)) {
+		alert("手机号格式不正确");
+	} else {
 	$.post("updateStu",{
 	    Sid:$("#sid4").val(),
 		Sname:$("#sname4").val(),
@@ -107,6 +111,7 @@ function saveEdit1(){
 			$.messager.alert('警告','修改失败');
 		}
 	},"json")
+	}
 }
 function updsguanbi(){
 	$("#upds").dialog("close");
@@ -118,6 +123,11 @@ function insertStu(){
 	$("#inse").window("open");
 }
 function addb(){
+	var checkRole = /^((13[0-9])|(14[5,7,9])|(15([0-3]|[5-9]))|(166)|(17[0,1,3,5,6,7,8])|(18[0-9])|(19[8|9]))\d{8}$/;
+	var phone = $("#state1").val();
+	if (!checkRole.test(phone)) {
+		alert("手机号格式不正确");
+	} else {
 	$.post("addStu",{
 		sname:$("#sname1").val(),
 		sex:$("#sex1").val(),
@@ -155,6 +165,7 @@ function addb(){
 			$.messager.alert("提示",'新增失败');
 		}
 	})
+	}
 }
 function addc(){
 	$("#adds").window("close");
@@ -341,12 +352,12 @@ function daochuexcel() {
 	<!-- 搜索表单 -->
 	<div id="stubar">
 		<form id="ffs">
-			<label for="name">姓名:</label> <input class="easyui-validatebox"
+			<label for="name">姓名:</label> <input class="easyui-textbox"
 				type="text" id="Sname2" /> <label for="name">电话:</label> <input
-				class="easyui-validatebox" type="text" id="Smtel2" /> <label
-				for="name">咨询师:</label> <input class="easyui-validatebox"
+				class="easyui-textbox" type="text" id="Smtel2" /> <label
+				for="name">咨询师:</label> <input class="easyui-textbox"
 				type="text" id="zixunshi2" /> <label for="name">QQ:</label> <input
-				class="easyui-validatebox" type="text" id="QQ2" /> <label
+				class="easyui-textbox" type="text" id="QQ2" /> <label
 				for="name">首次回访开始时间:</label> <input id="StartData2"
 				class="easyui-datebox"> </input> <label for="name">首次回访结束时间:</label>
 			<input id="EndData2" class="easyui-datebox"> </input> <label
@@ -694,114 +705,161 @@ function daochuexcel() {
 
 	</div>
 	<!-- 添加表单 -->
-	<div id="inse" class="easyui-window" title="添加"
-		data-options="iconCls:'icon-save',modal:true,closed:true">
-		<div style="padding: 20px 150px 50px 50px">
-			<div>
-				<div>
-					<label for="name">姓名:</label> <input class="easyui-validatebox"
-						type="text" id="sname1" name="sname1" data-options="required:true" />
-				</div>
-				<div>
-					<br /> <label for="name">性别:</label> <input
-						class="easyui-validatebox" type="text" id="sex1" name="sex1"
-						data-options="required:true" />
-				</div>
-				<div>
-					<br /> <label for="name">年龄:</label> <input
-						class="easyui-validatebox" type="text" id="age1" name="age1"
-						data-options="required:true" />
-				</div>
-				<div>
-					<br /> <label for="name">电话:</label> <input
-						class="easyui-validatebox" type="text" id="smtel1" name="smtel1"
-						data-options="required:true" />
-				</div>
-				<div>
-					<br /> <label for="name">学历:</label> <select id="education1"
-						class="easyui-combobox" name="dept" style="width: 150px;">
-						<option value="">--请选择--</option>
-						<option value="未知">未知</option>
-						<option value="大专">大专</option>
-						<option value="高中">高中</option>
-						<option value="中专">中专</option>
-						<option value="初中">初中</option>
-						<option value="本科">本科</option>
-						<option value="其它">其它</option>
-					</select>
-				</div>
-				<div>
-					<br /> <label for="name">状态:</label> <select id="state1"
-						class="easyui-combobox" name="dept" style="width: 150px;">
-						<option value="">--请选择--</option>
-						<option value="未知">未知</option>
-						<option value="待业">待业</option>
-						<option value="在职">在职</option>
-						<option value="在读">在读</option>
-					</select>
-				</div>
-				<div>
-					<br /> <label for="name">来源渠道:</label> <select id="channel1"
-						class="easyui-combobox" name="dept" style="width: 150px;">
-						<option value="">--请选择--</option>
-						<option value="未知">未知</option>
-						<option value="百度">百度</option>
-						<option value="百度移动端">百度移动端</option>
-						<option value="360">360</option>
-						<option value="360移动端">360移动端</option>
-						<option value="搜狗">搜狗</option>
-						<option value="搜狗移动端">搜狗移动端</option>
-						<option value="UC移动端">UC移动端</option>
-						<option value="直接输入">直接输入</option>
-						<option value="自然流量">自然流量</option>
-						<option value="直电">直电</option>
-						<option value="微信">微信</option>
-						<option value="QQ">QQ</option>
-					</select>
-				</div>
-				<div>
-					<br /> <label for="name">来源网站:</label> <select id="website1"
-						class="easyui-combobox" name="dept" style="width: 150px;">
-						<option value="">--请选择--</option>
-						<option value="其它">其它</option>
-						<option value="高考站">高考站</option>
-						<option value="职英A站">职英A站</option>
-					</select>
-				</div>
-				<div>
-					<br /> <label for="name">来源关键词:</label> <input
-						class="easyui-validatebox" type="text" id="keyWord1"
-						name="keyWord1" data-options="required:true" />
-				</div>
-				<div>
-					<br /> <label for="name">QQ:</label> <input
-						class="easyui-validatebox" type="text" id="qq1" name="qq1"
-						data-options="required:true" />
-				</div>
-				<div>
-					<br /> <label for="name">微信:</label> <input
-						class="easyui-validatebox" type="text" id="weiXin1" name="weiXin1"
-						data-options="required:true" />
-				</div>
-				<div>
-					<br /> <label for="name">是否报名:</label> <select id="isEnroll1"
-						class="easyui-combobox" name="dept" style="width: 150px;">
-						<option value="">--请选择--</option>
-						<option value="是">是</option>
-						<option value="否">否</option>
-					</select>
-				</div>
-				<br /> <label for="name">在线备注:</label> <input
-					class="easyui-validatebox" type="text" id="remarks1"
-					name="remarks1" data-options="required:true" />
-			</div>
-		</div>
-		<div style="padding-left: 80px">
-			<a href="javascript:void(0)" class="easyui-linkbutton"
-				onclick="addb()">保存</a> <a href="javascript:void(0)"
-				class="easyui-linkbutton" onclick="addc()">关闭</a>
-		</div>
-	</div>
+	<div id="inse" style="width: 400px; height: 440px" class="easyui-window" title="添加" data-options="iconCls:'icon-save',modal:true,closed:true">   
+     <div style="text-align: center;padding-top: 10px;">  
+      <table style="width: 70%; margin: auto;">
+      <tr>
+         <td>
+          <label for="name">姓名:</label>   
+         </td>  
+         <td>   
+          <input class="easyui-textbox" type="text" id="sname1" name="sname1" />
+         </td>  
+      </tr> 
+      <tr>
+         <td>   
+          <label for="name">性别:</label>   
+         </td>
+         <td>   
+          <input class="easyui-textbox" type="text" id="sex1" name="sex1" />   
+          </td>
+       </tr> 
+       <tr>
+         <td>   
+          <label for="name">年龄:</label>   
+         </td>
+         <td>
+          <input class="easyui-textbox" type="text" id="age1" name="age1" />   
+         </td>
+       </tr> 
+       <tr>
+         <td> 
+          <label for="name">电话:</label> 
+         </td>
+         <td>  
+          <input class="easyui-textbox" type="text" id="smtel1" name="smtel1" /> 
+         </td>
+       </tr>
+       <tr>
+         <td>  
+          <label for="name">学历:</label> 
+         </td>
+         <td>     
+          <select id="education1" class="easyui-combobox" name="dept" style="width:150px;">   
+            <option value="">--请选择--</option>   
+            <option value="未知">未知</option>   
+            <option value="大专">大专</option>
+            <option value="高中">高中</option>  
+            <option value="中专">中专</option>
+            <option value="初中">初中</option>
+            <option value="本科">本科</option> 
+            <option value="其它">其它</option> 
+          </select>
+         </td>
+       </tr>
+       <tr>
+         <td>  
+          <label for="name">状态:</label>  
+         </td>
+         <td>    
+          <select id="state1" class="easyui-combobox" name="dept" style="width:150px;">   
+            <option value="">--请选择--</option>   
+            <option value="未知">未知</option>   
+            <option value="待业">待业</option>
+            <option value="在职">在职</option>  
+            <option value="在读">在读</option>
+          </select>
+         </td>
+       </tr>
+       <tr>
+         <td> 
+          <label for="name">来源渠道:</label> 
+         </td>
+         <td>      
+          <select id="channel1" class="easyui-combobox" name="dept" style="width:150px;">   
+	         <option value="">--请选择--</option>   
+	         <option value="未知">未知</option>   
+	         <option value="百度">百度</option>
+	         <option value="百度移动端">百度移动端</option>  
+	         <option value="360">360</option>
+	         <option value="360移动端">360移动端</option>
+	         <option value="搜狗">搜狗</option>
+	         <option value="搜狗移动端">搜狗移动端</option>
+	         <option value="UC移动端">UC移动端</option>
+	         <option value="直接输入">直接输入</option>
+	         <option value="自然流量">自然流量</option>
+	         <option value="直电">直电</option>
+	         <option value="微信">微信</option>
+	         <option value="QQ">QQ</option>
+          </select> 
+         </td>
+       </tr>
+       <tr>
+         <td>  
+          <label for="name">来源网站:</label>
+         </td>
+         <td> 
+          <select id="website1" class="easyui-combobox" name="dept" style="width:150px;">   
+            <option value="">--请选择--</option>   
+            <option value="其它">其它</option>   
+            <option value="高考站">高考站</option>
+            <option value="职英A站">职英A站</option>  
+          </select>
+         </td>
+       </tr> 
+       <tr>
+         <td>            
+          <label for="name">来源关键词:</label>
+         </td>
+         <td>  
+          <input class="easyui-textbox" type="text" id="keyWord1" name="keyWord1" />  
+         </td>
+       </tr> 
+       <tr>
+         <td>
+          <label for="name">QQ:</label>
+         </td>
+         <td>    
+          <input class="easyui-textbox" type="text" id="qq1" name="qq1" />
+         </td>
+       </tr>
+       <tr>
+         <td> 
+          <label for="name">微信:</label>
+         </td>
+         <td>     
+          <input class="easyui-textbox" type="text" id="weiXin1" name="weiXin1" />
+         </td>
+       </tr>
+       <tr>
+         <td> 
+          <label for="name">是否报名:</label> 
+         </td>
+         <td>     
+          <select id="isEnroll1" class="easyui-combobox" name="dept" style="width:150px;">   
+            <option value="">--请选择--</option>   
+            <option value="是">是</option>
+            <option value="否">否</option>  
+          </select>
+        </td>
+       </tr>
+        <tr>
+         <td> 
+          <label for="name">在线备注:</label> 
+         </td>
+         <td>   
+          <input class="easyui-textbox" type="text" id="remarks1" name="remarks1" />
+         </td>
+       </tr>
+       </table>
+       </div>
+        <div style="text-align: center;padding-top: 20px">
+           <a href="javascript:void(0)" class="easyui-linkbutton" onclick="addb()">保存</a>
+           <a href="javascript:void(0)" class="easyui-linkbutton" onclick="addc()">关闭</a>
+        </div>
+
+   
+  </div> 
 
 
 	<!--  跟踪-->

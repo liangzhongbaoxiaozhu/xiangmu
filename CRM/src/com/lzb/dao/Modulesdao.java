@@ -80,8 +80,20 @@ public interface Modulesdao {
 	List<Modules> SelectFuChaZiMoKuai(Integer id);
 	
 	/**
-	 * 根据id查询模块
+	 * 根据id查询子模块
 	 * @return
 	 */
 	Modules SelectChaZiMoKuai(Integer id);
+	/**
+	 * 根据id查询模块
+	 * @param id
+	 * @return
+	 */
+	Modules SelectMoKuai(Integer id);
+	/**
+	 * 根据名字查询模块
+	 * @param mizi
+	 * @return
+	 */
+	List<Modules> SelectMiZi(String mizi);
 }

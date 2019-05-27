@@ -79,6 +79,7 @@ public class ModulesController {
 	@ResponseBody
 	public Integer DeleteModules(Integer id){
 		Integer deleteRoles = modulesService.deleteModules(id);
+			
 		return deleteRoles;
 	}
 	

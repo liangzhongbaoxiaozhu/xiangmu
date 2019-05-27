@@ -20,6 +20,7 @@ public class UsersServiceImpl implements UsersService {
 	@Override
 	public Users DengLu(Users user) {
 		// TODO Auto-generated method stub
+		user.setPassWord(MD5Util.getMD5(user.getPassWord()));
 		return usersdao.DengLu(user);
 	}
 
@@ -129,7 +130,11 @@ public class UsersServiceImpl implements UsersService {
 	@Override
 	public Integer updateMiMa(Integer id) {
 		// TODO Auto-generated method stub
-		return usersdao.updateMiMa(id);
+		Users user=new Users();
+		user.setUid(id);
+		String md5 = MD5Util.getMD5("ysd123");
+		user.setPassWord(md5);
+		return usersdao.updateMiMa(user);
 	}
 
 	@Override
@@ -151,6 +156,8 @@ public class UsersServiceImpl implements UsersService {
 	@Override
 	public Integer UpdateGeRenMiMa(Users user) {
 		// TODO Auto-generated method stub
+		user.setPassWord(MD5Util.getMD5(user.getPassWord()));
+		user.setMiMa(MD5Util.getMD5(user.getMiMa()));
 		Integer updateGeRenMiMa = usersdao.UpdateGeRenMiMa(user);
 		return updateGeRenMiMa;
 	}
@@ -193,6 +200,26 @@ public class UsersServiceImpl implements UsersService {
 	public String SelectZiDongFenPei() {
 		// TODO Auto-generated method stub
 		return usersdao.SelectZiDongFenPei();
+	}
+
+	@Override
+	public Users SelectGeRenQianDao(Integer uid) {
+		// TODO Auto-generated method stub
+		
+		return usersdao.SelectGeRenQianDao(uid);
+	}
+
+	@Override
+	public Integer updateChiDao() {
+		// TODO Auto-generated method stub
+		List<Users> selectKuanBan = usersdao.SelectKuanBan();
+		for(Users u:selectKuanBan){
+			Integer updateChiDao = usersdao.updateChiDao(u.getUid());
+			if(updateChiDao<0){
+				return 0;
+			}
+		}
+		return 1;
 	}
 
 }

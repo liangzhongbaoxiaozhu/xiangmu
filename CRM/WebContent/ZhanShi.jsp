@@ -22,12 +22,28 @@
    			method:'post',
    			url:"SelectModul",
    			queryParams:{
-   				uid:<%=1%>    <%--<%=1%>  <%=session.getAttribute("Uid")%>--%>
+   				uid:<%=session.getAttribute("Uid")%>    <%--  --%>
    			}
 
    	});
     	   tixingxiaoxi(); 
        })
+       //查询个人签到状态
+       $.post("SelectGeRenQianDaoZhuangTai",{
+    	   uid:<%=session.getAttribute("Uid")%>
+       },function(res){
+    	   var qianda = document.getElementById("qiandao");
+   		   var qiantu = document.getElementById("qiantui");
+    	   if(res==1||res==2){
+    		qiantu.style.display = "block"; //style中的display属性
+   			qianda.style.display = "none";
+    	   }
+    	   if(res==0){
+    		qianda.style.display = "block"; //style中的display属性
+    		qiantu.style.display = "none";
+    	   }
+       })
+       
         $(function(){
         	   $("#menuTree").tree({
      		  onClick: function(node){
@@ -53,7 +69,11 @@
 		uid:<%=session.getAttribute("Uid")%>
 	},function(res){
 		$("#dg").datagrid("reload");
-		if(res>0){
+		var qianda = document.getElementById("qiandao");
+		var qiantu = document.getElementById("qiantui");
+		if(res.search("签到成功")!=-1){
+			qiantu.style.display = "block"; //style中的display属性
+			qianda.style.display = "none";
 			$.messager.alert('提示','签到成功！');
 		}else{
 			$.messager.alert('提示','签到失败！');
@@ -62,7 +82,7 @@
 }  
 		function tixingxiaoxi(){
 			$.post("SelectXiaoXi",{
-				tid:<%=1%>
+				tid:<%=session.getAttribute("Uid")%>
 			},function(res){
 				if(res!=null){
 					$.messager.show({
@@ -81,6 +101,58 @@
 
 			},"json")
 		}
+		function tuichu(){
+			window.location="http://localhost:8080/CRM/index.jsp";  
+		}
+		//签退
+		function qiantui(){
+			   $.post("UpdateQianTui",{
+				   uid:<%=session.getAttribute("Uid")%>
+			   },function(res){
+				   $("#dg").datagrid("reload");
+				   var qianda = document.getElementById("qiandao");
+				   var qiantu = document.getElementById("qiantui");
+				   if(res.search("签退成功")!=-1){
+					   qianda.style.display = "block"; //style中的display属性
+					   qiantu.style.display = "none";
+					   alert(res);  
+				   }else{
+					   alert(res);  
+				   }
+				   
+			   })
+		   }
+		
+		/* 
+		  入参是目标时间的小时数，取值0-23，当然可以根据需要拓展成分钟数，这里主要是提供思路所以从简
+		 */
+		function setRegular(targetHour){
+		  var timeInterval,nowTime,nowSeconds,targetSeconds 
+		 
+		  nowTime = new Date()
+		  // 计算当前时间的秒数
+		  nowSeconds = nowTime.getHours() * 3600 + nowTime.getMinutes() * 60 + nowTime.getSeconds()
+		 
+		  // 计算目标时间对应的秒数
+		  targetSeconds =  targetHour * 3600
+		 
+		  //  判断是否已超过今日目标小时，若超过，时间间隔设置为距离明天目标小时的距离
+		  timeInterval = targetSeconds > nowSeconds ? targetSeconds - nowSeconds: targetSeconds + 24 * 3600 - nowSeconds 
+		  setTimeout(getProductFileList,timeInterval * 1000)
+		}
+		 
+		function getProductFileList(){
+		  $.post("KuangBan",{},function(res){
+			  if(res<1){
+				  alert("出现错误，请找管理员进行修改！");
+			  }
+		  })//你自己的数据处理函数
+		  setTimeout(getProductFileList,24*3600 * 1000)//之后每天调用一次
+		}
+		setRegular(9);//比如目标是每天早上8点
+		
+		
+		
 	</script>
 
 </head>
@@ -88,9 +160,16 @@
 	<div class="easyui-layout" style="width: 100%; height: 700px;">
 		<div data-options="region:'north'" style="height: 50px">
 			<h2>
-				CRM系统欢迎您！<%=session.getAttribute("name")%><a style="float: right;"
+				CRM系统欢迎您！<%=session.getAttribute("name")%>
+				<a 
+					href="javascript:void(0)" 
+					onclick="tuichu()" data-options="">退出</a>
+				<a style="float: right;" id="qiandao"
 					href="javascript:void(0)" class="easyui-linkbutton"
 					onclick="qiandao()" data-options="iconCls:'icon-ok'">签到</a>
+				<a style="float: right;display:none;" id="qiantui"
+					href="javascript:void(0)" class="easyui-linkbutton"
+					onclick="qiantui()" data-options="iconCls:'icon-ok'">签退</a>
 			</h2>
 
 		</div>

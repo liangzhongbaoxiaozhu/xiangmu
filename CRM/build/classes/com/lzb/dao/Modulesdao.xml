@@ -55,9 +55,16 @@
 	<select id="SelectFuChaZiMoKuai" resultType="modules">
 		select * from Modules where ParentId=#{id}
 	</select>
-	<!-- 根据id查询 -->
+	<!-- 根据id查询子 -->
 	<select id="SelectChaZiMoKuai" resultType="modules"
 		parameterType="int">
 		select * from Modules where Mid=#{id}
+	</select>
+	<!-- 根据id查询 -->
+	<select id="SelectMoKuai" parameterType="int" resultType="modules">
+	select * from modules where mid=#{id}
+	</select>
+	<select id="SelectMiZi" parameterType="string" resultType="modules"> 
+	select * from modules where Mname =#{mizi}
 	</select>
 </mapper>

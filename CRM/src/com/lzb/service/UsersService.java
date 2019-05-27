@@ -74,4 +74,8 @@ public interface UsersService {
 	//查询自动分配
 	String SelectZiDongFenPei();
 	
+	//查询个人签到状态
+	Users SelectGeRenQianDao(Integer uid);
+	//旷班
+	Integer updateChiDao();
 }

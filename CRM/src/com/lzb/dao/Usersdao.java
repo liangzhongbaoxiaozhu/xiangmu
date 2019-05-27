@@ -125,7 +125,7 @@ public interface Usersdao {
 	 * @param id
 	 * @return
 	 */
-	Integer updateMiMa(Integer id);
+	Integer updateMiMa(Users user);
 	
 	/**
 	 * 查看个人信息
@@ -194,4 +194,21 @@ public interface Usersdao {
 	 * @return
 	 */
 	Integer updateguanbiZiDong();
+	/**
+	 * 查询个人签到状态
+	 * @param uid
+	 * @return
+	 */
+	Users SelectGeRenQianDao(Integer uid);
+	/**
+	 * 旷班
+	 * @param uid
+	 * @return
+	 */
+	Integer updateChiDao(Integer uid);
+	/**
+	 * 查询旷班的人，进行修改
+	 * @return
+	 */
+	List<Users> SelectKuanBan();
 }

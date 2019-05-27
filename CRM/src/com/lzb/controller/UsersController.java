@@ -1,5 +1,7 @@
 package com.lzb.controller;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -141,16 +143,50 @@ public class UsersController {
 		}
 		
 		//签到
-		@RequestMapping(value="/Qian",method=RequestMethod.POST)
+		@RequestMapping(value="/Qian",method=RequestMethod.POST,produces = "text/plain;charset=utf-8")
 		@ResponseBody
-		public Integer Qian(Integer uid){
+		public String Qian(Integer uid) throws ParseException{
+			String zhuangtai="";
 			Users user =new Users();
 			user.setUid(uid);
 			Date t = new Date();
 			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			user.setSignInData(df.format(t));
-			Integer SelectGeRen = usersService.QianDao(user);
-			return SelectGeRen;
+			SimpleDateFormat XianShiShiJian = new SimpleDateFormat("HH:mm:ss");
+			
+			//用户登录时间
+			String YongHuDengLuShiJian=XianShiShiJian.format(t);
+			Date  uhdlsj=XianShiShiJian.parse(YongHuDengLuShiJian);
+			//登录限定时间
+			Date dqsj=XianShiShiJian.parse("09:00:00");
+			
+			//迟到限定时间时间
+			Date cdsj=XianShiShiJian.parse("10:00:00");
+			
+			// 签退 0  签到  1 迟到 2 早退 3 旷班 4
+			
+			System.out.println("用户登录时间:"+uhdlsj);
+			/*System.out.println("登录限定时间:"+dqsj);*/
+			System.out.println("用户登录判定:"+uhdlsj.before(dqsj));
+			System.out.println("用户迟到判定:"+uhdlsj.before(cdsj));
+			
+			if(uhdlsj.before(dqsj)){
+				user.setSignIn(1);
+				zhuangtai="签到成功！";
+				user.setSignInData(df.format(t));
+				Integer SelectGeRen = usersService.QianDao(user);
+			}
+			if(uhdlsj.before(cdsj)){
+				user.setSignIn(2);
+				zhuangtai="签到成功！您已迟到！";
+				user.setSignInData(df.format(t));
+				Integer SelectGeRen = usersService.QianDao(user);
+			}
+			if(cdsj.before(uhdlsj)){
+				zhuangtai="已超过签到时间！";
+			}
+			
+			
+			return zhuangtai;
 		}
 		//修改密码
 		@RequestMapping(value="/UpdateGeReMiMa",method=RequestMethod.POST)
@@ -178,18 +214,45 @@ public class UsersController {
 			return selectQianDao;
 		}	
 		//签退
-		@RequestMapping(value="/UpdateQianTui",method=RequestMethod.POST)
+		@RequestMapping(value="/UpdateQianTui",method=RequestMethod.POST,produces = "text/plain;charset=utf-8")
 		@ResponseBody
-		public Integer UpdateQianTui(String uid){
+		public String UpdateQianTui(String uid) throws ParseException{
+			
+			Date t = new Date();
+			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			SimpleDateFormat XianShiShiJian = new SimpleDateFormat("HH:mm:ss");
+			
+			//用户签退时间
+			String YongHuDengLuShiJian=XianShiShiJian.format(t);
+			Date  uhdtsj=XianShiShiJian.parse(YongHuDengLuShiJian);
+			//签退限定时间
+			Date dtsj=XianShiShiJian.parse("17:00:00");
+			
+			System.out.println("用户签退时间:"+uhdtsj);
+			System.out.println("用户签退判定:"+dtsj.before(uhdtsj));
+			
+			String huihua="签退时间未到，请到时间下班！";
+			
+			if(dtsj.before(uhdtsj)){
+				huihua="签退成功！";
 			String[] split = uid.split(",");
 			for(int i=0;i<split.length;i++){
 				Integer selectQianTui = usersService.SelectQianTui(Integer.parseInt(split[i]));
+				
 				if(selectQianTui<1){
-					return selectQianTui;
+					huihua="签退失败，请找管理员!";
 				}
 			}
-			return 1;
-		}		
+			}
+			return huihua;
+		}
+		//旷班
+		@RequestMapping(value="/KuangBan",method=RequestMethod.POST)
+		@ResponseBody
+			public Integer KuangBan(){
+			Integer updateChiDao = usersService.updateChiDao();
+				return updateChiDao;
+		}
 	    //修改权重
 		@RequestMapping(value="/UpdateQuanZhong",method=RequestMethod.POST)
 		@ResponseBody
@@ -222,5 +285,12 @@ public class UsersController {
 		public Integer guanbizidong(){
 			Integer updateguanbiZiDong = usersService.updateguanbiZiDong();
 			return updateguanbiZiDong;
+		}
+		//查询个人签到状态
+		@RequestMapping(value="/SelectGeRenQianDaoZhuangTai",method=RequestMethod.POST)
+		@ResponseBody
+		public Integer SelectGeRenQianDaoZhuangTai(Integer uid){
+			Users selectGeRenQianDao = usersService.SelectGeRenQianDao(uid);
+			return selectGeRenQianDao.getSignIn();
 		}		
 }

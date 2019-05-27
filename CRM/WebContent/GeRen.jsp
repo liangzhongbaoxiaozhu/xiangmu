@@ -18,7 +18,7 @@ function init(){
 		method:"post",
 		view:transposedview,
 		queryParams:{
-			uid:1
+			uid:<%=session.getAttribute("Uid")%>
 		}
 	})
 	

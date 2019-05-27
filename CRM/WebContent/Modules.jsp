@@ -44,15 +44,17 @@ $(function(){
 //删除
 function remove() {
 	var row=$("#tt").tree("getSelected");
-	$.messager.confirm('确认','您确认想要删除记录吗？',function(r){    
+	$.messager.confirm('确认','您确认想要删除吗？',function(r){    
 	    if (r){    
 	    	$.post("DeleteModules", {
 				id : row.id,
 			}, function(res) {
-				if(res>0){
+				if(res==1){
 					$.messager.alert('提示','删除成功!'); 
-				}else{
+				}else if(res==0){
 					$.messager.alert('提示','删除失败!'); 
+				}else if(res==2){
+					$.messager.alert('提示','删除失败!有角色拥有该权限，请先删除！'); 
 				}
 			})
 			$("#tt").tree("reload");  
@@ -77,14 +79,20 @@ function addbaocuen(){
 		weight:$("#weight2").val()
 	},function(res){
 		$("#tt").tree("reload");
-		if(res>0){
+		if(res==1){
 			$('#addwin').window('close');
 			$("#mname2").val("");
 			$("#path2").val("");
 			$("#weight2").val("");
 			$.messager.alert('提示','增加成功！');
-		}else{
+		}else if(res==0){
 			$.messager.alert('提示','增加失败！');
+		}else if(res==2){
+			$('#addwin').window('close');
+			$("#mname2").val("");
+			$("#path2").val("");
+			$("#weight2").val("");
+			$.messager.alert('提示','增加失败！名字重复!');
 		}
 		
 	})
@@ -114,11 +122,14 @@ function updatebaocuen(){
 		weight:$("#weight3").val()
 	},function(res){
 		$("#tt").tree("reload");
-		if(res>0){
+		if(res==1){
 			$('#updatewin').window('close');
 			$.messager.alert('提示','修改成功！');
-		}else{
+		}else if(res==0){
 			$.messager.alert('提示','修改失败！');
+		}else if(res==2){
+			$('#updatewin').window('close');
+			$.messager.alert('提示','修改失败！名字重复!');
 		}
 		
 	})
@@ -142,39 +153,77 @@ function updateguanbi(){
 
 
 
-<div id="addwin" class="easyui-window" title="增加" style="width:300px;height:400px"   
+<div id="addwin" class="easyui-window" title="增加" style="width:300px;height:200px"   
         data-options="iconCls:'icon-save',modal:true,closed:true"> 
-        <div style="padding: 20px 150px 50px 50px">  
-    <div> 
+        <div style="text-align: center;padding-top: 20px;">  
+    <table style=" margin: auto;">
+    <tr>
+    <td>
+    <label for="name">名称:</label>
+    </td>
+    <td>
+    <input class="easyui-textbox" type="text" id="mname2" name="mname"  />
+    </td>
+    </tr>
     
-    <label for="name">名称:</label>  
-    <input class="easyui-validatebox" type="text" id="mname2" name="mname" data-options="required:true" />
-    <label for="name">路径:</label>  
-    <input class="easyui-validatebox" type="text" id="path2" name="path" data-options="required:true" />   
-    <label for="name">权重:</label>  
-    <input class="easyui-validatebox" type="text" id="weight2" name="weight" data-options="required:true" />   
-    </div>  
+    <tr>
+    <td>
+    <label for="name">路径:</label>
+    </td>
+    <td>  
+    <input class="easyui-textbox" type="text" id="path2" name="path"  />   
+    </td>
+    </tr>
     
+    <tr>
+    <td>
+    <label for="name">权重:</label>
+    </td>
+    <td>   
+    <input class="easyui-textbox" type="text" id="weight2" name="weight"  />   
+    </td>
+    </tr>
+    </table>
     </div>
-    <div style="padding-left:80px ">
+    <div style="text-align: center;padding-top: 20px;">
     <a onclick="addbaocuen()" href="javascript:void(0)" class="easyui-linkbutton" ">保存</a>
     <a onclick="addguanbi()" href="javascript:void(0)" class="easyui-linkbutton" ">关闭</a>
     </div>
 </div>  
 
-<div id="updatewin" class="easyui-window" title="修改" style="width:300px;height:400px"   
+<div id="updatewin" class="easyui-window" title="修改" style="width:300px;height:200px"   
         data-options="iconCls:'icon-save',modal:true,closed:true"> 
-        <div style="padding: 20px 150px 50px 50px">  
-   <div> 
-     <label for="name">名称:</label>  
-    <input class="easyui-validatebox" type="text" id="mname3" name="text" data-options="required:true" />
+    <div style="text-align: center;padding-top: 20px;">
+    <table style=" margin: auto;">
+    <tr>
+    <td>
+    <label for="name">名称:</label>
+    </td>
+    <td>  
+    <input class="easyui-textbox" type="text" id="mname3" name="text"  />
+    </td>
+    </tr>
+    
+    <tr>
+    <td>
     <label for="name">路径:</label>  
-    <input class="easyui-validatebox" type="text" id="path3" name="url" data-options="required:true" />   
-    <label for="name">权重:</label>  
-    <input class="easyui-validatebox" type="text" id="weight3" name="weight" data-options="required:true" />   
-    </div>  
+    </td>
+    <td>
+    <input class="easyui-textbox" type="text" id="path3" name="url"  />   
+    </td>
+    </tr>
+    
+    <tr>
+    <td>
+    <label for="name">权重:</label>
+    </td>
+    <td>  
+    <input class="easyui-textbox" type="text" id="weight3" name="weight"  />   
+    </td>
+    </tr>
+    </table>  
     </div>
-    <div style="padding-left:80px ">
+    <div style="text-align: center;padding-top: 20px;">
     <a onclick="updatebaocuen()" href="javascript:void(0)" class="easyui-linkbutton" ">保存</a>
     <a onclick="updateguanbi()" href="javascript:void(0)" class="easyui-linkbutton" ">关闭</a>
     </div>

@@ -137,9 +137,9 @@
 		update users set
 		Email=#{Email},Mtel=#{Mtel} where Uid=#{Uid}
 	</update>
-	<update id="updateMiMa" parameterType="int">
+	<update id="updateMiMa" parameterType="users">
 		update users set
-		PassWord='ysd123' where Uid=#{id}
+		PassWord=#{PassWord} where Uid=#{uid}
 	</update>
 
 	<!-- 查看个人信息 -->
@@ -150,8 +150,7 @@
 	<!-- 签到 -->
 	<update id="QianDao" parameterType="users">
 		update users set
-		SignIn=1,SignInData=#{SignInData} where uid=#{uid} and
-		SignIn=0
+		SignIn=#{SignIn},SignInData=#{SignInData} where uid=#{uid} 
 	</update>
 	<!-- 个人修改密码 -->
 	<update id="UpdateGeRenMiMa" parameterType="users">
@@ -197,7 +196,7 @@
 	</select>
 	<!-- 签退 -->
 	<update id="SelectQianTui" parameterType="int">
-		update users set SignIn=0 where Uid=#{uid} and SignIn=1
+		update users set SignIn=0 where Uid=#{uid} 
 	</update>
 
 	<update id="updateQuanZhong" parameterType="users">
@@ -214,4 +213,15 @@
 	<update id="updateguanbiZiDong">
 		update users set String0="false" where uid=1
 	</update>
+	
+	<select id="SelectGeRenQianDao" parameterType="int" resultType="users">
+	select SignIn from users where uid=#{uid}
+	</select>
+	
+	<update id="updateChiDao" parameterType="int">
+	update users set SignIn=4 where uid=#{uid}
+	</update>
+	<select id="SelectKuanBan" resultType="users">
+	select * from users where SignIn=0
+	</select>
 </mapper>

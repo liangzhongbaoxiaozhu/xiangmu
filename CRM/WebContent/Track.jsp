@@ -50,9 +50,9 @@ $(function(){
 <div id="tool">
 <form id="ff">   
         <label for="name">学生名称:</label>   
-        <input class="easyui-validatebox" style="width: 150px;"  id="Studentid2"   />   
+        <input class="easyui-textbox" style="width: 150px;"  id="Studentid2"   />   
         <label for="name">跟踪者:</label>   
-        <input class="easyui-validatebox" style="width: 150px;"  id="UserId2"   />
+        <input class="easyui-textbox" style="width: 150px;"  id="UserId2"   />
         <label for="name">跟踪开始时间:</label>   
         <input  id="TrackStartData2"  class= "easyui-datebox" > </input>   
         <label for="name">跟踪结束时间:</label>   
@@ -71,7 +71,7 @@ $(function(){
          <option value="QQ">QQ</option>     
         </select> 
 		<a  href="javascript:void(0)" class="easyui-linkbutton" onclick="init()" data-options="iconCls:'icon-search'">搜索</a>
-		<a  href="javascript:void(0)" class="easyui-linkbutton" onclick="xinzeng()" data-options="iconCls:'icon-add'">新增</a>  
+		<!-- <a  href="javascript:void(0)" class="easyui-linkbutton" onclick="xinzeng()" data-options="iconCls:'icon-add'">新增</a> -->  
 </form>  
 
 </div>

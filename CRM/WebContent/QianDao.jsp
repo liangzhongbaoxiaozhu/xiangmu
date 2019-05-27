@@ -35,23 +35,25 @@ $(function(){
 	   var data = $("#dg").datagrid("getData").rows;
 	   var uid=null;
 	   for(var i=0;i<data.length;i++){
-		   if(uid==null){
-			   uid=data[i].uid;
-		   }else{
-			   uid=uid+","+data[i].uid;  
+		   if(data[i].signIn==1){
+			   if(uid==null){
+				   uid=data[i].uid;
+			   }else{
+				   uid=uid+","+data[i].uid;  
+			   } 
 		   }
 		   
 	   }
-	   alert(uid);
+	  /*  alert(uid); */
 	   $.post("UpdateQianTui",{
 		   uid:uid
 	   },function(res){
 		   $("#dg").datagrid("reload");  
-		   if(res>0){
+		   if(res.search("签退成功")!=-1){
 			  
-			   alert("签退成功！");  
+			   alert(res);  
 		   }else{
-			   alert("签退失败！");  
+			   alert(res);  
 		   }
 		   
 	   })
@@ -63,17 +65,17 @@ $(function(){
 		   uid:row.uid
 	   },function(res){
 		   $("#dg").datagrid("reload"); 
-		   if(res>0){
+		   if(res.search("签退成功")!=-1){
 			   
-			   alert("签退成功！");  
+			   alert(res);  
 		   }else{
-			   alert("签退失败！");  
+			   alert(res);  
 		   }
 		   
 	   })
    }
    function zhuangtai(value,row,index){
-	   return value==0?"签退":"签到" 
+	   return value==0?"签退":(value==1?"签到":(value==2?"迟到":(value==3?"早退":"旷班")))
    }
 </script>
 </head>
@@ -81,7 +83,7 @@ $(function(){
 <div id="tool">
 <form id="ff">   
         <label for="name">名称:</label>   
-        <input class="easyui-validatebox" style="width: 150px;" type="text" id="loginName"   />   
+        <input class="easyui-textbox" style="width: 150px;" type="text" id="loginName"   />   
         <label for="name">签退:</label>   
         <select id="SignIn" class="easyui-combobox" name="dept" style="width:150px;">   
          <option value="">--请选择--</option>   
