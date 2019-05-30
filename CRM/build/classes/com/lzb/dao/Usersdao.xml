@@ -178,7 +178,7 @@
 			<if test="LoginName!=null and LoginName!=''">
 				and LoginName like "%"#{LoginName}"%"
 			</if>
-			<if test="signIn==0 || signIn==1">
+			<if test="signIn==0 || signIn==1 || signIn==2 || signIn==3 || signIn==4 ">
 				and SignIn=#{signIn}
 			</if>
 			<if

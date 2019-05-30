@@ -12,6 +12,7 @@
 <title>Insert title here</title>
 <script type="text/javascript">
 function init(){
+	
 	$("#dg").datagrid({
 		url:'SelectQianDao',  
 		method:"post",
@@ -97,7 +98,10 @@ $(function(){
         <select id="SignIn" class="easyui-combobox" name="dept" style="width:150px;">   
          <option value="">--请选择--</option>   
          <option value="0">签退</option>   
-         <option value="1">签到</option>   
+         <option value="1">签到</option>
+         <option value="2">迟到</option>   
+         <option value="3">早退</option>   
+         <option value="4">旷班</option>      
         </select> 
         <label for="name">签到开始时间:</label>   
         <input  id="cuanjiankaishi"  type= "text" class= "easyui-datebox" > </input>   

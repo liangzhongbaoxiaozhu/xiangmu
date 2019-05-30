@@ -5,16 +5,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>Insert title here</title>
-<link rel="stylesheet" type="text/css"
-	href="js/jquery-easyui-1.4.5/themes/icon.css" />
-<link rel="stylesheet" type="text/css"
-	href="js/jquery-easyui-1.4.5/themes/default/easyui.css" />
-<script type="text/javascript"
-	src="js/jquery-easyui-1.4.5/jquery.min.js"></script>
-<script type="text/javascript"
-	src="js/jquery-easyui-1.4.5/jquery.easyui.min.js"></script>
-<script type="text/javascript"
-	src="zjs/jquery-easyui-1.4.5/locale/easyui-lang-zh_CN.js"></script>
+<link rel="stylesheet" type="text/css" href="js/jquery-easyui-1.4.5/themes/icon.css"/>
+<link rel="stylesheet" type="text/css" href="js/jquery-easyui-1.4.5/themes/default/easyui.css"/>
+<script type="text/javascript" src="js/jquery-easyui-1.4.5/jquery.min.js"></script>
+<script type="text/javascript" src="js/jquery-easyui-1.4.5/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="js/jquery-easyui-1.4.5/locale/easyui-lang-zh_CN.js"></script>
 <script type="text/javascript" src="js/jquery-easyui-1.4.5/test.js"></script>
 <script type="text/javascript">
 $(function(){
@@ -441,6 +436,7 @@ $(function(){
 				class="easyui-linkbutton" data-options="iconCls:'icon-add'">修改咨询师</a> -->
 			<a href="javascript:void(0)" class="easyui-linkbutton"
 				onclick="daochuexcel()" data-options="iconCls:'icon-redo'">导出Excel</a>
+				 <a href="javascript:void(0)" class="easyui-linkbutton" onclick="xianshilie()" data-options="iconCls:'icon-redo'">显示列</a>
 		</form>
 	</div>
 
@@ -1299,5 +1295,49 @@ $(function(){
     </div> 
 	</div>
 
+<div id="xz_xs" class="easyui-window" title="选择显示列"
+		style="width: 450px; height: 230px;"
+		data-options="iconCls:'icon-save',modal:true,closed:true">
+		<input type="checkbox" name="category" value="state" />个人状态 
+		<input type="checkbox" name="category" value="channel" />来源渠道 &emsp; &ensp; 
+		<input type="checkbox" name="category" value="website" />来源网站 
+		<input type="checkbox" name="category" value="keyWord" />来源关键词
+		<input type="checkbox" name="category" value="department" />来源部门<br/>
+		<input type="checkbox" name="category" value="nameConsultation" />咨询姓名
+		<input type="checkbox" name="category" value="region" />所在区域&emsp;&emsp;
+		<input type="checkbox" name="category" value="isReport" />是否报备
+		<input type="checkbox" name="category" value="curriculum" />课程方向&emsp;
+		<input type="checkbox" name="category" value="scoring" />打分<br/>
+		<input type="checkbox" name="category" value="isEffective" />是否有效
+		<input type="checkbox" name="category" value="returnVisitData" />首次回访时间
+		<input type="checkbox" name="category" value="isReturnVisit" />是否回访
+		<input type="checkbox" name="category" value="door" />是否上门&emsp;
+		<input type="checkbox" name="category" value="doorData" />上门时间<br/>
+		<input type="checkbox" name="category" value="reason" />无效原因
+		<input type="checkbox" name="category" value="isPay" />是否缴费&emsp;&emsp;
+		<input type="checkbox" name="category" value="payData" />缴费时间
+		<input type="checkbox" name="category" value="money" />金额&emsp;&emsp;&emsp;
+		<input type="checkbox" name="category" value="isRefund" />是否退费<br/>
+		<input type="checkbox" name="category" value="isClassEntry" />是否进班
+		<input type="checkbox" name="category" value="classEntryData" />进班时间&emsp;&emsp;
+		<input type="checkbox" name="category" value="classEntryRemarks" />进班备注
+		<input type="checkbox" name="category" value="reasonsRefund" />退费原因&emsp;
+		<input type="checkbox" name="category" value="earnestMoney" />定金金额<br/>
+		<input type="checkbox" name="category" value="earnestMoneyData" />定金时间
+		<input type="checkbox" name="category" value="follow" />学员关注&emsp;&emsp;
+		<input type="checkbox" name="category" value="qq" />QQ&emsp; &emsp;
+		<input type="checkbox" name="category" value="weiXin" />微信&emsp;&emsp;&emsp;
+		<input type="checkbox" name="category" value="isEnroll" />是否报名<br/>
+		<input type="checkbox" name="category" value="remarks" />在线备注
+		<input type="checkbox" name="category" value="zixunshi" />咨询师&emsp;&emsp;&emsp;
+		<input type="checkbox" name="category" value="lururen" />录入人&emsp;
+		<input type="checkbox" name="category" value="consultantRemarks" />咨询师备注
+		<input type="checkbox" name="category" value="caozuo" />操作
 
+    <div style="text-align: center;">
+    <input type="checkbox" id="all1" name="all"/>全选&emsp;&emsp;
+    <input id="btnOperate" type="button" value="选择" onclick="static_num()" />&emsp;&emsp;
+    <!-- <input type="checkbox" id="all2" name="all"/>反选 -->
+    </div> 
+	</div>
 </html>

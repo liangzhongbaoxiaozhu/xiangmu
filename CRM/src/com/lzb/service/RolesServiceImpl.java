@@ -26,7 +26,7 @@ public class RolesServiceImpl implements RolesService{
 		List<Roles> selectRoles = rolesdao.SelectRoles(fen);
 		fen.setRows(selectRoles);
 		Integer selectCount = rolesdao.SelectCount(fen);
-		fen.setPageSize(selectCount);
+		fen.setTotal(selectCount);
 		return fen;
 	}
 	@Override
