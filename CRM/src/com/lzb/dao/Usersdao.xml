@@ -7,7 +7,19 @@
 	<select id="DengLu" parameterType="users" resultType="users">
 		select *
 		from users
-		where IsLoginData=0 and LoginName=#{LoginName} and PassWord=#{PassWord}
+		where  LoginName=#{LoginName} and PassWord=#{PassWord}
+	</select>
+	
+	<select id="YongHuMing" parameterType="users" resultType="users">
+		select *
+		from users
+		where  LoginName=#{LoginName} 
+	</select>
+	
+	<select id="SuoDing" parameterType="users" resultType="users">
+		select *
+		from users
+		where IsLoginData=0 and LoginName=#{LoginName} 
 	</select>
 
 	<!-- 查询所有 -->
@@ -198,6 +210,11 @@
 	<update id="SelectQianTui" parameterType="int">
 		update users set SignIn=0 where Uid=#{uid} 
 	</update>
+	
+	<!-- 早退 -->
+	<update id="SelectZhaoTui" parameterType="int">
+		update users set SignIn=3 where Uid=#{uid} 
+	</update>
 
 	<update id="updateQuanZhong" parameterType="users">
 		update users set weight=#{weight},Remarks=#{Remarks} where uid=#{uid}
@@ -223,5 +240,9 @@
 	</update>
 	<select id="SelectKuanBan" resultType="users">
 	select * from users where SignIn=0
+	</select>
+	
+	<select id="SelectCountUserRoles" parameterType="int" resultType="int">
+	select count(URrid) from UserRoles where UserId=#{uid}
 	</select>
 </mapper>

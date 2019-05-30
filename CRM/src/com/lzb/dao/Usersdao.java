@@ -10,11 +10,25 @@ import com.lzb.entity.Users;
 public interface Usersdao {
 
 	/**
-	 * 登录
+	 * 登录 密码验证
 	 * @param user
 	 * @return
 	 */
 	Users DengLu(Users user);
+	
+	/**
+	 * 用户名验证
+	 * @param user
+	 * @return
+	 */
+	Users YongHuMing(Users user);
+	
+	/**
+	 * 是否锁定验证
+	 * @param user
+	 * @return
+	 */
+	Users SuoDing(Users user);
 	
 	/**
 	 * 查询所有
@@ -169,6 +183,14 @@ public interface Usersdao {
 	 */
 	Integer SelectQianTui(Integer uid);
 	
+	
+	/**
+	 * 早退
+	 * @param uid
+	 * @return
+	 */
+	Integer SelectZhaoTui(Integer uid);
+	
 	/**
 	 * 分配权重
 	 * @param user
@@ -194,21 +216,31 @@ public interface Usersdao {
 	 * @return
 	 */
 	Integer updateguanbiZiDong();
+	
 	/**
 	 * 查询个人签到状态
 	 * @param uid
 	 * @return
 	 */
 	Users SelectGeRenQianDao(Integer uid);
+	
 	/**
 	 * 旷班
 	 * @param uid
 	 * @return
 	 */
 	Integer updateChiDao(Integer uid);
+	
 	/**
 	 * 查询旷班的人，进行修改
 	 * @return
 	 */
 	List<Users> SelectKuanBan();
+	
+	/**
+	 * 查询个人是否有角色
+	 * @param uid
+	 * @return
+	 */
+	Integer SelectCountUserRoles(Integer uid);
 }

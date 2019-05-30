@@ -11,6 +11,12 @@ public interface UsersService {
 	/*登录*/
 	Users DengLu(Users user);
 	
+	//用户名验证
+	Users YongHuMing(Users user);
+	
+	//是否锁定验证
+	Users SuoDing(Users user);
+	
 	//查询所有
 	FenYe SelectUsers(FenYe fen);
 	
@@ -76,6 +82,10 @@ public interface UsersService {
 	
 	//查询个人签到状态
 	Users SelectGeRenQianDao(Integer uid);
+	
 	//旷班
 	Integer updateChiDao();
+	
+	//早退
+	Integer SelectZhaoTui(Integer uid);
 }

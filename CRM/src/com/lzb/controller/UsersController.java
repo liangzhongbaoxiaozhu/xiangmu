@@ -43,7 +43,7 @@ public class UsersController {
 	}
 	@RequestMapping(value="/InsertUsers",method=RequestMethod.POST)
 	@ResponseBody
-	public Integer InsertUsers(String loginName,String passWord,String email,Integer mtel){
+	public Integer InsertUsers(String loginName,String passWord,String email,String mtel){
 		Date t = new Date();
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		/*System.out.println(df.format(t));*/
@@ -162,7 +162,7 @@ public class UsersController {
 			//迟到限定时间时间
 			Date cdsj=XianShiShiJian.parse("10:00:00");
 			
-			// 签退 0  签到  1 迟到 2 早退 3 旷班 4
+			// 签退 0  签到  1 迟到  2 早退 3 旷班 4
 			
 			System.out.println("用户登录时间:"+uhdlsj);
 			/*System.out.println("登录限定时间:"+dqsj);*/
@@ -246,6 +246,43 @@ public class UsersController {
 			}
 			return huihua;
 		}
+		//早退
+		@RequestMapping(value="/UpdateZaoTui",method=RequestMethod.POST,produces = "text/plain;charset=utf-8")
+		@ResponseBody
+		public String UpdateZaoTui(String uid) throws ParseException{
+					
+					Date t = new Date();
+					SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+					SimpleDateFormat XianShiShiJian = new SimpleDateFormat("HH:mm:ss");
+					
+					//用户签退时间
+					String YongHuDengLuShiJian=XianShiShiJian.format(t);
+					Date  uhdtsj=XianShiShiJian.parse(YongHuDengLuShiJian);
+					//签退限定时间
+					Date zaotuis=XianShiShiJian.parse("08:00:00");
+					Date zaotuix=XianShiShiJian.parse("17:00:00");
+					
+					System.out.println("用户签退时间:"+uhdtsj);
+					System.out.println("用户早退上判定:"+zaotuis.before(uhdtsj));
+					System.out.println("用户早退下判定:"+uhdtsj.before(zaotuix));
+					String huihua="签退失败！";
+					
+					if(zaotuis.before(uhdtsj)&&uhdtsj.before(zaotuix)){
+						huihua="签退成功！";
+					String[] split = uid.split(",");
+					for(int i=0;i<split.length;i++){
+						if(split[i]!=""){
+							Integer selectQianTui = usersService.SelectZhaoTui(Integer.parseInt(split[i]));
+							
+							if(selectQianTui<1){
+								huihua="签退失败，请找管理员!";
+							}
+						}
+						
+					}
+					}
+					return huihua;
+				}
 		//旷班
 		@RequestMapping(value="/KuangBan",method=RequestMethod.POST)
 		@ResponseBody

@@ -27,11 +27,21 @@
 			password:$("#password").val(),
 			YanZhengMa:$("#YanZhengMa").val()
 		},function(res){
-			if(res==1){
+			if(res==4){
 				/* alert("登录成功"); */
 				window.location.href='ZhanShi.jsp';
-			}else{
-				alert("登录失败");
+			}
+			if(res==0){
+				alert("验证码错误");
+			}
+			if(res==1){
+				alert("用户名错误");
+			}
+			if(res==2){
+				alert("密码错误");
+			}
+			if(res==3){
+				alert("用户被锁定，如需解锁请联系管理员");
 			}
 			
 		})

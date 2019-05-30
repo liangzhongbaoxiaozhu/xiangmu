@@ -42,7 +42,7 @@ function init(){
 }
 
 function formatterCaozuo(value,row,index){
-	return "<a href='javascript:void(0)' onclick='genzong("+index+")' class='easyui-linkbutton' >添加跟踪日志</a>    <a href='javascript:void(0)' onclick='edit("+ index +")'>修改</a>   <a href='javascript:void(0)' onclick='del("+ index +")'>删除</a>   <a href='javascript:void(0)' onclick='updateUU("+ index +")'>查看</a>    <a href='javascript:void(0)' onclick='ck_genzong("+ index +")'>查看日志</a>"
+	return "<a href='javascript:void(0)' onclick='genzong("+index+")' class='easyui-linkbutton' >添加跟踪日志</a>    <a href='javascript:void(0)' onclick='edit("+ index +")'>修改</a>     <a href='javascript:void(0)' onclick='updateUU("+ index +")'>查看</a>    <a href='javascript:void(0)' onclick='ck_genzong("+ index +")'>查看日志</a>"
 }
 function edit(index){
 	
@@ -57,6 +57,8 @@ function saveEdit1(){
 	var phone = $("#state4").val();
 	if (!checkRole.test(phone)) {
 		alert("手机号格式不正确");
+	} else if(phone==""){
+		alert("手机号为空");
 	} else {
 	$.post("updateStu",{
 	    Sid:$("#sid4").val(),
@@ -127,6 +129,8 @@ function addb(){
 	var phone = $("#state1").val();
 	if (!checkRole.test(phone)) {
 		alert("手机号格式不正确");
+	} else if(phone==""){
+		alert("手机号为空");
 	} else {
 	$.post("addStu",{
 		sname:$("#sname1").val(),
@@ -345,6 +349,58 @@ function daochuexcel() {
 		});
 	}
 }
+
+
+function xianshilie(){
+	$("#xz_xs").window("open");
+}
+function static_num(){            
+	var fields =$("#stutab").datagrid('getColumnFields');
+	for (var i = 5; i < fields.length; i++) {
+		//隐藏
+		
+		   $('#stutab').datagrid('hideColumn',fields[i]);
+	}
+        var arr = new Array();                
+        var items = document.getElementsByName("category");                 
+        for (i = 0; i < items.length; i++) {                    
+            if (items[i].checked) { 
+            	$('#stutab').datagrid('showColumn',items[i].value);
+                /* arr.push(items[i].value); */                    
+            }                
+        }                 
+       //  alert("选择的个数为：" + arr.length);             
+          
+};   
+$(function(){
+	//全选
+	$("#all1").click(function(){
+		var all= document.getElementById("all1").checked;
+	  	var checkboxs=document.getElementsByName("category");
+			if(all==true){
+				for(var i=0;i<checkboxs.length;i++){
+					checkboxs[i].checked=true;
+				}
+	         }else{
+	          	for(var i=0;i<checkboxs.length;i++){
+					checkboxs[i].checked=false;
+				}
+	          }
+	})
+	//反选
+	/* $("#all2").click(function(){
+	    $("input[name=category]").each(function(){
+	        if(this.checked){
+	            $(this).attr("checked", "")
+	        }else{
+	            $(this).attr("checked", "checked")
+	        }
+	        $("#all1").attr("checked", "");
+	       
+	    })
+
+	}) */
+})
 </script>
 </head>
 <body>
@@ -380,9 +436,9 @@ function daochuexcel() {
 			</select> <a href="javascript:void(0)" onclick="init()"
 				class="easyui-linkbutton" data-options="iconCls:'icon-search'">搜索</a>
 			<a href="javascript:void(0)" onclick="insertStu()"
-				class="easyui-linkbutton" data-options="iconCls:'icon-add'">添加</a> <a
+				class="easyui-linkbutton" data-options="iconCls:'icon-add'">添加</a> <!-- <a
 				href="javascript:void(0)" onclick="xiugaizixunshi()"
-				class="easyui-linkbutton" data-options="iconCls:'icon-add'">修改咨询师</a>
+				class="easyui-linkbutton" data-options="iconCls:'icon-add'">修改咨询师</a> -->
 			<a href="javascript:void(0)" class="easyui-linkbutton"
 				onclick="daochuexcel()" data-options="iconCls:'icon-redo'">导出Excel</a>
 		</form>
@@ -1196,6 +1252,52 @@ function daochuexcel() {
 	</div>
 </body>
 
+
+<div id="xz_xs" class="easyui-window" title="选择显示列"
+		style="width: 450px; height: 230px;"
+		data-options="iconCls:'icon-save',modal:true,closed:true">
+		<input type="checkbox" name="category" value="state" />个人状态 
+		<input type="checkbox" name="category" value="channel" />来源渠道 &emsp; &ensp; 
+		<input type="checkbox" name="category" value="website" />来源网站 
+		<input type="checkbox" name="category" value="keyWord" />来源关键词
+		<input type="checkbox" name="category" value="department" />来源部门<br/>
+		<input type="checkbox" name="category" value="nameConsultation" />咨询姓名
+		<input type="checkbox" name="category" value="region" />所在区域&emsp;&emsp;
+		<input type="checkbox" name="category" value="isReport" />是否报备
+		<input type="checkbox" name="category" value="curriculum" />课程方向&emsp;
+		<input type="checkbox" name="category" value="scoring" />打分<br/>
+		<input type="checkbox" name="category" value="isEffective" />是否有效
+		<input type="checkbox" name="category" value="returnVisitData" />首次回访时间
+		<input type="checkbox" name="category" value="isReturnVisit" />是否回访
+		<input type="checkbox" name="category" value="door" />是否上门&emsp;
+		<input type="checkbox" name="category" value="doorData" />上门时间<br/>
+		<input type="checkbox" name="category" value="reason" />无效原因
+		<input type="checkbox" name="category" value="isPay" />是否缴费&emsp;&emsp;
+		<input type="checkbox" name="category" value="payData" />缴费时间
+		<input type="checkbox" name="category" value="money" />金额&emsp;&emsp;&emsp;
+		<input type="checkbox" name="category" value="isRefund" />是否退费<br/>
+		<input type="checkbox" name="category" value="isClassEntry" />是否进班
+		<input type="checkbox" name="category" value="classEntryData" />进班时间&emsp;&emsp;
+		<input type="checkbox" name="category" value="classEntryRemarks" />进班备注
+		<input type="checkbox" name="category" value="reasonsRefund" />退费原因&emsp;
+		<input type="checkbox" name="category" value="earnestMoney" />定金金额<br/>
+		<input type="checkbox" name="category" value="earnestMoneyData" />定金时间
+		<input type="checkbox" name="category" value="follow" />学员关注&emsp;&emsp;
+		<input type="checkbox" name="category" value="qq" />QQ&emsp; &emsp;
+		<input type="checkbox" name="category" value="weiXin" />微信&emsp;&emsp;&emsp;
+		<input type="checkbox" name="category" value="isEnroll" />是否报名<br/>
+		<input type="checkbox" name="category" value="remarks" />在线备注
+		<input type="checkbox" name="category" value="zixunshi" />咨询师&emsp;&emsp;&emsp;
+		<input type="checkbox" name="category" value="lururen" />录入人&emsp;
+		<input type="checkbox" name="category" value="consultantRemarks" />咨询师备注
+		<input type="checkbox" name="category" value="caozuo" />操作
+
+    <div style="text-align: center;">
+    <input type="checkbox" id="all1" name="all"/>全选&emsp;&emsp;
+    <input id="btnOperate" type="button" value="选择" onclick="static_num()" />&emsp;&emsp;
+    <!-- <input type="checkbox" id="all2" name="all"/>反选 -->
+    </div> 
+	</div>
 
 
 </html>

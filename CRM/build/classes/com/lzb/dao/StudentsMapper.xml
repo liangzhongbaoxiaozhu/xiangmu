@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.lzb.dao.StudentsMapper">
 	<select id="selectStuCounta" parameterType="fenye" resultType="int">
-		select count(sid) 
+		select count(sid)
 		from students s LEFT join Users u
 		on u.Uid=s.ConsultantId
 		<where>
@@ -80,10 +80,11 @@
 		s.ConsultantRemarks,
 		s.Int0,u.LoginName as
 		zixunshi,s.String0
-		from students s LEFT join Users u
+		from students s LEFT join Users
+		u
 		on u.Uid=s.ConsultantId
 		<where>
-			
+
 			<if test="sname !='' and sname !=null">
 				and sname like "%"#{sname}"%"
 			</if>
@@ -119,7 +120,7 @@
 		insert into
 		students(sname,sex,age,smtel,education,state,channel,website,KeyWord,qq,weiXin,isEnroll,remarks,consultantId,EntryPersonId)
 		values(#{sname},#{sex},#{age},#{smtel},#{education},#{state},#{channel},#{website},#{KeyWord},#{qq},#{weiXin},#{isEnroll},#{remarks},#{consultantId},#{entryPersonId})
-        
+
 	</insert>
 	<delete id="deleteStu" parameterType="int">
 		delete from students where
@@ -409,30 +410,38 @@
 	</select>
 
 	<select id="SelectCountDengJi" parameterType="fenYe" resultType="int">
-		select count(uid) from Users
-		where
-		SignIn=1
-		and weight=#{page}
-		and
-		Int0=#{pageSize}
 
+		SELECT
+		count(uid)
+		FROM
+		Users u,
+		UserRoles ur
+		WHERE
+		u.uid = ur.UserId
+		AND IsLoginData = 0
+		AND weight = #{page}
+		AND Int0 = #{pageSize}
+		AND RoleId = 3
+		AND SignIn IN (1, 2)
 	</select>
 
 
 	<select id="selectFenLianDengji" parameterType="fenYe"
 		resultType="users">
-		select * from Users
-		where
-		SignIn=1
-		and weight=#{page}
-		and
-		Int0=#{pageSize}
+		select * from Users u,UserRoles ur
+		WHERE
+		u.uid = ur.UserId
+		AND IsLoginData = 0
+		AND weight = #{page}
+		AND Int0 = #{pageSize}
+		AND RoleId = 3
+		AND SignIn IN (1, 2)
 
 
 	</select>
-	
+
 	<select id="SelectFenLiangShiFouKaiQi" resultType="String">
-	select String0 from users where uid=1
+		select String0 from users where uid=1
 	</select>
 
 	<update id="updateFenLiangDengJi" parameterType="fenYe">

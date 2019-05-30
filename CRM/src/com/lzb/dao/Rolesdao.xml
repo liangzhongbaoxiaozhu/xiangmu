@@ -31,6 +31,12 @@
 		select ModuleId from RoleModules where RoleId in (
 		select RoleId from userroles where UserId=#{id}))
 	</select>
+	
+	<select id="SelectRolesZhuangYong" resultType="modules"
+		parameterType="int">
+		select distinct Mid from modules where Mid in (
+		select ModuleId from RoleModules where RoleId=#{id})
+	</select>
 	<!-- 查询所有父id -->
 	<select id="SelectModulesFuid" resultType="modules">
 		select * from Modules where Weight=1
@@ -50,6 +56,10 @@
 		delete from RoleModules where RoleId=#{id}
 	</delete>
 	<select id="selectUserRolesCount" parameterType="int" resultType="int">
-	select count(URrid) from UserRoles where RoleId=#{id}
+	select count(RMid) from RoleModules where RoleId=#{id}
 	</select>
+	<select id="selectMingZi" parameterType="string" resultType="roles">
+	select * from roles where Rname=#{mingzi}
+	</select>
+	
 </mapper>

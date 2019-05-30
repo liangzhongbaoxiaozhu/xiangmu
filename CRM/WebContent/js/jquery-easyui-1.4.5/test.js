@@ -5,7 +5,7 @@ var createGridHeaderContextMenu = function(e, field) {
 	var okCls = 'tree-checkbox1';// 选中
 	var emptyCls = 'tree-checkbox0';// 取消
 	if (!headerContextMenu) {
-		var tmenu = $('<div style="width:100px;"></div>').appendTo('body');
+		var tmenu = $('<div style="width:400px;"></div>').appendTo('body');
 		var fields = grid.datagrid('getColumnFields');
 		for (var i = 0; i < fields.length; i++) {
 			var fildOption = grid.datagrid('getColumnOption', fields[i]);
@@ -18,7 +18,7 @@ var createGridHeaderContextMenu = function(e, field) {
 			}
 		}
 		headerContextMenu = this.headerContextMenu = tmenu.menu({
-			onClick : function(item) {
+			onmouseout : function(item) {
 				var field = $(item.target).attr('field');
 				if (item.iconCls == okCls) {
 					grid.datagrid('hideColumn', field);
@@ -43,4 +43,7 @@ var createGridHeaderContextMenu = function(e, field) {
 };
 $.fn.datagrid.defaults.onHeaderContextMenu = createGridHeaderContextMenu;
 $.fn.treegrid.defaults.onHeaderContextMenu = createGridHeaderContextMenu;
+
+
+ 
 

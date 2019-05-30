@@ -25,6 +25,18 @@ public class UsersServiceImpl implements UsersService {
 	}
 
 	@Override
+	public Users YongHuMing(Users user) {
+		// TODO Auto-generated method stub
+		return usersdao.YongHuMing(user);
+	}
+
+	@Override
+	public Users SuoDing(Users user) {
+		// TODO Auto-generated method stub
+		return usersdao.SuoDing(user);
+	}
+	
+	@Override
 	public FenYe SelectUsers(FenYe fen) {
 		// TODO Auto-generated method stub
 		Integer selectCount = usersdao.SelectCount(fen);
@@ -48,9 +60,10 @@ public class UsersServiceImpl implements UsersService {
 	@Override
 	public Integer InsertUsers(Users users) {
 		// TODO Auto-generated method stub
+		users.setPassWord(MD5Util.getMD5(users.getPassWord()));
 		Integer selectName = usersdao.SelectName(users.getLoginName());
 		if (selectName > 0) {
-			return 0;
+			return 2;
 		} else {
 			return usersdao.InsertUsers(users);
 		}
@@ -60,7 +73,13 @@ public class UsersServiceImpl implements UsersService {
 	@Override
 	public Integer deleteUsers(Integer id) {
 		// TODO Auto-generated method stub
-		return usersdao.deleteUsers(id);
+		Integer selectCountUserRoles = usersdao.SelectCountUserRoles(id);
+		if(selectCountUserRoles!=null){
+			if(selectCountUserRoles==0){
+				return usersdao.deleteUsers(id);
+			}
+		}
+		return 2;
 	}
 
 	@Override
@@ -221,5 +240,13 @@ public class UsersServiceImpl implements UsersService {
 		}
 		return 1;
 	}
+
+	@Override
+	public Integer SelectZhaoTui(Integer uid) {
+		// TODO Auto-generated method stub
+		return usersdao.SelectZhaoTui(uid);
+	}
+
+	
 
 }

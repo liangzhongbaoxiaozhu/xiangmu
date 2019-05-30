@@ -45,10 +45,16 @@ public interface Rolesdao {
 	Integer deleteRoles(Integer id);
 	
 	/**
-	 * 查询角色所有的子模块id
+	 * 根据用户查询角色所有的子模块id
 	 * @return
 	 */
 	List<Modules> SelectRolesModulesid(Integer id);
+	
+	/**
+	 * 根据角色所有的子模块id
+	 * @return
+	 */
+	List<Modules> SelectRolesZhuangYong(Integer id);
 	
 	/**
 	 * 查询所有父id
@@ -87,4 +93,11 @@ public interface Rolesdao {
 	 * @return
 	 */
 	Integer selectUserRolesCount(Integer id);
+	/**
+	 * 根据名字查询是否存在
+	 * @param mingzi
+	 * @return
+	 */
+	Roles selectMingZi(String mingzi);
+	
 }

@@ -53,12 +53,15 @@ public class StudentsServiceImp implements StudentsService {
 			fen.setPage(i);
 			fen.setPageSize(0);
 			Integer selectCountDengJi = studentsMapper.SelectCountDengJi(fen);
-			if(i==1&&selectCountDengJi==1){
+			System.out.println(selectCountDengJi);
+			if(i==1&&selectCountDengJi==0){
 				studentsMapper.UpdateFenLiangQuanBu();
 			}
+			 selectCountDengJi = studentsMapper.SelectCountDengJi(fen);
 			if(selectCountDengJi>0){
 				/*System.out.println(i);*/
 				List<Users> selectFenLianDengji = studentsMapper.selectFenLianDengji(fen);
+				System.out.println(selectFenLianDengji.get(0).getUid());
 				students.setConsultantId(selectFenLianDengji.get(0).getUid());
 				fen.setPage(1);
 				fen.setPageSize(selectFenLianDengji.get(0).getUid());

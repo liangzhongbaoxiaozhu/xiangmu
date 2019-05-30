@@ -32,11 +32,19 @@ public class RolesServiceImpl implements RolesService{
 	@Override
 	public Integer InsertRoles(Roles roles) {
 		// TODO Auto-generated method stub
+		Roles selectMingZi = rolesdao.selectMingZi(roles.getRname());
+		if(selectMingZi!=null){
+			return 2;
+		}
 		return rolesdao.InsertRoles(roles);
 	}
 	@Override
 	public Integer UpdateRoles(Roles roles) {
 		// TODO Auto-generated method stub
+		Roles selectMingZi = rolesdao.selectMingZi(roles.getRname());
+		if(selectMingZi!=null){
+			return 2;
+		}
 		return rolesdao.UpdateRoles(roles);
 	}
 	@Override
@@ -50,19 +58,20 @@ public class RolesServiceImpl implements RolesService{
 				jieguo="成功";
 			}
 		}else{
-			jieguo=jieguo+",某用户拥有该角色不能删除";
+			jieguo=jieguo+",该角色拥有权限不能删除";
 		}
 		return jieguo;
 	}
 	
 	//根据父id查询子id
 	@Override
-	public TreeNode SelectModulesFuid(Integer id,Integer uid) {
+	public TreeNode SelectModulesFuid(Integer id,Integer rid) {
 		// TODO Auto-generated method stub
 		
-			
-		List<Modules> selectRolesModulesid = rolesdao.SelectRolesModulesid(uid);
-		
+		List<Modules> selectRolesModulesid = rolesdao.SelectRolesZhuangYong(rid);
+		/*for(Modules ss:selectRolesModulesid){
+			System.out.println(ss.getMid());
+		}*/
 		
 			Modules Module = rolesdao.SelectModule(id);
 			//封装
@@ -97,7 +106,7 @@ public class RolesServiceImpl implements RolesService{
 				arrList.add(nod2);
 			}
 			for (TreeNode child :arrList) {
-	            TreeNode n = SelectDiGui(Integer.parseInt(child.getId()),uid,child.isChecked()); // 递归(查询所有的子模块)
+	            TreeNode n = SelectDiGui(Integer.parseInt(child.getId()),rid,child.isChecked()); // 递归(查询所有的子模块)
 	            nod.getChildren().add(n);
 	        }
 			
@@ -105,10 +114,10 @@ public class RolesServiceImpl implements RolesService{
 	}
 	
 	//用来递归
-		public TreeNode SelectDiGui(Integer id,Integer uid,boolean banduan) {
+		public TreeNode SelectDiGui(Integer id,Integer rid,boolean banduan) {
 			// TODO Auto-generated method stub
 			
-			List<Modules> selectRolesModulesid = rolesdao.SelectRolesModulesid(uid);
+			List<Modules> selectRolesModulesid = rolesdao.SelectRolesZhuangYong(rid);
 			
 			
 			Modules Module = rolesdao.SelectModule(id);
@@ -147,7 +156,7 @@ public class RolesServiceImpl implements RolesService{
 			}
 			for (TreeNode child :arrList) {
 				/*System.out.println(child.getId()+","+child.isChecked()+","+uid);*/
-	            TreeNode n = SelectDiGui(Integer.parseInt(child.getId()),uid,child.isChecked()); // 递归(查询所有的子模块)
+	            TreeNode n = SelectDiGui(Integer.parseInt(child.getId()),rid,child.isChecked()); // 递归(查询所有的子模块)
 	            nod.getChildren().add(n);
 	        }
 			

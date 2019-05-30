@@ -62,11 +62,15 @@ function addbaocuen(){
 		$("#dg").datagrid("reload");
 		$("#rname2").val("");
 		
-		if(res>0){
+		if(res==1){
 			$('#addwin').window('close');
 			$.messager.alert('提示','增加成功！');
-		}else{
+		}else if(res==0){
+			$('#updatewin').window('close');
 			$.messager.alert('提示','增加失败！');
+		}else if(res==2){
+			$('#addwin').window('close');
+			$.messager.alert('提示','名字重复！请重新输入');
 		}
 		
 	})
@@ -89,11 +93,15 @@ function updatebaocuen(){
 		rname:$("#rname3").val(),
 	},function(res){
 		$("#dg").datagrid("reload");
-		if(res>0){
+		if(res==1){
 			$('#updatewin').window('close');
 			$.messager.alert('提示','修改成功！');
-		}else{
+		}else if(res==0){
+			$('#updatewin').window('close');
 			$.messager.alert('提示','修改失败！');
+		}else if(res==2){
+			$('#updatewin').window('close');
+			$.messager.alert('提示','修改失败！名字重复！请重新输入！');
 		}
 		
 	})

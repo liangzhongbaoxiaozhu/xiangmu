@@ -54,10 +54,12 @@
 				$.post("DeleteUsers", {
 					id : row.uid,
 				}, function(res) {
-					if (res > 0) {
+					if (res == 1) {
 						$.messager.alert('提示', '删除成功!');
-					} else {
+					} else if(res==0) {
 						$.messager.alert('提示', '删除失败!');
+					} else if(res==2){
+						$.messager.alert('提示', '有角色不能删除!');
 					}
 				})
 				$("#dg").datagrid("reload");
@@ -83,9 +85,8 @@
 
 				var checkRole = /^((13[0-9])|(14[5,7,9])|(15([0-3]|[5-9]))|(166)|(17[0,1,3,5,6,7,8])|(18[0-9])|(19[8|9]))\d{8}$/;
 				var phone = $("#mtel2").val();
-				if (!checkRole.test(phone)) {
-					alert("手机号格式不正确");
-				} else {
+				if (checkRole.test(phone)) {
+					
 					$.post("InsertUsers", {
 						loginName : $("#loginName2").val(),
 						passWord : $("#passWord2").val(),
@@ -95,21 +96,28 @@
 					}, function(res) {
 						$("#dg").datagrid("reload");
 
-						if (res > 0) {
+						if (res ==1 ) {
 							$('#addwin').window('close');
 							$("#loginName2").val("");
 							$("#passWord2").val("");
 							$("#email2").val("");
 							$("#mtel2").val("");
 							$.messager.alert('提示', '增加成功！');
-						} else {
+						} else if(res==0) {
 							$.messager.alert('提示', '增加失败！');
+						}else if(res==2){
+							$.messager.alert('提示', '姓名重复！');
 						}
 
 					})
+					
+				} else {
+					alert("手机号格式不正确");
 				}
 
 			}
+		}else{
+			$.messager.alert('提示', '请输入邮箱！');
 		}
 
 	}
@@ -229,7 +237,9 @@
 				var phone = $("#mtel3").val();
 				if (!checkRole.test(phone)) {
 					alert("手机号格式不正确");
-				} else {
+				} else if(phone==""){
+					alert("手机号为空");
+				}else{
 					$.post("updateUser", {
 						uid : id,
 						loginName : $("#loginName3").val(),
@@ -248,6 +258,9 @@
 				}
 
 			}
+		}else{
+			$.messager.alert('提示', '修改失败！');
+			
 		}
 
 	}

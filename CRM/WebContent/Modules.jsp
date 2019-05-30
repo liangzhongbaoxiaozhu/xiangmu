@@ -105,16 +105,21 @@ function addguanbi(){
 //修改
 function xiugai(){
 	var row=$("#tt").tree("getSelected");
-	$("#path3").val(row.attributes.url);
-	$("#weight3").val(row.attributes.weight);
-	$('#updatewin').form("load",row);
+	$("#path3").textbox("setValue",row.attributes.url);
+	$("#weight3").textbox("setValue",row.attributes.weight);
+	
+	$('#xiugaifrom').form("load",row);
 	$('#updatewin').window("open");
 }
 //修改保存
 function updatebaocuen(){
 	var id=$("#tt").tree("getSelected").id;
 	var fuid=$("#tt").tree("getSelected").parentid;
-	$.post("UpdateModules",{
+	if(fuid=="null"){
+		
+		fuid=0;
+	}
+	 $.post("UpdateModules",{
 		mid:id,
 		mname:$("#mname3").val(),
 		parentId:fuid,
@@ -132,7 +137,7 @@ function updatebaocuen(){
 			$.messager.alert('提示','修改失败！名字重复!');
 		}
 		
-	})
+	}) 
 }
 //修改关闭
 function updateguanbi(){
@@ -194,6 +199,7 @@ function updateguanbi(){
 <div id="updatewin" class="easyui-window" title="修改" style="width:300px;height:200px"   
         data-options="iconCls:'icon-save',modal:true,closed:true"> 
     <div style="text-align: center;padding-top: 20px;">
+    <form id="xiugaifrom">
     <table style=" margin: auto;">
     <tr>
     <td>
@@ -221,7 +227,8 @@ function updateguanbi(){
     <input class="easyui-textbox" type="text" id="weight3" name="weight"  />   
     </td>
     </tr>
-    </table>  
+    </table> 
+    </form> 
     </div>
     <div style="text-align: center;padding-top: 20px;">
     <a onclick="updatebaocuen()" href="javascript:void(0)" class="easyui-linkbutton" ">保存</a>

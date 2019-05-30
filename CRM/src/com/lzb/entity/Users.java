@@ -9,7 +9,7 @@ public class Users {
 	private String LastLoginData;
 	private String CreateData;
 	private String Email;
-	private Integer Mtel;
+	private String Mtel;
 	private Integer SignIn;
 	private String SignInData;
 	private Integer weight;
@@ -88,10 +88,10 @@ public class Users {
 	public void setEmail(String email) {
 		Email = email;
 	}
-	public Integer getMtel() {
+	public String getMtel() {
 		return Mtel;
 	}
-	public void setMtel(Integer mtel) {
+	public void setMtel(String mtel) {
 		Mtel = mtel;
 	}
 	public Integer getSignIn() {

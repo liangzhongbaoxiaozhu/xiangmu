@@ -44,35 +44,44 @@ $(function(){
 		   }
 		   
 	   }
-	  /*  alert(uid); */
-	   $.post("UpdateQianTui",{
-		   uid:uid
-	   },function(res){
-		   $("#dg").datagrid("reload");  
-		   if(res.search("签退成功")!=-1){
-			  
-			   alert(res);  
-		   }else{
-			   alert(res);  
-		   }
-		   
-	   })
+	    
+	    if(uid!=null){
+	    	 $.post("UpdateZaoTui",{
+	  		   uid:uid
+	  	   },function(res){
+	  		   $("#dg").datagrid("reload");  
+	  		   if(res.search("签退成功")!=-1){
+	  			  
+	  			   alert(res);  
+	  		   }else{
+	  			   alert(res);  
+	  		   }
+	  		   
+	  	   })
+	    }else{
+	    	alert("当前页面无签到的人");
+	    }
+	  
    }
    function qiantui(index){
 	   var data = $("#dg").datagrid("getData");
 		var row = data.rows[index];
-	   $.post("UpdateQianTui",{
-		   uid:row.uid
-	   },function(res){
-		   $("#dg").datagrid("reload"); 
-		   if(res.search("签退成功")!=-1){
-			   
-			   alert(res);  
-		   }else{
-			   alert(res);  
-		   }
-		   
-	   })
+		if(row.signIn==1||row.signIn==2){
+			 $.post("UpdateZaoTui",{
+				   uid:row.uid
+			   },function(res){
+				   $("#dg").datagrid("reload"); 
+				   if(res.search("签退成功")!=-1){
+					   alert(res);  
+				   }else{
+					   alert(res);  
+				   }
+				   
+			   })
+		}else{
+			alert("没有签到，无法早退!");
+		}
+	  
    }
    function zhuangtai(value,row,index){
 	   return value==0?"签退":(value==1?"签到":(value==2?"迟到":(value==3?"早退":"旷班")))
