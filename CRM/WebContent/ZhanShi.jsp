@@ -101,8 +101,13 @@
 
 			},"json")
 		}
+		
+		$(function(){
+			window.setInterval(tixingxiaoxi(),5000);
+		})
+		
 		function tuichu(){
-			window.location="http://localhost:8080/CRM/index.jsp";  
+			window.location="http://localhost:8081/CRM/index.jsp";  
 		}
 		//签退
 		function qiantui(){

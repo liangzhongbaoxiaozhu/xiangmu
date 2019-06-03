@@ -5,30 +5,30 @@
 
 	<!-- 根据用户id查角色 -->
 	<select id="SelectRoles" parameterType="int" resultType="roles">
-		select * from Roles where Rid in(select RoleId from UserRoles where
+		select *
+		from roles where Rid in(select roleId from userRoles where
 		UserId=#{id})
 	</select>
 
 	<!-- 根据角色查模块id -->
 	<select id="SelectModules" parameterType="int" resultType="modules">
-		select * from Modules where Mid in(select ModuleId from RoleModules
+		select * from modules where Mid in(select ModuleId from roleModules
 		where RoleId=#{id})
 	</select>
 
 	<!-- 根据父模块id查子模块id -->
 	<select id="SelectZiModules" parameterType="int" resultType="modules">
-		select * from Modules where ParentId=#{id}
+		select * from modules where ParentId=#{id}
 	</select>
-
-
 
 	<select id="SelectModuless" resultType="modules" parameterType="fenYe">
 		select * from modules
-
 		limit #{page},#{pageSize}
 	</select>
+
 	<select id="SelectCount" resultType="int" parameterType="fenYe">
-		select count(Mid) from modules
+		select
+		count(Mid) from modules
 	</select>
 
 	<insert id="InsertModules" parameterType="modules">
@@ -43,28 +43,47 @@
 	</update>
 
 	<delete id="deleteModules" parameterType="int">
-		delete from modules where Mid=#{id}
+		delete from modules
+		where Mid=#{id}
 	</delete>
 
 
 	<!-- 查询所有父id -->
 	<select id="SelectFuidMoKuai" resultType="modules">
-		select * from Modules where Weight=1
+		select * from modules
+		where Weight=1
 	</select>
+
 	<!-- 根据父模块id查子模块id -->
 	<select id="SelectFuChaZiMoKuai" resultType="modules">
-		select * from Modules where ParentId=#{id}
+		select * from
+		modules where ParentId=#{id}
 	</select>
+
 	<!-- 根据id查询子 -->
 	<select id="SelectChaZiMoKuai" resultType="modules"
 		parameterType="int">
-		select * from Modules where Mid=#{id}
+		select * from modules where Mid=#{id}
 	</select>
+
 	<!-- 根据id查询 -->
 	<select id="SelectMoKuai" parameterType="int" resultType="modules">
-	select * from modules where mid=#{id}
+		select
+		* from modules where mid=#{id}
 	</select>
-	<select id="SelectMiZi" parameterType="string" resultType="modules"> 
-	select * from modules where Mname =#{mizi}
+
+	<select id="SelectRMoKuai" parameterType="int" resultType="modules">
+		select * from modules where mid in(select ModuleId from roleModules
+		where ModuleId=#{id})
 	</select>
+
+	<select id="SelectMiZi" parameterType="string" resultType="modules">
+		select * from modules where Mname =#{mizi}
+	</select>
+
+	<insert id="IntegerFuMoKuai" parameterType="modules">
+		insert into modules
+		(Mname,Weight)values(#{Mname},1)
+	</insert>
+
 </mapper>

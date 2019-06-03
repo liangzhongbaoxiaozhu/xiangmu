@@ -6,60 +6,84 @@
 
 	<select id="SelectRoles" resultType="roles" parameterType="fenYe">
 		select * from roles
-
+		<where>
+		<if test="Rname!=null and Rname!=''">
+		Rname like "%"#{rname}"%"
+		</if>
+		</where>
 		limit #{page},#{pageSize}
 	</select>
+
 	<select id="SelectCount" resultType="int" parameterType="fenYe">
-		select count(Rid) from roles
+		select
+		count(Rid) from roles
 	</select>
 
 	<insert id="InsertRoles" parameterType="roles">
-		insert into roles (Rname)values(#{Rname})
+		insert into roles
+		(Rname)values(#{Rname})
 	</insert>
 
 	<update id="UpdateRoles" parameterType="roles">
-		update roles set Rname=#{Rname} where Rid=#{Rid}
+		update roles set
+		Rname=#{Rname} where Rid=#{Rid}
 	</update>
 
 	<delete id="deleteRoles" parameterType="int">
-		delete from roles where Rid=#{id}
+		delete from roles where
+		Rid=#{id}
 	</delete>
+
 	<!-- 查询角色所有的子模块id -->
 	<select id="SelectRolesModulesid" resultType="modules"
 		parameterType="int">
 		select distinct Mid from modules where Mid in (
-		select ModuleId from RoleModules where RoleId in (
-		select RoleId from userroles where UserId=#{id}))
+		select
+		ModuleId from roleModules where RoleId in (
+		select RoleId from
+		userroles where UserId=#{id}))
 	</select>
-	
+
 	<select id="SelectRolesZhuangYong" resultType="modules"
 		parameterType="int">
 		select distinct Mid from modules where Mid in (
-		select ModuleId from RoleModules where RoleId=#{id})
+		select
+		ModuleId from roleModules where RoleId=#{id})
 	</select>
+
 	<!-- 查询所有父id -->
 	<select id="SelectModulesFuid" resultType="modules">
-		select * from Modules where Weight=1
+		select * from modules
+		where Weight=1
 	</select>
+
 	<!-- 根据父模块id查子模块id -->
 	<select id="SelectZiModules2" resultType="modules">
-		select * from Modules where ParentId=#{id}
+		select * from modules
+		where ParentId=#{id}
 	</select>
+
 	<select id="SelectModule" resultType="modules" parameterType="int">
-		select * from Modules where Mid=#{id}
+		select * from modules where Mid=#{id}
 	</select>
 
 	<insert id="IntegerRolesModules" parameterType="fenYe">
-		insert into RoleModules (ModuleId,RoleId)values(#{page},#{pageSize})
+		insert into
+		roleModules (ModuleId,RoleId)values(#{page},#{pageSize})
 	</insert>
+
 	<delete id="DeleteRolesModules" parameterType="int">
-		delete from RoleModules where RoleId=#{id}
+		delete from
+		roleModules where RoleId=#{id}
 	</delete>
-	<select id="selectUserRolesCount" parameterType="int" resultType="int">
-	select count(RMid) from RoleModules where RoleId=#{id}
+
+	<select id="selectRoleModulesCount" parameterType="int"
+		resultType="int">
+		select count(RMid) from roleModules where RoleId=#{id}
 	</select>
+
 	<select id="selectMingZi" parameterType="string" resultType="roles">
-	select * from roles where Rname=#{mingzi}
+		select * from roles where Rname=#{mingzi}
 	</select>
-	
+
 </mapper>

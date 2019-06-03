@@ -20,4 +20,11 @@ public interface Trackdao {
 	 * @return
 	 */
 	Integer SelectCount(FenYe fen);
+	
+	/**
+	 * ²éÑ¯ËùÓĞ
+	 * @param fen
+	 * @return
+	 */
+	List<Track> SelectTracks(FenYe fen);
 }

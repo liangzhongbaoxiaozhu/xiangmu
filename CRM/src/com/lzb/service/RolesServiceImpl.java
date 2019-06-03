@@ -50,9 +50,9 @@ public class RolesServiceImpl implements RolesService{
 	@Override
 	public String deleteRoles(Integer id) {
 		// TODO Auto-generated method stub
-		Integer selectUserRolesCount = rolesdao.selectUserRolesCount(id);
+		Integer selectRoleModulesCount = rolesdao.selectRoleModulesCount(id);
 		String jieguo="Ê§°Ü";
-		if(selectUserRolesCount==0){
+		if(selectRoleModulesCount==0){
 			Integer deleteRoles = rolesdao.deleteRoles(id);
 			if(deleteRoles>0){
 				jieguo="³É¹¦";

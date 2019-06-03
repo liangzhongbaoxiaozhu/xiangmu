@@ -66,7 +66,7 @@ public interface UsersService {
 	FenYe SelectQianDao(FenYe fen);
 	
 	//Ç©ÍË
-	Integer SelectQianTui(Integer uid);
+	Integer SelectQianTui(Integer uid,String data);
 	
 	//·ÖÅäÈ¨ÖØ
 	Integer updateQuanZhong(Users user);
@@ -88,4 +88,7 @@ public interface UsersService {
 	
 	//ÔçÍË
 	Integer SelectZhaoTui(Integer uid);
+	
+	//ÅĞ¶ÏÇ©ÍË10·ÖÖÓ
+	String SelectQianTuiShi(Integer uid);
 }

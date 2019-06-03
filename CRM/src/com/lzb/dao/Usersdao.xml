@@ -7,19 +7,20 @@
 	<select id="DengLu" parameterType="users" resultType="users">
 		select *
 		from users
-		where  LoginName=#{LoginName} and PassWord=#{PassWord}
+		where LoginName=#{LoginName} and PassWord=#{PassWord}
 	</select>
-	
+
 	<select id="YongHuMing" parameterType="users" resultType="users">
-		select *
+		select
+		*
 		from users
-		where  LoginName=#{LoginName} 
+		where LoginName=#{LoginName}
 	</select>
-	
+
 	<select id="SuoDing" parameterType="users" resultType="users">
 		select *
 		from users
-		where IsLoginData=0 and LoginName=#{LoginName} 
+		where IsLoginData=0 and LoginName=#{LoginName}
 	</select>
 
 	<!-- 查询所有 -->
@@ -45,6 +46,7 @@
 		</where>
 		limit #{page},#{pageSize}
 	</select>
+
 	<!-- 查询所有创建时间 -->
 	<select id="SelectUsersCuanJian" resultType="users"
 		parameterType="fenYe">
@@ -102,8 +104,8 @@
 
 	<insert id="InsertUsers" parameterType="users">
 		insert into users
-		(LoginName,PassWord,CreateData,Email,Mtel,IsLoginData)
-		values(#{LoginName},#{PassWord},#{CreateData},#{Email},#{Mtel},0)
+		(LoginName,PassWord,CreateData,Email,Mtel,IsLoginData,SignIn,SignInData,Int0)
+		values(#{LoginName},#{PassWord},#{CreateData},#{Email},#{Mtel},0,1,#{SignInData},0)
 	</insert>
 
 	<update id="isShuoDing" parameterType="int">
@@ -117,6 +119,7 @@
 		IsLoginData=0
 		where Uid=#{id}
 	</update>
+
 	<delete id="deleteUsers" parameterType="int">
 		delete from users where
 		Uid=#{id}
@@ -125,22 +128,27 @@
 	<select id="SelectRoles" resultType="roles">
 		select * from roles
 	</select>
+
 	<select id="SelectRolesUsers" parameterType="int" resultType="roles">
 		select * from roles where Rid in (select RoleId from UserRoles where
 		UserId=#{id})
 	</select>
+
 	<insert id="InsertUserRoles" parameterType="fenYe">
 		insert into userRoles
 		(UserId,RoleId)values(#{page},#{pageSize})
 	</insert>
+
 	<delete id="deleteUserRoles" parameterType="fenYe">
 		delete from userRoles
 		where UserId=#{page} and RoleId=#{pageSize}
 	</delete>
+
 	<select id="SelectCountUsers" parameterType="fenYe" resultType="int">
 		select count(*) from userRoles where UserId=#{page} and
 		RoleId=#{pageSize}
 	</select>
+
 	<select id="SelectName" parameterType="String" resultType="int">
 		select count(*) from users where LoginName=#{name}
 	</select>
@@ -149,6 +157,7 @@
 		update users set
 		Email=#{Email},Mtel=#{Mtel} where Uid=#{Uid}
 	</update>
+
 	<update id="updateMiMa" parameterType="users">
 		update users set
 		PassWord=#{PassWord} where Uid=#{uid}
@@ -159,11 +168,13 @@
 		select *
 		from users where uid=#{id}
 	</select>
+
 	<!-- 签到 -->
 	<update id="QianDao" parameterType="users">
 		update users set
-		SignIn=#{SignIn},SignInData=#{SignInData} where uid=#{uid} 
+		SignIn=#{SignIn},SignInData=#{SignInData} where uid=#{uid}
 	</update>
+
 	<!-- 个人修改密码 -->
 	<update id="UpdateGeRenMiMa" parameterType="users">
 		update users set
@@ -172,7 +183,7 @@
 
 	<!-- 查询签到 -->
 	<select id="SelectQianDao" parameterType="fenYe" resultType="users">
-		select Uid,LoginName,SignIn,SignInData from users
+		select Uid,LoginName,SignIn,SignInData,SigningData from users
 		<where>
 			IsLoginData=0
 			<if test="LoginName!=null and LoginName!=''">
@@ -188,6 +199,7 @@
 		</where>
 		limit #{page},#{pageSize}
 	</select>
+
 	<!-- 查询签到总条数 -->
 	<select id="SelectQianDaoCount" parameterType="fenYe"
 		resultType="int">
@@ -206,43 +218,62 @@
 			</if>
 		</where>
 	</select>
+
 	<!-- 签退 -->
-	<update id="SelectQianTui" parameterType="int">
-		update users set SignIn=0 where Uid=#{uid} 
+	<update id="UpdateQianTui" parameterType="users">
+		update users set
+		SignIn=0,SigningData=#{signingData} where Uid=#{uid}
 	</update>
-	
+
 	<!-- 早退 -->
 	<update id="SelectZhaoTui" parameterType="int">
-		update users set SignIn=3 where Uid=#{uid} 
+		update users set
+		SignIn=3 where Uid=#{uid}
 	</update>
 
 	<update id="updateQuanZhong" parameterType="users">
-		update users set weight=#{weight},Remarks=#{Remarks} where uid=#{uid}
+		update users set
+		weight=#{weight},Remarks=#{Remarks} where uid=#{uid}
 	</update>
 
 	<!-- 查询自动分配 -->
 	<select id="SelectZiDongFenPei" resultType="string">
-		select String0 from users where uid=1
+		select String0 from
+		users where uid=1
 	</select>
+
 	<update id="updateZiDongFenPei">
 		update users set String0="true" where uid=1
 	</update>
+
 	<update id="updateguanbiZiDong">
 		update users set String0="false" where uid=1
 	</update>
-	
+
 	<select id="SelectGeRenQianDao" parameterType="int" resultType="users">
-	select SignIn from users where uid=#{uid}
+		select SignIn from users where uid=#{uid}
 	</select>
-	
+
 	<update id="updateChiDao" parameterType="int">
-	update users set SignIn=4 where uid=#{uid}
+		update users set SignIn=4 where uid=#{uid}
 	</update>
+
 	<select id="SelectKuanBan" resultType="users">
-	select * from users where SignIn=0
+		select * from users where SignIn=0
+	</select>
+
+	<select id="SelectCountUserRoles" parameterType="int"
+		resultType="int">
+		select count(URrid) from userRoles where UserId=#{uid}
+	</select>
+
+	<select id="SelectZuiXinCuangjian" resultType="users">
+		select * from users order by uid desc limit 1
 	</select>
 	
-	<select id="SelectCountUserRoles" parameterType="int" resultType="int">
-	select count(URrid) from UserRoles where UserId=#{uid}
+	<select id="SelectQianTuiShi" parameterType="int" resultType="string">
+	SELECT TIMESTAMPDIFF(MINUTE,SignInData,NOW()) FROM users WHERE
+		uid=#{uid}
 	</select>
+
 </mapper>

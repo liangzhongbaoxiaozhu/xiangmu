@@ -84,16 +84,33 @@ public interface Modulesdao {
 	 * @return
 	 */
 	Modules SelectChaZiMoKuai(Integer id);
+	
 	/**
 	 * 根据id查询模块
 	 * @param id
 	 * @return
 	 */
 	Modules SelectMoKuai(Integer id);
+	
+	/**
+	 * 根据id查询模块角色
+	 * @param id
+	 * @return
+	 */
+	List<Modules> SelectRMoKuai(Integer id);
+	
 	/**
 	 * 根据名字查询模块
 	 * @param mizi
 	 * @return
 	 */
 	List<Modules> SelectMiZi(String mizi);
+	
+	/**
+	 * 添加父模块
+	 * @param modules
+	 * @return
+	 */
+	Integer IntegerFuMoKuai(Modules modules);
+	
 }

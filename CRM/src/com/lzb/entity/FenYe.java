@@ -39,8 +39,15 @@ public class FenYe<T> {
      private Integer sid;
      
      
+     private String Rname;
      
 	
+	public String getRname() {
+		return Rname;
+	}
+	public void setRname(String rname) {
+		Rname = rname;
+	}
 	public Integer getSid() {
 		return sid;
 	}

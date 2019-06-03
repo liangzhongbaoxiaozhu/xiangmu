@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 
+import com.lzb.dao.Statisticsdao;
 import com.lzb.dao.Usersdao;
 import com.lzb.entity.FenYe;
 import com.lzb.entity.Roles;
+import com.lzb.entity.Statistics;
 import com.lzb.entity.Users;
 
 @Component
@@ -16,6 +18,8 @@ public class UsersServiceImpl implements UsersService {
 
 	@Autowired
 	private Usersdao usersdao;
+	@Autowired
+	private Statisticsdao statisticsdao;
 
 	@Override
 	public Users DengLu(Users user) {
@@ -65,7 +69,16 @@ public class UsersServiceImpl implements UsersService {
 		if (selectName > 0) {
 			return 2;
 		} else {
-			return usersdao.InsertUsers(users);
+			Integer insertUsers = usersdao.InsertUsers(users);
+			Users ZuiXinCuangjian = usersdao.SelectZuiXinCuangjian();
+			Statistics sta=new Statistics();
+			sta.setUid((ZuiXinCuangjian.getUid()));
+			sta.setChidao(0);
+			sta.setKuanggong(0);
+			sta.setQiandao(1);
+			sta.setQingjia(0);
+			statisticsdao.InsertXinYuanGong(sta);
+			return insertUsers;
 		}
 
 	}
@@ -192,9 +205,12 @@ public class UsersServiceImpl implements UsersService {
 	}
 
 	@Override
-	public Integer SelectQianTui(Integer uid) {
+	public Integer SelectQianTui(Integer uid,String data) {
 		// TODO Auto-generated method stub
-		return usersdao.SelectQianTui(uid);
+		Users user=new Users();
+		user.setUid(uid);
+		user.setSigningData(data);
+		return usersdao.UpdateQianTui(user);
 	}
 
 	@Override
@@ -245,6 +261,12 @@ public class UsersServiceImpl implements UsersService {
 	public Integer SelectZhaoTui(Integer uid) {
 		// TODO Auto-generated method stub
 		return usersdao.SelectZhaoTui(uid);
+	}
+
+	@Override
+	public String SelectQianTuiShi(Integer uid) {
+		// TODO Auto-generated method stub
+		return usersdao.SelectQianTuiShi(uid);
 	}
 
 	

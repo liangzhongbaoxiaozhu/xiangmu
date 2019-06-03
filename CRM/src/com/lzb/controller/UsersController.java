@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.lzb.entity.FenYe;
 import com.lzb.entity.Modules;
+import com.lzb.entity.Statistics;
 import com.lzb.entity.Users;
+import com.lzb.service.StatisticsService;
 import com.lzb.service.UsersService;
 
 @Controller
@@ -24,6 +26,8 @@ public class UsersController {
 
 	@Autowired
 	private UsersService usersService;
+	@Autowired
+	private StatisticsService statisticsService;
 	
 	
 	
@@ -53,6 +57,7 @@ public class UsersController {
 		users.setPassWord(passWord);
 		users.setEmail(email);
 		users.setMtel(mtel);
+		users.setSignInData(df.format(t));
 		Integer insertRoles = usersService.InsertUsers(users);
 		return insertRoles;
 	}
@@ -146,6 +151,7 @@ public class UsersController {
 		@RequestMapping(value="/Qian",method=RequestMethod.POST,produces = "text/plain;charset=utf-8")
 		@ResponseBody
 		public String Qian(Integer uid) throws ParseException{
+			
 			String zhuangtai="";
 			Users user =new Users();
 			user.setUid(uid);
@@ -170,12 +176,18 @@ public class UsersController {
 			System.out.println("用户迟到判定:"+uhdlsj.before(cdsj));
 			
 			if(uhdlsj.before(dqsj)){
+				Statistics sta = statisticsService.SelectById(uid);
+				sta.setQiandao((sta.getQiandao()+1));
+				statisticsService.UpdateQianDao(sta);
 				user.setSignIn(1);
 				zhuangtai="签到成功！";
 				user.setSignInData(df.format(t));
 				Integer SelectGeRen = usersService.QianDao(user);
 			}
 			if(uhdlsj.before(cdsj)){
+				Statistics sta = statisticsService.SelectById(uid);
+				sta.setChidao((sta.getChidao()+1));
+				statisticsService.UpdateChiDao(sta);
 				user.setSignIn(2);
 				zhuangtai="签到成功！您已迟到！";
 				user.setSignInData(df.format(t));
@@ -234,10 +246,12 @@ public class UsersController {
 			String huihua="签退时间未到，请到时间下班！";
 			
 			if(dtsj.before(uhdtsj)){
+				
 				huihua="签退成功！";
 			String[] split = uid.split(",");
 			for(int i=0;i<split.length;i++){
-				Integer selectQianTui = usersService.SelectQianTui(Integer.parseInt(split[i]));
+				
+				Integer selectQianTui = usersService.SelectQianTui(Integer.parseInt(split[i]),df.format(t));
 				
 				if(selectQianTui<1){
 					huihua="签退失败，请找管理员!";
@@ -256,7 +270,7 @@ public class UsersController {
 					SimpleDateFormat XianShiShiJian = new SimpleDateFormat("HH:mm:ss");
 					
 					//用户签退时间
-					String YongHuDengLuShiJian=XianShiShiJian.format(t);
+					/*String YongHuDengLuShiJian=XianShiShiJian.format(t);
 					Date  uhdtsj=XianShiShiJian.parse(YongHuDengLuShiJian);
 					//签退限定时间
 					Date zaotuis=XianShiShiJian.parse("08:00:00");
@@ -265,21 +279,34 @@ public class UsersController {
 					System.out.println("用户签退时间:"+uhdtsj);
 					System.out.println("用户早退上判定:"+zaotuis.before(uhdtsj));
 					System.out.println("用户早退下判定:"+uhdtsj.before(zaotuix));
-					String huihua="签退失败！";
+					String huihua="签退失败！";*/
 					
-					if(zaotuis.before(uhdtsj)&&uhdtsj.before(zaotuix)){
-						huihua="签退成功！";
+					/*if(zaotuis.before(uhdtsj)&&uhdtsj.before(zaotuix)){
+						huihua="签退成功！";*/
+					String huihua="签退失败！";
 					String[] split = uid.split(",");
 					for(int i=0;i<split.length;i++){
 						if(split[i]!=""){
-							Integer selectQianTui = usersService.SelectZhaoTui(Integer.parseInt(split[i]));
 							
-							if(selectQianTui<1){
-								huihua="签退失败，请找管理员!";
+							String selectQianTuiShi = usersService.SelectQianTuiShi(Integer.parseInt(split[i]));
+							if(Integer.parseInt(selectQianTuiShi)>10){
+								//记录
+								Statistics sta = statisticsService.SelectById(Integer.parseInt(split[i]));
+								sta.setQingjia((sta.getQingjia()+1));
+								statisticsService.UpdateQingJia(sta);
+								
+								Integer selectQianTui = usersService.SelectZhaoTui(Integer.parseInt(split[i]));
+								huihua="签退成功！";
+								if(selectQianTui<1){
+									huihua="签退失败，请找管理员!";
+								}
+							}else{
+								huihua="签退失败，签到未满十分钟!";
 							}
+							
 						}
 						
-					}
+					/*}*/
 					}
 					return huihua;
 				}

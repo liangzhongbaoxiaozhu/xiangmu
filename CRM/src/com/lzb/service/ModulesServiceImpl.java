@@ -153,9 +153,14 @@ public class ModulesServiceImpl implements ModulesService{
 	@Override
 	public Integer deleteModules(Integer id) {
 		// TODO Auto-generated method stub
-		Modules selectMoKuai = modulesdao.SelectMoKuai(id);
+		List<Modules> selectMoKuai = modulesdao.SelectRMoKuai(id);
+		/*System.out.println(selectMoKuai);*/
 		if(selectMoKuai!=null){
-			return 2;
+			if(selectMoKuai.toString()=="[]"){
+				
+			}else{
+				return 2;
+			}
 		}
 		return modulesdao.deleteModules(id);
 	}
@@ -237,6 +242,16 @@ public class ModulesServiceImpl implements ModulesService{
             nod.getChildren().add(n);
         }
 	            return nod;
+	}
+
+	@Override
+	public Integer IntegerFuLei(Modules modules) {
+		// TODO Auto-generated method stub
+		List<Modules> selectMiZi = modulesdao.SelectMiZi(modules.getMname());
+		if(selectMiZi.size()>0){
+			return 2;
+		}
+		return modulesdao.IntegerFuMoKuai(modules);
 	}
 
 }

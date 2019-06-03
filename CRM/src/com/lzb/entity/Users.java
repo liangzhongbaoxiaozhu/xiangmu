@@ -12,6 +12,7 @@ public class Users {
 	private String Mtel;
 	private Integer SignIn;
 	private String SignInData;
+	private String SigningData;
 	private Integer weight;
 	private String Remarks;
 	private String String0;
@@ -22,6 +23,12 @@ public class Users {
 	
 	
 	
+	public String getSigningData() {
+		return SigningData;
+	}
+	public void setSigningData(String signingData) {
+		SigningData = signingData;
+	}
 	public String getInt0() {
 		return Int0;
 	}

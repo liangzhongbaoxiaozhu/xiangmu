@@ -59,14 +59,11 @@
                 <a href="#" onclick="changeCode()">点击图片切换</a>
                 </form>
                 <button  onclick="DengLu()">登录</button>
-                <div class="error"><span>+</span></div>
-            
+                <div class="error"><span>+</span></div><br/><br/>
+            <a href="#">忘记密码</a>
             <div class="connect">
-                <p>登录方式:</p>
-                <p>
-                    <a class="facebook" href="#"></a>
-                    <a class="twitter" href="#"></a>
-                </p>
+               
+                
             </div>
         </div>
         <!-- <div align="center">来自<a href="http://www.cssmoban.com/" target="_blank" title="">CRM</a></div> -->

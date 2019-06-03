@@ -181,7 +181,7 @@ public interface Usersdao {
 	 * @param uid
 	 * @return
 	 */
-	Integer SelectQianTui(Integer uid);
+	Integer UpdateQianTui(Users users);
 	
 	
 	/**
@@ -243,4 +243,17 @@ public interface Usersdao {
 	 * @return
 	 */
 	Integer SelectCountUserRoles(Integer uid);
+	
+	/**
+	 * 最新创建的用户
+	 * @return
+	 */
+	Users SelectZuiXinCuangjian();
+	
+	/**
+	 * 判断签退10分钟
+	 * @param uid
+	 * @return
+	 */
+	String SelectQianTuiShi(Integer uid);
 }

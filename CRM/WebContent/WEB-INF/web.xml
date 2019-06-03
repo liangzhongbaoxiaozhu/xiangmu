@@ -24,6 +24,15 @@
   </servlet-mapping>
   
   
+  <servlet>  
+        <servlet-name>DisplayChart</servlet-name>  
+        <servlet-class>org.jfree.chart.servlet.DisplayChart</servlet-class>  
+    </servlet>  
+    <servlet-mapping>  
+        <servlet-name>DisplayChart</servlet-name>  
+        <url-pattern>/chart</url-pattern>  
+</servlet-mapping> 
+  
   <filter>
         <filter-name>CharacterEncodingFilter</filter-name>
         <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>

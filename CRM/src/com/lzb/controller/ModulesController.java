@@ -21,88 +21,96 @@ import com.lzb.service.ModulesService;
 public class ModulesController {
 	@Autowired
 	private ModulesService modulesService;
-	
-	@RequestMapping(value="/SelectModul",method={RequestMethod.POST},produces = "text/plain;charset=utf-8")
+
+	@RequestMapping(value = "/SelectModul", method = { RequestMethod.POST }, produces = "text/plain;charset=utf-8")
 	@ResponseBody
-	public String SelectModul(Integer uid){
-		
-		TreeNode node=new TreeNode();
+	public String SelectModul(Integer uid) {
+
+		TreeNode node = new TreeNode();
 		List<Modules> Fuid = modulesService.SelectFuidMoKuai();
-		String chucuen=null;
-		for(Modules m:Fuid){
-			TreeNode selectModulesFuid = modulesService.SelectCaiDan(m.getMid(),uid);
-			/*System.out.println(selectModulesFuid.getChildren());*/
-			String jsonText="";
-			if(selectModulesFuid.getChildren().toString()!="[]"){
-				 jsonText = JSON.toJSONString(selectModulesFuid, true); 
+		String chucuen = null;
+		for (Modules m : Fuid) {
+			TreeNode selectModulesFuid = modulesService.SelectCaiDan(
+					m.getMid(), uid);
+			/* System.out.println(selectModulesFuid.getChildren()); */
+			String jsonText = "";
+			if (selectModulesFuid.getChildren().toString() != "[]") {
+				jsonText = JSON.toJSONString(selectModulesFuid, true);
 			}
-			
-			/*System.out.println(jsonText);*/
-			if(chucuen==null&&jsonText!=""){
-				chucuen=jsonText;
-			}else{
-				if(jsonText!=""){
-					chucuen=chucuen+","+jsonText;
+
+			/* System.out.println(jsonText); */
+			if (chucuen == null && jsonText != "") {
+				chucuen = jsonText;
+			} else {
+				if (jsonText != "") {
+					chucuen = chucuen + "," + jsonText;
 				}
 			}
 		}
-		chucuen="["+chucuen+"]";
-		/*System.out.println(chucuen);*/
+		chucuen = "[" + chucuen + "]";
+		/* System.out.println(chucuen); */
 		return chucuen;
 	}
-	
-	
-	
-	@RequestMapping(value="/SelectModules",method=RequestMethod.POST)
+
+	@RequestMapping(value = "/SelectModules", method = RequestMethod.POST)
 	@ResponseBody
-	public FenYe SelectModules(Integer page,Integer rows){
-		FenYe fen=new FenYe();
-		fen.setPage((page-1)*rows);
+	public FenYe SelectModules(Integer page, Integer rows) {
+		FenYe fen = new FenYe();
+		fen.setPage((page - 1) * rows);
 		fen.setPageSize(rows);
 		fen = modulesService.SelectModuless(fen);
 		return fen;
 	}
-	@RequestMapping(value="/InsertModules",method=RequestMethod.POST)
+
+	@RequestMapping(value = "/InsertModules", method = RequestMethod.POST)
 	@ResponseBody
-	public Integer InsertModules(Modules modules){
+	public Integer InsertModules(Modules modules) {
 		Integer insertRoles = modulesService.InsertModules(modules);
 		return insertRoles;
 	}
-	
-	@RequestMapping(value="/UpdateModules",method=RequestMethod.POST)
+
+	@RequestMapping(value = "/UpdateModules", method = RequestMethod.POST)
 	@ResponseBody
-	public Integer UpdateModules(Modules modules){
+	public Integer UpdateModules(Modules modules) {
 		Integer updateRoles = modulesService.UpdateModules(modules);
 		return updateRoles;
 	}
-	@RequestMapping(value="/DeleteModules",method=RequestMethod.POST)
+
+	@RequestMapping(value = "/DeleteModules", method = RequestMethod.POST)
 	@ResponseBody
-	public Integer DeleteModules(Integer id){
+	public Integer DeleteModules(Integer id) {
 		Integer deleteRoles = modulesService.deleteModules(id);
-			
+
 		return deleteRoles;
 	}
-	
-	
-	@RequestMapping(value="/SelectMoKuaiShu",method=RequestMethod.POST,produces = "text/plain;charset=utf-8")
+
+	@RequestMapping(value = "/SelectMoKuaiShu", method = RequestMethod.POST, produces = "text/plain;charset=utf-8")
 	@ResponseBody
-	public String SelectMoKuaiShu(){
-		TreeNode node=new TreeNode();
+	public String SelectMoKuaiShu() {
+		TreeNode node = new TreeNode();
 		List<Modules> Fuid = modulesService.SelectFuidMoKuai();
-		String chucuen=null;
-		for(Modules m:Fuid){
-			TreeNode selectModulesFuid = modulesService.SelectFuChaZiMoKuai(m.getMid());
-			String jsonText = JSON.toJSONString(selectModulesFuid, true); 
-			/*System.out.println(jsonText);*/
-			if(chucuen==null){
-				chucuen=jsonText;
-			}else{
-				chucuen=chucuen+","+jsonText;
+		String chucuen = null;
+		for (Modules m : Fuid) {
+			TreeNode selectModulesFuid = modulesService.SelectFuChaZiMoKuai(m
+					.getMid());
+			String jsonText = JSON.toJSONString(selectModulesFuid, true);
+			/* System.out.println(jsonText); */
+			if (chucuen == null) {
+				chucuen = jsonText;
+			} else {
+				chucuen = chucuen + "," + jsonText;
 			}
 		}
-		chucuen="["+chucuen+"]";
-		/*System.out.println(chucuen);*/
+		chucuen = "[" + chucuen + "]";
+		/* System.out.println(chucuen); */
 		return chucuen;
+	}
+
+	@RequestMapping(value = "/IntegerFuMoKuai", method = RequestMethod.POST)
+	@ResponseBody
+	public Integer IntegerFuMoKuai(Modules modules) {
+		Integer IntegerFuLei = modulesService.IntegerFuLei(modules);
+		return IntegerFuLei;
 	}
 
 }

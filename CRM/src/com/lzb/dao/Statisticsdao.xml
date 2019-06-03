@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE 
+mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lzb.dao.Statisticsdao">
+
+	<insert id="InsertXinYuanGong" parameterType="statistics">
+		INSERT into
+		statistics (tj_id,uid,chidao,qiandao,qingjia,kuanggong)
+		VALUES(#{tj_id},#{uid},#{chidao},#{qiandao},#{qingjia},#{kuanggong})
+	</insert>
+
+	<update id="UpdateQianDao" parameterType="statistics">
+		update statistics set
+		qiandao=#{qiandao}
+		where uid=#{uid}
+	</update>
+
+	<update id="UpdateChiDao" parameterType="statistics">
+		update statistics set
+		chidao=#{chidao}
+		where uid=#{uid}
+	</update>
+
+	<update id="UpdateQingJia" parameterType="statistics">
+		update statistics set
+		qingjia=#{qingjia}
+		where uid=#{uid}
+	</update>
+
+	<select id="SelectById" parameterType="int" resultType="statistics">
+		select *
+		from statistics where uid=#{uid}
+	</select>
+
+	<delete id="DeleteById" parameterType="int">
+		delete from statistics
+		where uid=#{uid}
+	</delete>
+
+	<select id="SelectStatistics" resultType="statistics">
+		select tj_id,
+		s.uid,
+		s.chidao,
+		s.qiandao,
+		s.qingjia,
+		s.kuanggong,
+		u.LoginName as name
+		from
+		statistics s,Users u
+		where s.uid=u.uid
+	</select>
+</mapper>

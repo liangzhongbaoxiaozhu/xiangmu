@@ -7,7 +7,7 @@
 		select
 		Tid,Studentid,UserId,TrackStartData,TrackEndData,ReturnVisit,TrackingMode,Content,NextTrackingData,Operation,s.Sname
 		as StudentName,u.LoginName as UsersName
-		from track t,Students s,Users u
+		from track t,students s,users u
 		<where>
 			t.Studentid=s.Sid and t.UserId=u.Uid
 			<if test="StudentName!=null and StudentName!=''">
@@ -32,9 +32,8 @@
 		limit #{page},#{pageSize}
 	</select>
 
-
 	<select id="SelectCount" parameterType="fenYe" resultType="int">
-		select count(Tid) from track t,Students s,Users u
+		select count(Tid) from track t,students s,users u
 		<where>
 			t.Studentid=s.Sid and t.UserId=u.Uid
 			<if test="StudentName!=null and StudentName!=''">
@@ -55,6 +54,16 @@
 			<if test="TrackingMode!=null and TrackingMode!=''">
 				and TrackingMode=#{TrackingMode}
 			</if>
+		</where>
+	</select>
+
+	<select id="SelectTracks" resultType="track">
+		select
+		Tid,Studentid,UserId,TrackStartData,TrackEndData,ReturnVisit,TrackingMode,Content,NextTrackingData,Operation,s.Sname
+		as StudentName,u.LoginName as UsersName
+		from track t,students s,users u
+		<where>
+			t.Studentid=s.Sid and t.UserId=u.Uid
 		</where>
 	</select>
 </mapper>

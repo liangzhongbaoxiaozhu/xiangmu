@@ -49,6 +49,7 @@ public class StudentsServiceImp implements StudentsService {
 		if(Boolean.parseBoolean(selectFenLiangShiFouKaiQi)){
 		FenYe fen=new FenYe();
 		
+		int jishu=0;
 		for(int i=4;i>0;i--){
 			/*System.out.println("i="+i);*/
 			fen.setPage(i);
@@ -57,8 +58,12 @@ public class StudentsServiceImp implements StudentsService {
 			/*System.out.println(selectCountDengJi);*/
 			if(i==1&&selectCountDengJi==0){
 				studentsMapper.UpdateFenLiangQuanBu();
+				if(jishu==1){
+					return 2;
+				}
 				i=4;
 				fen.setPage(i);
+				jishu=1;
 			}
 			 selectCountDengJi = studentsMapper.SelectCountDengJi(fen);
 			/* System.out.println(selectCountDengJi);*/
@@ -273,6 +278,18 @@ public class StudentsServiceImp implements StudentsService {
 	public Integer deleteTips(Integer tid) {
 		// TODO Auto-generated method stub
 		return tipsdao.deleteTips(tid);
+	}
+
+
+
+	@Override
+	public FenYe selectStuwangluo(FenYe fenye) {
+		// TODO Auto-generated method stub
+		Integer selectStuCountGeRen = studentsMapper.selectStuCountwangluo(fenye);
+		List<Students> selectStuGeRen = studentsMapper.selectStuwangluo(fenye);
+		fenye.setTotal(selectStuCountGeRen);
+		fenye.setRows(selectStuGeRen);
+		return fenye;
 	}
 
 

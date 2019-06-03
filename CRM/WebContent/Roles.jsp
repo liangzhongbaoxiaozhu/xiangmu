@@ -22,9 +22,10 @@ function init(){
 		url:'SelectRoles',  
 		method:"post",
 		queryParams:{
-			
+			rname:$("#rname4").val()
 		}
 	})
+	$("#rname4").textbox("reset");
 } 
 $(function(){
 	   init();
@@ -66,7 +67,7 @@ function addbaocuen(){
 			$('#addwin').window('close');
 			$.messager.alert('提示','增加成功！');
 		}else if(res==0){
-			$('#updatewin').window('close');
+			$('#addwin').window('close');
 			$.messager.alert('提示','增加失败！');
 		}else if(res==2){
 			$('#addwin').window('close');
@@ -179,8 +180,9 @@ function updateQXGB(){
 <body>
 <div id="tool">
 <form id="ff">   
-        
-		
+        <label for="name">名称:</label>   
+       <input class="easyui-textbox" type="text" id="rname4" />
+		<a href="javascript:void(0)" onclick="init()" class="easyui-linkbutton" data-options="iconCls:'icon-search'">搜索</a>  
 		<a  href="javascript:void(0)" class="easyui-linkbutton" onclick="xinzeng()" data-options="iconCls:'icon-add'">新增</a>  
 </form>  
 

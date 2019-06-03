@@ -121,6 +121,7 @@ $(function(){
 					<th data-options="field:'loginName',width:100">名称</th>
 					<th data-options="field:'signIn',width:100,formatter:zhuangtai">签到状态</th>
 					<th data-options="field:'signInData',width:100">签到时间</th>
+					<th data-options="field:'signingData',width:100">签退时间</th>
 					<th data-options="field:'a',width:100,formatter:caozuo">操作</th>
 				</tr>
 			</thead>

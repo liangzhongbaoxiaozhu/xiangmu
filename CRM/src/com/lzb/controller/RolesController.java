@@ -25,10 +25,11 @@ public class RolesController {
 	
 	@RequestMapping(value="/SelectRoles",method=RequestMethod.POST)
 	@ResponseBody
-	public FenYe SelectRoles(Integer page,Integer rows){
+	public FenYe SelectRoles(Integer page,Integer rows,String rname){
 		FenYe fen=new FenYe();
 		fen.setPage((page-1)*rows);
 		fen.setPageSize(rows);
+		fen.setRname(rname);
 		fen = rolesService.SelectRoles(fen);
 		return fen;
 	}
@@ -86,15 +87,15 @@ public class RolesController {
 			Integer lis2=null;
 			if(lis!=""){
 				lis2=Integer.parseInt(lis);
-			}
 				FenYe fen=new FenYe();
 				fen.setPage(lis2);
 				fen.setPageSize(Rid);
 				Integer integerRolesModules = rolesService.IntegerRolesModules(fen);
 				if(integerRolesModules<1){
 					return integerRolesModules;
-				
 			}
+			}
+				
 		
 		}
 		return 1;

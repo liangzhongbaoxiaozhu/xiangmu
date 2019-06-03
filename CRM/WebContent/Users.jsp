@@ -98,10 +98,10 @@
 
 						if (res ==1 ) {
 							$('#addwin').window('close');
-							$("#loginName2").val("");
-							$("#passWord2").val("");
-							$("#email2").val("");
-							$("#mtel2").val("");
+							$("#loginName2").textbox("reset");
+							$("#passWord2").textbox("reset");
+							$("#email2").textbox("reset");
+							$("#mtel2").textbox("reset");
 							$.messager.alert('提示', '增加成功！');
 						} else if(res==0) {
 							$.messager.alert('提示', '增加失败！');

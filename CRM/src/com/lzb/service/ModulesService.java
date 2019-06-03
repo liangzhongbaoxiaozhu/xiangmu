@@ -32,5 +32,7 @@ public interface ModulesService {
 	//根据父模块id查子模块id
 	TreeNode SelectFuChaZiMoKuai(Integer id);
 	
+	//添加父模块
+	Integer IntegerFuLei(Modules modules);
 	
 }

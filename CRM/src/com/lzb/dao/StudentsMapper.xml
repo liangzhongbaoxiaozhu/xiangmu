@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.lzb.dao.StudentsMapper">
+
 	<select id="selectStuCounta" parameterType="fenye" resultType="int">
 		select count(sid)
-		from students s LEFT join Users u
-		on u.Uid=s.ConsultantId
+		from students s LEFT join users u
+		on
+		u.Uid=s.ConsultantId
 		<where>
 			<if test="sname !='' and sname !=null">
 				and sname like "%"#{sname}"%"
@@ -75,12 +77,12 @@
 		s.Remarks,
 		s.ConsultantId,
 		s.NetworkConsultantId,
-		(select LoginName from Users
+		(select LoginName from users
 		where Uid=s.EntryPersonId) as lururen,
 		s.ConsultantRemarks,
 		s.Int0,u.LoginName as
 		zixunshi,s.String0
-		from students s LEFT join Users
+		from students s LEFT join users
 		u
 		on u.Uid=s.ConsultantId
 		<where>
@@ -118,14 +120,16 @@
 
 	<insert id="insertStu" parameterType="students">
 		insert into
-		students(sname,sex,age,smtel,education,state,channel,website,KeyWord,qq,weiXin,isEnroll,remarks,consultantId,EntryPersonId)
+		students (sname,sex,age,smtel,education,state,channel,website,KeyWord,qq,weiXin,isEnroll,remarks,consultantId,EntryPersonId)
 		values(#{sname},#{sex},#{age},#{smtel},#{education},#{state},#{channel},#{website},#{KeyWord},#{qq},#{weiXin},#{isEnroll},#{remarks},#{consultantId},#{entryPersonId})
 
 	</insert>
+
 	<delete id="deleteStu" parameterType="int">
 		delete from students where
-		sid=#{sid};
+		sid=#{sid}
 	</delete>
+
 	<update id="updateStu" parameterType="students">
 		update students
 		<set>
@@ -246,26 +250,19 @@
 			<if test="consultantRemarks !='' and consultantRemarks != null">
 				consultantRemarks=#{consultantRemarks}
 			</if>
-
-
 		</set>
 		<where>
 			sid=#{sid}
 		</where>
 	</update>
 
-
 	<select id="selectStuQuanBu" resultType="students">
 		select * from students
 	</select>
 
-
-
-
-
 	<select id="selectStuCountGeRen" parameterType="fenye"
 		resultType="int">
-		select count(sid) from students s,Users u
+		select count(sid) from students s,users u
 		<where>
 			s.ConsultantId=#{JiaoXueid} and u.Uid=s.ConsultantId
 			<if test="sname !='' and sname !=null">
@@ -297,6 +294,7 @@
 			</if>
 		</where>
 	</select>
+
 	<select id="selectStuGeRen" parameterType="fenye" resultType="students">
 		select s.Sid,
 		s.Sname,
@@ -337,12 +335,12 @@
 		s.Remarks,
 		s.ConsultantId,
 		s.NetworkConsultantId,
-		(select LoginName from Users
+		(select LoginName from users
 		where Uid=s.EntryPersonId) as lururen,
 		s.ConsultantRemarks,
 		s.Int0,u.LoginName as
 		zixunshi,s.String0
-		from students s,Users u
+		from students s,users u
 		<where>
 			s.ConsultantId=#{JiaoXueid} and u.Uid=s.ConsultantId
 			<if test="sname !='' and sname !=null">
@@ -375,7 +373,120 @@
 		</where>
 		limit #{page},#{pageSize}
 	</select>
+	
+	<select id="selectStuCountwangluo" parameterType="fenye"
+		resultType="int">
+		select count(sid) from students s,users u
+		<where>
+			s.EntryPersonId=#{JiaoXueid} and u.Uid=s.ConsultantId
+			<if test="sname !='' and sname !=null">
+				and sname like "%"#{sname}"%"
+			</if>
+			<if test="Smtel !='' and Smtel !=null">
+				and Smtel like "%"#{Smtel}"%"
+			</if>
+			<if test="zixunshi !='' and zixunshi !=null">
+				and u.LoginName=#{zixunshi}
+			</if>
+			<if test="QQ !='' and QQ !=null">
+				and s.QQ like "%"#{QQ}"%"
+			</if>
+			<if test="StartData!=null and StartData!=''">
+				and CreateData &gt; #{StartData}
+			</if>
+			<if test="EndData!=null and EndData!=''">
+				and CreateData &lt; #{EndData}
+			</if>
+			<if test="IsEffective !='' and IsEffective !=null">
+				and IsEffective=#{IsEffective}
+			</if>
+			<if test="IsPay !='' and IsPay !=null">
+				and IsPay=#{IsPay}
+			</if>
+			<if test="IsReturnVisit !='' and IsReturnVisit !=null">
+				and IsReturnVisit=#{IsReturnVisit}
+			</if>
+		</where>
+	</select>
 
+	<select id="selectStuwangluo" parameterType="fenye" resultType="students">
+		select s.Sid,
+		s.Sname,
+		s.Sex,
+		s.Age,
+		s.Smtel,
+		s.Education,
+		s.State,
+		s.Channel,
+		s.Website,
+		s.KeyWord,
+		s.Department,
+		s.NameConsultation,
+		s.Region,
+		s.IsReport,
+		s.Curriculum,
+		s.IsEffective,
+		s.Scoring,
+		s.IsReturnVisit,
+		s.ReturnVisitData,
+		s.Door,
+		s.DoorData,
+		s.Reason,
+		s.IsPay,
+		s.PayData,
+		s.Money,
+		s.IsRefund,
+		s.IsClassEntry,
+		s.ClassEntryData,
+		s.ClassEntryRemarks,
+		s.ReasonsRefund,
+		s.EarnestMoney,
+		s.EarnestMoneyData,
+		s.Follow,
+		s.QQ,
+		s.WeiXin,
+		s.IsEnroll,
+		s.Remarks,
+		s.ConsultantId,
+		s.NetworkConsultantId,
+		(select LoginName from users
+		where Uid=s.EntryPersonId) as lururen,
+		s.ConsultantRemarks,
+		s.Int0,u.LoginName as
+		zixunshi,s.String0
+		from students s,users u
+		<where>
+			s.EntryPersonId=#{JiaoXueid} and u.Uid=s.ConsultantId
+			<if test="sname !='' and sname !=null">
+				and sname like "%"#{sname}"%"
+			</if>
+			<if test="Smtel !='' and Smtel !=null">
+				and s.Smtel like "%"#{Smtel}"%"
+			</if>
+			<if test="zixunshi !='' and zixunshi !=null">
+				and u.LoginName=#{zixunshi}
+			</if>
+			<if test="QQ !='' and QQ !=null">
+				and s.QQ like "%"#{QQ}"%"
+			</if>
+			<if test="StartData!=null and StartData!=''">
+				and CreateData &gt; #{StartData}
+			</if>
+			<if test="EndData!=null and EndData!=''">
+				and CreateData &lt; #{EndData}
+			</if>
+			<if test="IsEffective !='' and IsEffective !=null">
+				and IsEffective=#{IsEffective}
+			</if>
+			<if test="IsPay !='' and IsPay !=null">
+				and IsPay=#{IsPay}
+			</if>
+			<if test="IsReturnVisit !='' and IsReturnVisit !=null">
+				and IsReturnVisit=#{IsReturnVisit}
+			</if>
+		</where>
+		limit #{page},#{pageSize}
+	</select>
 
 	<update id="InsertTrack" parameterType="track">
 		Insert into track
@@ -383,15 +494,11 @@
 		values(#{Studentid},#{UserId},#{TrackStartData},#{ReturnVisit},#{TrackingMode},#{NextTrackingData},#{Content})
 	</update>
 
-
-
-
-
 	<select id="SelectTrackstu" parameterType="fenYe" resultType="track">
 		select
 		Tid,Studentid,UserId,TrackStartData,TrackEndData,ReturnVisit,TrackingMode,Content,NextTrackingData,Operation,s.Sname
 		as StudentName,u.LoginName as UsersName
-		from track t,Students s,Users u
+		from track t,students s,users u
 		<where>
 			t.Studentid=#{sid} and
 			t.Studentid=s.Sid and t.UserId=u.Uid
@@ -400,9 +507,8 @@
 		limit #{page},#{pageSize}
 	</select>
 
-
 	<select id="SelectCountstu" parameterType="fenYe" resultType="int">
-		select count(Tid) from track t,Students s,Users u
+		select count(Tid) from track t,students s,users u
 		<where>
 			t.Studentid=#{sid} and
 			t.Studentid=s.Sid and t.UserId=u.Uid
@@ -410,57 +516,60 @@
 	</select>
 
 	<select id="SelectCountDengJi" parameterType="fenYe" resultType="int">
-
 		SELECT
 		count(uid)
 		FROM
-		Users u,
-		UserRoles ur
+		users u,
+		userRoles ur
 		WHERE
 		u.uid = ur.UserId
-		AND IsLoginData = 0
-		AND weight = #{page}
-		AND Int0 = #{pageSize}
-		AND RoleId = 3
-		AND SignIn IN (1, 2)
+		AND
+		u.IsLoginData = 0
+		AND u.weight = #{page}
+		AND u.Int0 = #{pageSize}
+		AND
+		ur.RoleId = 3
+		AND u.SignIn IN (1, 2)
 	</select>
-
 
 	<select id="selectFenLianDengji" parameterType="fenYe"
 		resultType="users">
-		select * from Users u,UserRoles ur
+		select * from users u,userRoles ur
 		WHERE
 		u.uid = ur.UserId
 		AND IsLoginData = 0
 		AND weight = #{page}
 		AND Int0 = #{pageSize}
-		AND RoleId = 3
+		AND
+		RoleId = 3
 		AND SignIn IN (1, 2)
-
-
 	</select>
 
 	<select id="SelectFenLiangShiFouKaiQi" resultType="String">
-		select String0 from users where uid=1
+		select String0
+		from users where uid=1
 	</select>
 
 	<update id="updateFenLiangDengJi" parameterType="fenYe">
-		update Users set
+		update users set
 		Int0=#{page} where Uid=#{pageSize}
 	</update>
+
 	<update id="UpdateFenLiangQuanBu">
-		update Users set Int0=0
+		update users set Int0=0
 	</update>
+
 	<!-- 查询所有咨询师 -->
 	<select id="SelectChaXunZiXunShi" resultType="users">
 		select
-		uid,LoginName from Users where Uid in (select UserId from UserRoles
+		uid,LoginName from users where Uid in (select UserId from userRoles
 		where RoleId=3)
 	</select>
+
 	<!-- 给学生修改咨询师 -->
 	<update id="UpdateXueShengZiXunShi" parameterType="fenYe">
 		update
-		Students set ConsultantId=#{pageSize} where Sid=#{page}
+		students set ConsultantId=#{pageSize} where Sid=#{page}
 	</update>
 
 	<select id="selectStudent_xuanzhong" parameterType="list"
@@ -504,12 +613,12 @@
 		s.Remarks,
 		s.ConsultantId,
 		s.NetworkConsultantId,
-		(select LoginName from Users
+		(select LoginName from users
 		where Uid=1) as lururen,
 		s.ConsultantRemarks,
 		s.Int0,u.LoginName as
 		zixunshi,s.String0
-		from students s,Users u
+		from students s,users u
 		where u.Uid=s.ConsultantId
 		and s.sid in
 		<foreach collection="list" item="item" open="(" separator=","

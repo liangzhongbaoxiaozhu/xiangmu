@@ -92,7 +92,8 @@ public interface Rolesdao {
 	 * @param id
 	 * @return
 	 */
-	Integer selectUserRolesCount(Integer id);
+	Integer selectRoleModulesCount(Integer id);
+	
 	/**
 	 * 根据名字查询是否存在
 	 * @param mingzi

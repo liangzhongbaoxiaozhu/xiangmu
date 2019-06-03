@@ -43,6 +43,20 @@ public interface StudentsMapper {
 	Integer selectStuCountGeRen(FenYe fenye);
 	
 	/**
+	 * 网路咨询师的学生
+	 * @param fenye
+	 * @return
+	 */
+	List<Students> selectStuwangluo(FenYe fenye);
+	
+	/**
+	 * 网络咨询师的学生数量
+	 * @param fenye
+	 * @return
+	 */
+	Integer selectStuCountwangluo(FenYe fenye);
+	
+	/**
 	 * 添加日志
 	 * @param track
 	 * @return

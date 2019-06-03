@@ -1,20 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8"%>
+	pageEncoding="utf-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>Insert title here</title>
-        <link rel="stylesheet" type="text/css" href="js/css/normalize.css" />
-		<link rel="stylesheet" type="text/css" href="js/fonts/font-awesome-4.2.0/css/font-awesome.min.css" />
-		<link rel="stylesheet" type="text/css" href="js/css/demo.css" />
-		<link rel="stylesheet" type="text/css" href="js/css/component.css" />
-		<script type="text/javascript" src="js/jquery-easyui-1.4.5/jquery.min.js"></script>
-		<script src="js/js/classie.js"></script>
-		
+<link rel="stylesheet" type="text/css" href="js/css/normalize.css" />
+<link rel="stylesheet" type="text/css"
+	href="js/fonts/font-awesome-4.2.0/css/font-awesome.min.css" />
+<link rel="stylesheet" type="text/css" href="js/css/demo.css" />
+<link rel="stylesheet" type="text/css" href="js/css/component.css" />
+<script type="text/javascript"
+	src="js/jquery-easyui-1.4.5/jquery.min.js"></script>
+<script src="js/js/classie.js"></script>
+
 </head>
 
-		<script>
+<script>
 			(function() {
 				// trim polyfill : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/Trim
 				if (!String.prototype.trim) {
@@ -52,7 +54,7 @@
 			
 			
 		</script>
-		<style>
+<style>
 .login-button { /* 按钮美化 */
 	width: 270px; /* 宽度 */
 	height: 40px; /* 高度 */
@@ -65,39 +67,37 @@
 	color: white; /* 字体颜色 */
 	font-size: 17px; /* 字体大小 */
 	margin-right: 20px;
-	
-	
 }
+
 .login-button:hover { /* 鼠标移入按钮范围时改变颜色 */
 	background: #5599FF;
+}
 </style>
 <body>
-      <div class="container" style="width:100%;height:600px;">
-      <section class="content" >
-				<!-- <h2>Kaede</h2> -->
-				<span class="input input--kaede" >
-					<input class="input__field input__field--kaede" type="text" id="input-35" />
-					<label class="input__label input__label--kaede" for="input-35">
-						<span id="jiumima" class="input__label-content input__label-content--kaede">旧密码</span>
-					</label>
-				</span>
-				<span class="input input--kaede">
-					<input class="input__field input__field--kaede" type="text" id="input-36" />
-					<label class="input__label input__label--kaede" for="input-36">
-						<span id="xinmima" class="input__label-content input__label-content--kaede">新密码</span>
-					</label>
-				</span>
-				<span  class="input input--kaede">
-					<input class="input__field input__field--kaede" type="text" id="input-37" />
-					<label class="input__label input__label--kaede" for="input-37">
-						<span  class="input__label-content input__label-content--kaede">再次输入新密码</span>
-					</label>
-				</span>
-				<input onclick="updatea()" class="login-button" type="button"  value="修改"/>
-			</section> 
-			
-			
-			<div/>
+	<div class="container" style="width: 100%; height: 600px;">
+		<section class="content"> <!-- <h2>Kaede</h2> --> <span
+			class="input input--kaede"> <input
+			class="input__field input__field--kaede" type="text" id="input-35" />
+			<label class="input__label input__label--kaede" for="input-35">
+				<span id="jiumima"
+				class="input__label-content input__label-content--kaede">旧密码</span>
+		</label>
+		</span> <span class="input input--kaede"> <input
+			class="input__field input__field--kaede" type="text" id="input-36" />
+			<label class="input__label input__label--kaede" for="input-36">
+				<span id="xinmima"
+				class="input__label-content input__label-content--kaede">新密码</span>
+		</label>
+		</span> <span class="input input--kaede"> <input
+			class="input__field input__field--kaede" type="text" id="input-37" />
+			<label class="input__label input__label--kaede" for="input-37">
+				<span class="input__label-content input__label-content--kaede">再次输入新密码</span>
+		</label>
+		</span> <input onclick="updatea()" class="login-button" type="button"
+			value="修改" /> </section>
+
+
+		<div />
 </body>
 <script type="text/javascript">
 		function updatea(){
@@ -105,22 +105,33 @@
 			var xin=document.getElementById("input-36").value;
 			var yanzheng=document.getElementById("input-37").value;
 			
-			if(xin==yanzheng){
-				$.post("UpdateGeReMiMa",{
-					uid: <%=session.getAttribute("Uid")%>,<%-- <%=1%> --%>
-					passWord:jiu,
-					mima:yanzheng
-				},function(res){
-					if(res>0){
-						alert("修改成功！");
-					}else{
-						alert("修改失败！请重新修改");
-					}
-				});
-			}else{
-				alert("新密码输入不同！请重新输入");
+			if(xin==""){
+				alert("输入的新密码为空！");
 			}
+            if(yanzheng==""){
+            	alert("重复输入的新密码为空！");
+			}
+            if(xin!=""){
+            	if(yanzheng!=""){
+            		if(xin==yanzheng){
+        				$.post("UpdateGeReMiMa",{
+        					uid: <%=session.getAttribute("Uid")%>,
+        					passWord:jiu,
+        					mima:yanzheng
+        				},function(res){
+        					if(res==1){
+        						alert("修改成功！");
+        					}else if(res==0){
+        						alert("修改失败！旧密码错误，请重新修改!");
+        					}
+        				});
+        			}else{
+        				alert("新密码输入不同！请重新输入");
+        			}
+            	}
+            }
 			
 		}
+		
 		</script>
 </html>
